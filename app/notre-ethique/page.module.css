@@ -1,0 +1,114 @@
+.ethicsPage {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 60px var(--container-padding) 100px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.label {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 20px;
+}
+
+.intro {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Values Grid */
+.values {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    margin-bottom: 80px;
+}
+
+.value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.valueIcon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.valueTitle {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+}
+
+.valueText {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.8;
+}
+
+/* Quote */
+.quote {
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--color-bg-white);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.quoteText {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--color-text);
+    margin-bottom: 20px;
+}
+
+.quoteAuthor {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-style: normal;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .values {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .quote {
+        padding: 40px 20px;
+    }
+}

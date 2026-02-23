@@ -1,0 +1,149 @@
+.contactPage {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 60px var(--container-padding) 100px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formLabel {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+}
+
+.formInput {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text);
+    transition: border-color var(--transition-fast);
+    background: transparent;
+}
+
+.formInput:focus {
+    border-bottom-color: var(--color-text);
+}
+
+.formInput::placeholder {
+    color: var(--color-text-muted);
+}
+
+.formTextarea {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text);
+    resize: vertical;
+    min-height: 120px;
+    font-family: var(--font-body);
+    transition: border-color var(--transition-fast);
+}
+
+.formTextarea:focus {
+    border-bottom-color: var(--color-text);
+}
+
+.formTextarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+/* Info */
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding-top: 10px;
+}
+
+.infoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.infoTitle {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+}
+
+.infoLink {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+}
+
+.infoLink:hover {
+    opacity: 0.6;
+}
+
+.infoText {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+}
