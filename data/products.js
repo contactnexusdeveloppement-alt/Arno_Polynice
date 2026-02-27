@@ -494,16 +494,15 @@ function mapShopifyProduct(node) {
   const images = node.images?.edges?.map(edge => edge.node.url) || [];
 
   // Default colors/sizes if missing
-  const colors = [{ name: 'Par Défaut', hex: '#1A1A1A' }];
+  const colors = [{ name: 'Unique', hex: '#1A1A1A' }];
   let sizes = ['Unique'];
 
   // Try to extract colors and sizes from Shopify options if they exist
   if (node.options && node.options.length > 0) {
     const colorOption = node.options.find(o => o.name.toLowerCase() === 'couleur' || o.name.toLowerCase() === 'coloris');
     if (colorOption && colorOption.values.length > 0 && colorOption.values[0] !== 'Default Title') {
-      // Very basic color mapping for demo, in reality we'd need a translation table
       colors.length = 0;
-      colorOption.values.forEach(v => colors.push({ name: v, hex: '#8A8A8A' }));
+      colorOption.values.forEach(v => colors.push({ name: v, hex: '#8A8A8A' })); // Fallback hex for unknown colors
     }
 
     const sizeOption = node.options.find(o => o.name.toLowerCase() === 'taille' || o.name.toLowerCase() === 'size');
@@ -512,11 +511,20 @@ function mapShopifyProduct(node) {
     }
   }
 
-  // Determine category from tags or productType
-  let category = 'unisexe';
-  const tags = node.tags || [];
-  if (tags.some(t => t.toLowerCase() === 'femme')) category = 'femme';
-  if (tags.some(t => t.toLowerCase() === 'homme')) category = 'homme';
+  // Determine category from tags
+  let category = 'unisexe'; // Default
+  const rawTags = node.tags || [];
+  const tagsLower = rawTags.map(t => t.toLowerCase());
+
+  if (tagsLower.includes('femme')) category = 'femme';
+  else if (tagsLower.includes('homme')) category = 'homme';
+  else if (tagsLower.includes('unisexe')) category = 'unisexe';
+
+  // Determine subcategory from productType
+  let subcategory = 'Autre';
+  if (node.productType && node.productType.trim() !== '') {
+    subcategory = node.productType;
+  }
 
   // Determine availability
   const availability = node.availableForSale ? 'available' : 'unavailable';
@@ -526,11 +534,11 @@ function mapShopifyProduct(node) {
     name: node.title,
     slug: node.handle,
     category,
-    subcategory: node.productType || 'Autre',
+    subcategory,
     price,
     colors,
     sizes,
-    images: images.length > 0 ? images : ['/products/placeholder.jpg'],
+    images: images, // Removed fallback placeholder to allow logic in ProductDetail to show letter if empty
     description: node.description || 'Description à venir.',
     details: 'Matières et détails à préciser.',
     availability,
