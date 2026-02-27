@@ -2,18 +2,15 @@
 
 import { useState } from 'react';
 import ProductCard from '@/components/ProductCard';
-import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 import styles from './CategoryPage.module.css';
 
-export default function CategoryPage({ category, title }) {
-    const allProducts = getProductsByCategory(category);
-    const subcategories = getAvailableSubcategories(category);
+export default function CategoryPage({ title, products, subcategories }) {
     const [activeFilter, setActiveFilter] = useState('Tout');
 
     const filters = ['Tout', ...subcategories];
     const filteredProducts = activeFilter === 'Tout'
-        ? allProducts
-        : allProducts.filter(p => p.subcategory === activeFilter);
+        ? products
+        : products.filter(p => p.subcategory === activeFilter);
 
     return (
         <div className="page-enter">

@@ -1,10 +1,13 @@
 import CategoryPage from '@/components/CategoryPage';
+import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 
 export const metadata = {
     title: 'Femme — Arno Polynice',
-    description: 'Découvrez la collection femme Arno Polynice. Ensembles, vestes, pantalons et accessoires confectionnés artisanalement en France.',
+    description: 'Découvrez les créations pour femme d\'Arno Polynice.',
 };
 
-export default function FemmePage() {
-    return <CategoryPage category="femme" title="Femme" />;
+export default async function FemmePage() {
+    const products = await getProductsByCategory('femme');
+    const subcategories = await getAvailableSubcategories('femme');
+    return <CategoryPage title="Femme" products={products} subcategories={subcategories} />;
 }

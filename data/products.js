@@ -1,3 +1,5 @@
+import { getProducts as fetchShopifyProducts, getProduct as fetchShopifyProduct } from '@/lib/shopify';
+
 export const categories = [
   { id: 'femme', name: 'Femme', slug: 'femme' },
   { id: 'homme', name: 'Homme', slug: 'homme' },
@@ -481,23 +483,97 @@ export const products = [
 ];
 
 // Helper functions
-export function getProductsByCategory(category) {
-  return products.filter(p => p.category === category);
+
+function mapShopifyProduct(node) {
+  // Handle price
+  const price = node.priceRange?.minVariantPrice?.amount
+    ? parseInt(node.priceRange.minVariantPrice.amount, 10)
+    : 0;
+
+  // Handle images
+  const images = node.images?.edges?.map(edge => edge.node.url) || [];
+
+  // Default colors/sizes if missing
+  const colors = [{ name: 'Par Défaut', hex: '#1A1A1A' }];
+  let sizes = ['Unique'];
+
+  // Try to extract colors and sizes from Shopify options if they exist
+  if (node.options && node.options.length > 0) {
+    const colorOption = node.options.find(o => o.name.toLowerCase() === 'couleur' || o.name.toLowerCase() === 'coloris');
+    if (colorOption && colorOption.values.length > 0 && colorOption.values[0] !== 'Default Title') {
+      // Very basic color mapping for demo, in reality we'd need a translation table
+      colors.length = 0;
+      colorOption.values.forEach(v => colors.push({ name: v, hex: '#8A8A8A' }));
+    }
+
+    const sizeOption = node.options.find(o => o.name.toLowerCase() === 'taille' || o.name.toLowerCase() === 'size');
+    if (sizeOption && sizeOption.values.length > 0 && sizeOption.values[0] !== 'Default Title') {
+      sizes = sizeOption.values;
+    }
+  }
+
+  // Determine category from tags or productType
+  let category = 'unisexe';
+  const tags = node.tags || [];
+  if (tags.some(t => t.toLowerCase() === 'femme')) category = 'femme';
+  if (tags.some(t => t.toLowerCase() === 'homme')) category = 'homme';
+
+  // Determine availability
+  const availability = node.availableForSale ? 'available' : 'unavailable';
+
+  return {
+    id: node.id,
+    name: node.title,
+    slug: node.handle,
+    category,
+    subcategory: node.productType || 'Autre',
+    price,
+    colors,
+    sizes,
+    images: images.length > 0 ? images : ['/products/placeholder.jpg'],
+    description: node.description || 'Description à venir.',
+    details: 'Matières et détails à préciser.',
+    availability,
+    featured: true, // we'll feature all Shopify products for now
+    isShopify: true
+  };
 }
 
-export function getProductBySlug(slug) {
-  return products.find(p => p.slug === slug);
+export async function getAllProducts() {
+  try {
+    const shopifyNodes = await fetchShopifyProducts(50);
+    const shopifyProducts = shopifyNodes.map(mapShopifyProduct);
+
+    // We merge Shopify products with mock products. 
+    // Shopify products appear first!
+    return [...shopifyProducts, ...products];
+  } catch (error) {
+    console.error('Error fetching getAllProducts:', error);
+    return products; // Fallback to mocks
+  }
 }
 
-export function getFeaturedProducts() {
-  return products.filter(p => p.featured);
+export async function getProductsByCategory(category) {
+  const all = await getAllProducts();
+  return all.filter(p => p.category === category);
 }
 
-export function getProductsBySubcategory(category, subcategory) {
-  return products.filter(p => p.category === category && p.subcategory === subcategory);
+export async function getProductBySlug(slug) {
+  const all = await getAllProducts();
+  return all.find(p => p.slug === slug);
 }
 
-export function getAvailableSubcategories(category) {
-  const categoryProducts = getProductsByCategory(category);
+export async function getFeaturedProducts() {
+  const all = await getAllProducts();
+  return all.filter(p => p.featured);
+}
+
+export async function getProductsBySubcategory(category, subcategory) {
+  const all = await getAllProducts();
+  return all.filter(p => p.category === category && p.subcategory === subcategory);
+}
+
+export async function getAvailableSubcategories(category) {
+  const categoryProducts = await getProductsByCategory(category);
   return [...new Set(categoryProducts.map(p => p.subcategory))];
 }

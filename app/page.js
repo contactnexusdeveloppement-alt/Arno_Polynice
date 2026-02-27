@@ -3,8 +3,8 @@ import ProductCard from '@/components/ProductCard';
 import { getFeaturedProducts } from '@/data/products';
 import styles from './page.module.css';
 
-export default function HomePage() {
-  const featured = getFeaturedProducts();
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <div className="page-enter">
@@ -60,7 +60,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="product-grid">
-            {featured.map(product => (
+            {featuredProducts.map(product => (
               <ProductCard key={product.id} product={product} showPrice={false} />
             ))}
           </div>

@@ -1,10 +1,13 @@
 import CategoryPage from '@/components/CategoryPage';
+import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 
 export const metadata = {
     title: 'Unisexe — Arno Polynice',
-    description: 'Découvrez la collection unisexe Arno Polynice. Des créations sans genre, confectionnées artisanalement en France.',
+    description: 'Découvrez les créations unisexe d\'Arno Polynice.',
 };
 
-export default function UnisexePage() {
-    return <CategoryPage category="unisexe" title="Unisexe" />;
+export default async function UnisexePage() {
+    const products = await getProductsByCategory('unisexe');
+    const subcategories = await getAvailableSubcategories('unisexe');
+    return <CategoryPage title="Unisexe" products={products} subcategories={subcategories} />;
 }
