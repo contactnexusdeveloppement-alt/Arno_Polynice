@@ -22,12 +22,17 @@ export default function ProductCard({ product, showPrice = false }) {
                     className={styles.image}
                     style={{
                         backgroundColor: product.colors[0]?.hex || '#E5E0D8',
+                        backgroundImage: product.images && product.images[0] ? `url(${product.images[0]})` : 'none',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
                         transform: isHovered ? 'scale(1.03)' : 'scale(1)',
                     }}
                 >
-                    <span className={styles.imagePlaceholder}>
-                        {product.name.charAt(0)}
-                    </span>
+                    {(!product.images || !product.images[0]) && (
+                        <span className={styles.imagePlaceholder}>
+                            {product.name.charAt(0)}
+                        </span>
+                    )}
                 </div>
 
                 {/* Availability badge */}
