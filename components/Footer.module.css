@@ -130,10 +130,33 @@
     color: rgba(248, 245, 240, 0.4);
 }
 
+.copyrightAndCredit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
 .copyright {
     font-size: 0.7rem;
     color: rgba(248, 245, 240, 0.3);
     font-weight: 300;
+}
+
+.credit {
+    font-size: 0.7rem;
+    color: rgba(248, 245, 240, 0.3);
+    font-weight: 300;
+}
+
+.credit a {
+    color: rgba(248, 245, 240, 0.7);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+.credit a:hover {
+    color: var(--color-bg);
 }
 
 .bottomLinks {

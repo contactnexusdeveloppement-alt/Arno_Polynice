@@ -484,6 +484,41 @@ export const products = [
 
 // Helper functions
 
+const colorMap = {
+  'noir': '#1A1A1A',
+  'black': '#1A1A1A',
+  'blanc': '#FFFFFF',
+  'white': '#FFFFFF',
+  'beige': '#D4C5B2',
+  'bleu nuit': '#2C3E50',
+  'kaki': '#5C5C3D',
+  'sable': '#D2B48C',
+  'gris': '#808080',
+  'anthracite': '#383838',
+  'camel': '#C19A6B',
+  'olive': '#6B7B3D',
+  'marine': '#2C3E50',
+  'prune': '#5B2C4F',
+  'vert forêt': '#2D5A3D',
+  'ivoire': '#FFFFF0',
+  'bleu ciel': '#87CEEB',
+  'gris perle': '#C0C0C0',
+  'écru': '#F5F5DC',
+  'gris clair': '#D3D3D3',
+  'bleu toile': '#4A6FA5',
+  'rouge toile': '#C44536',
+  'sur mesure': '#D4C5B2',
+  'indigo': '#3F51B5',
+  'terracotta': '#C67B5C',
+  'crème': '#F5F0E8',
+  'bleu poudré': '#B0C4DE',
+  'gris chiné': '#A9A9A9',
+  'bordeaux': '#722F37',
+  'par défaut': '#1A1A1A'
+};
+
+const getHexForColor = (name) => colorMap[name.toLowerCase()] || '#8A8A8A';
+
 function mapShopifyProduct(node) {
   // Handle price
   const price = node.priceRange?.minVariantPrice?.amount
@@ -502,7 +537,7 @@ function mapShopifyProduct(node) {
     const colorOption = node.options.find(o => o.name.toLowerCase() === 'couleur' || o.name.toLowerCase() === 'coloris');
     if (colorOption && colorOption.values.length > 0 && colorOption.values[0] !== 'Default Title') {
       colors.length = 0;
-      colorOption.values.forEach(v => colors.push({ name: v, hex: '#8A8A8A' })); // Fallback hex for unknown colors
+      colorOption.values.forEach(v => colors.push({ name: v, hex: getHexForColor(v) }));
     }
 
     const sizeOption = node.options.find(o => o.name.toLowerCase() === 'taille' || o.name.toLowerCase() === 'size');
@@ -529,6 +564,14 @@ function mapShopifyProduct(node) {
   // Determine availability
   const availability = node.availableForSale ? 'available' : 'unavailable';
 
+  // Parse variants to send to frontend for checking availability of size/color combos
+  const variants = node.variants?.edges?.map(edge => ({
+    id: edge.node.id,
+    title: edge.node.title,
+    availableForSale: edge.node.availableForSale,
+    selectedOptions: edge.node.selectedOptions,
+  })) || [];
+
   return {
     id: node.id,
     name: node.title,
@@ -538,9 +581,10 @@ function mapShopifyProduct(node) {
     price,
     colors,
     sizes,
+    variants,
     images: images, // Removed fallback placeholder to allow logic in ProductDetail to show letter if empty
     description: node.description || 'Description à venir.',
-    details: 'Matières et détails à préciser.',
+    details: node.metafield?.value || 'Ajoutez le champ méta personnalisé `custom.details` sur Shopify pour afficher la composition ici.',
     availability,
     featured: true, // we'll feature all Shopify products for now
     isShopify: true

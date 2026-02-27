@@ -228,6 +228,17 @@
     border-color: var(--color-text);
 }
 
+.sizeBtnUnavailable {
+    opacity: 0.4;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sizeBtnUnavailable:hover {
+    border-color: var(--color-border);
+}
+
 .sizeHint {
     font-size: 0.7rem;
     color: var(--color-text-muted);

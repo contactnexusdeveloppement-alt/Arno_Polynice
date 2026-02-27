@@ -8,7 +8,19 @@ import styles from '@/app/produit/[slug]/page.module.css';
 
 export default function ProductDetail({ product }) {
     const { addItem } = useCart();
+
     const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
+
+    // Reset size if the selected size is not available for new color
+    const checkSizeAvailability = (color, size) => {
+        if (!product.variants) return true; // mock products are always available
+        const variant = product.variants.find(v =>
+            v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === color) &&
+            v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === size)
+        );
+        return variant ? variant.availableForSale : false;
+    };
+
     const [selectedSize, setSelectedSize] = useState('');
     const [activeImage, setActiveImage] = useState(0);
     const [showDetails, setShowDetails] = useState(false);
@@ -102,7 +114,12 @@ export default function ProductDetail({ product }) {
                                         key={color.name}
                                         className={`${styles.swatch} ${selectedColor === color.name ? styles.swatchActive : ''}`}
                                         style={{ backgroundColor: color.hex }}
-                                        onClick={() => setSelectedColor(color.name)}
+                                        onClick={() => {
+                                            setSelectedColor(color.name);
+                                            if (selectedSize && !checkSizeAvailability(color.name, selectedSize)) {
+                                                setSelectedSize(''); // Reset size if unavailable in new color
+                                            }
+                                        }}
                                         title={color.name}
                                         aria-label={`Couleur ${color.name}`}
                                     />
@@ -114,15 +131,20 @@ export default function ProductDetail({ product }) {
                         <div className={styles.section}>
                             <label className={styles.label}>Taille</label>
                             <div className={styles.sizes}>
-                                {product.sizes.map(size => (
-                                    <button
-                                        key={size}
-                                        className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeBtnActive : ''}`}
-                                        onClick={() => setSelectedSize(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                                {product.sizes.map(size => {
+                                    const isAvailable = checkSizeAvailability(selectedColor, size);
+                                    return (
+                                        <button
+                                            key={size}
+                                            className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeBtnActive : ''} ${!isAvailable ? styles.sizeBtnUnavailable : ''}`}
+                                            onClick={() => isAvailable && setSelectedSize(size)}
+                                            disabled={!isAvailable}
+                                            title={!isAvailable ? 'Rupture de stock' : ''}
+                                        >
+                                            {size}
+                                        </button>
+                                    );
+                                })}
                             </div>
                             {!selectedSize && (
                                 <p className={styles.sizeHint}>Veuillez sélectionner une taille</p>

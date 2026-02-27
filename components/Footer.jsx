@@ -86,9 +86,14 @@ export default function Footer() {
                         <span>ARNO</span>
                         <span>POLYNICE</span>
                     </div>
-                    <p className={styles.copyright}>
-                        © {new Date().getFullYear()} Arno Polynice. Tous droits réservés.
-                    </p>
+                    <div className={styles.copyrightAndCredit}>
+                        <p className={styles.copyright}>
+                            © {new Date().getFullYear()} Arno Polynice. Tous droits réservés.
+                        </p>
+                        <p className={styles.credit}>
+                            Créé par <a href="https://nexusdeveloppement.fr" target="_blank" rel="noopener noreferrer">Nexus Developpement</a>
+                        </p>
+                    </div>
                     <div className={styles.bottomLinks}>
                         <a href="#">Mentions légales</a>
                         <a href="#">CGV</a>
