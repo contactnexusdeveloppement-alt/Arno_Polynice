@@ -28,6 +28,16 @@ export default function ProductCard({ product, showPrice = false }) {
                         transform: isHovered ? 'scale(1.03)' : 'scale(1)',
                     }}
                 >
+                    {/* Secondary Image for Hover */}
+                    {product.images && product.images[1] && (
+                        <div
+                            className={`${styles.secondaryImage} ${isHovered ? styles.secondaryImageVisible : ''}`}
+                            style={{
+                                backgroundImage: `url(${product.images[1]})`
+                            }}
+                        />
+                    )}
+
                     {(!product.images || !product.images[0]) && (
                         <span className={styles.imagePlaceholder}>
                             {product.name.charAt(0)}
