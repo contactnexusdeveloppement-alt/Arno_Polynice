@@ -593,14 +593,21 @@ function mapShopifyProduct(node) {
 
 export async function getAllProducts() {
   try {
+    console.log('[getAllProducts] Fetching Shopify products...');
+    console.log('[getAllProducts] Domain:', process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ? 'SET' : 'MISSING');
+    console.log('[getAllProducts] Token:', process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN ? 'SET' : 'MISSING');
+
     const shopifyNodes = await fetchShopifyProducts(50);
     const shopifyProducts = shopifyNodes.map(mapShopifyProduct);
+
+    console.log(`[getAllProducts] Got ${shopifyProducts.length} Shopify + ${products.length} mock products`);
 
     // We merge Shopify products with mock products. 
     // Shopify products appear first!
     return [...shopifyProducts, ...products];
   } catch (error) {
-    console.error('Error fetching getAllProducts:', error);
+    console.error('[getAllProducts] ERROR fetching Shopify products:', error.message);
+    console.error('[getAllProducts] Falling back to mock products only');
     return products; // Fallback to mocks
   }
 }
