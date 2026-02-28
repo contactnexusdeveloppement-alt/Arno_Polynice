@@ -81,8 +81,7 @@ export async function logoutAction() {
 }
 
 /**
- * Retrieves the currently logged in customer's data using the cookie
- * Can be called from Server Components
+ * Retrieve current customer data from session cookie
  */
 export async function getSessionCustomer() {
     const cookieStore = await cookies();
@@ -97,5 +96,25 @@ export async function getSessionCustomer() {
         // Token might be invalid or expired
         console.error('Session expired or invalid token');
         return null;
+    }
+}
+
+/**
+ * Handle password recovery requests
+ */
+export async function recoverAction(prevState, formData) {
+    try {
+        const email = formData.get('email');
+        if (!email) {
+            return { error: 'Veuillez saisir votre adresse email.' };
+        }
+
+        // We import it inside the action to avoid circular dependency issues if any
+        const { customerRecover } = await import('@/lib/shopifyAuth');
+        await customerRecover(email);
+
+        return { success: true };
+    } catch (error) {
+        return { error: error.message || "Une erreur est survenue." };
     }
 }
