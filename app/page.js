@@ -1,10 +1,29 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { getFeaturedProducts } from '@/data/products';
+import { getHomepageHeroImages, getCategoryImages } from '@/lib/shopify';
 import styles from './page.module.css';
 
+// Hero fallback colors when no Shopify image is available
+const heroFallbacks = [
+  { bg: '#D4C5B2', text: 'A' },
+  { bg: '#2C3E50', text: 'P' },
+  { bg: '#C19A6B', text: '✦' },
+];
+
+const categoryFallbacks = {
+  femme: { bg: '#E8DDD0', text: 'F' },
+  homme: { bg: '#2C3E50', text: 'H' },
+  unisexe: { bg: '#C67B5C', text: 'U' },
+};
+
 export default async function Home() {
-  const featuredProducts = await getFeaturedProducts();
+  const [featuredProducts, heroImages, categoryImages] = await Promise.all([
+    getFeaturedProducts(),
+    getHomepageHeroImages('en-vedette', 3).catch(() => []),
+    getCategoryImages().catch(() => ({})),
+  ]);
 
   return (
     <div className="page-enter">
@@ -26,15 +45,26 @@ export default async function Home() {
         </div>
         <div className={styles.heroVisual}>
           <div className={styles.heroImageGrid}>
-            <div className={styles.heroImg} style={{ backgroundColor: '#D4C5B2' }}>
-              <span className={styles.heroImgText}>A</span>
-            </div>
-            <div className={styles.heroImg} style={{ backgroundColor: '#2C3E50' }}>
-              <span className={styles.heroImgText}>P</span>
-            </div>
-            <div className={styles.heroImg} style={{ backgroundColor: '#C19A6B' }}>
-              <span className={styles.heroImgText}>✦</span>
-            </div>
+            {[0, 1, 2].map((i) => {
+              const heroItem = heroImages[i];
+              const fallback = heroFallbacks[i];
+
+              return heroItem?.imageUrl ? (
+                <Link key={i} href={`/produit/${heroItem.handle}`} className={styles.heroImg}>
+                  <Image
+                    src={heroItem.imageUrl}
+                    alt={heroItem.altText}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </Link>
+              ) : (
+                <div key={i} className={styles.heroImg} style={{ backgroundColor: fallback.bg }}>
+                  <span className={styles.heroImgText}>{fallback.text}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -96,24 +126,29 @@ export default async function Home() {
       <section className={`section ${styles.categories}`}>
         <div className="container">
           <div className={styles.catGrid}>
-            <Link href="/femme" className={styles.catCard}>
-              <div className={styles.catImage} style={{ backgroundColor: '#E8DDD0' }}>
-                <span className={styles.catImageText}>F</span>
-              </div>
-              <h3 className={styles.catName}>Femme</h3>
-            </Link>
-            <Link href="/homme" className={styles.catCard}>
-              <div className={styles.catImage} style={{ backgroundColor: '#2C3E50' }}>
-                <span className={styles.catImageText}>H</span>
-              </div>
-              <h3 className={styles.catName}>Homme</h3>
-            </Link>
-            <Link href="/unisexe" className={styles.catCard}>
-              <div className={styles.catImage} style={{ backgroundColor: '#C67B5C' }}>
-                <span className={styles.catImageText}>U</span>
-              </div>
-              <h3 className={styles.catName}>Unisexe</h3>
-            </Link>
+            {['femme', 'homme', 'unisexe'].map((cat) => {
+              const imgUrl = categoryImages[cat];
+              const fallback = categoryFallbacks[cat];
+
+              return (
+                <Link key={cat} href={`/${cat}`} className={styles.catCard}>
+                  <div className={styles.catImage} style={!imgUrl ? { backgroundColor: fallback.bg } : undefined}>
+                    {imgUrl ? (
+                      <Image
+                        src={imgUrl}
+                        alt={`Collection ${cat}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <span className={styles.catImageText}>{fallback.text}</span>
+                    )}
+                  </div>
+                  <h3 className={styles.catName}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</h3>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
