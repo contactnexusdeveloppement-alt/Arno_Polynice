@@ -1,0 +1,150 @@
+.authPage {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px var(--container-padding) 80px;
+    background-color: var(--color-bg);
+}
+
+.authContainer {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    padding: 60px 40px;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+.errorBanner {
+    background: rgba(196, 69, 54, 0.1);
+    border-left: 3px solid var(--color-error, #c44536);
+    color: var(--color-error, #c44536);
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    margin-bottom: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputGroup label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.inputGroup input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text);
+    transition: border-color var(--transition-fast);
+}
+
+.inputGroup input:focus {
+    outline: none;
+    border-color: var(--color-text);
+}
+
+.inputGroup input::placeholder {
+    color: var(--color-border);
+}
+
+.formLinks {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -8px;
+}
+
+.link {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.link:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
+.submitBtn {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.switchAuth {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    border-top: 1px solid var(--color-border);
+    padding-top: 32px;
+}
+
+.linkBold {
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-left: 8px;
+    transition: opacity var(--transition-fast);
+}
+
+.linkBold:hover {
+    opacity: 0.6;
+}
+
+/* Specific to Registration */
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.row .inputGroup {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .authContainer {
+        padding: 40px 24px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 24px;
+    }
+}

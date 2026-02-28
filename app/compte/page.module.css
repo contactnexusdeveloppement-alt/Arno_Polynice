@@ -1,0 +1,225 @@
+.accountPage {
+    min-height: 80vh;
+    padding: 120px var(--container-padding) 80px;
+    background-color: var(--color-bg);
+}
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+}
+
+.logoutBtn {
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color var(--transition-fast);
+}
+
+.logoutBtn:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+}
+
+.sectionTitle {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+    color: var(--color-text);
+}
+
+/* Orders */
+.emptyState {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border);
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.orderCard {
+    background: white;
+    border: 1px solid var(--color-border);
+    padding: 24px;
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.orderNumber {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.orderDate {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.orderStatus {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.statusBadge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 8px;
+    background: var(--color-bg-warm);
+    border-radius: 2px;
+}
+
+.orderTotal {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.orderItems {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.itemRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.itemImagePlaceholder {
+    width: 60px;
+    height: 75px;
+    background: var(--color-bg-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.itemImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.itemDetails {
+    flex: 1;
+}
+
+.itemName {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+
+.itemQty {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Profile info */
+.infoCard {
+    background: white;
+    border: 1px solid var(--color-border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.infoCard p {
+    font-size: 0.85rem;
+    color: var(--color-text);
+}
+
+.infoCard strong {
+    font-weight: 500;
+    display: inline-block;
+    min-width: 80px;
+}
+
+@media (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .orderHeader {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .orderStatus {
+        align-items: flex-start;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
