@@ -151,10 +151,12 @@
 }
 
 .visionImage {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 400px;
+  overflow: hidden;
 }
 
 .visionImageText {

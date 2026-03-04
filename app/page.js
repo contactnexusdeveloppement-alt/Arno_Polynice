@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { getFeaturedProducts } from '@/data/products';
-import { getHeroSlides, getHomepageHeroImages, getCategoryImages } from '@/lib/shopify';
+import { getHeroSlides, getHomepageHeroImages, getCategoryImages, getVisionImage } from '@/lib/shopify';
 import styles from './page.module.css';
 
 // Hero fallback colors when no Shopify image is available
@@ -20,11 +20,12 @@ const categoryFallbacks = {
 
 export default async function Home() {
   // Try metaobjects first (simple images), fallback to collection products
-  const [featuredProducts, heroSlides, heroImagesLegacy, categoryImages] = await Promise.all([
+  const [featuredProducts, heroSlides, heroImagesLegacy, categoryImages, visionImage] = await Promise.all([
     getFeaturedProducts(),
     getHeroSlides(3).catch(() => []),
     getHomepageHeroImages('en-vedette', 3).catch(() => []),
     getCategoryImages().catch(() => ({})),
+    getVisionImage().catch(() => null),
   ]);
 
   // Use metaobject slides if available, otherwise fallback to collection products
@@ -118,8 +119,18 @@ export default async function Home() {
       {/* Vision Section */}
       <section className={styles.vision}>
         <div className={styles.visionInner}>
-          <div className={styles.visionImage} style={{ backgroundColor: '#3D4F5F' }}>
-            <span className={styles.visionImageText}>AP</span>
+          <div className={styles.visionImage} style={!visionImage ? { backgroundColor: '#3D4F5F' } : undefined}>
+            {visionImage ? (
+              <Image
+                src={visionImage.url}
+                alt={visionImage.altText}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                style={{ objectFit: 'cover' }}
+              />
+            ) : (
+              <span className={styles.visionImageText}>AP</span>
+            )}
           </div>
           <div className={styles.visionContent}>
             <span className={styles.visionLabel}>Notre vision</span>
