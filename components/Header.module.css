@@ -265,8 +265,17 @@
         display: flex;
     }
 
+    .inner {
+        justify-content: flex-start;
+    }
+
     .logo {
-        position: static;
-        transform: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .rightSection {
+        margin-left: auto;
     }
 }

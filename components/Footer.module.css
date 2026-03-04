@@ -183,9 +183,34 @@
         margin-top: 60px;
     }
 
+    .newsletter {
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+    }
+
+    .newsletterTitle {
+        font-size: 1.2rem;
+    }
+
     .linksGrid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        padding-bottom: 40px;
+        margin-bottom: 30px;
+    }
+
+    .columnTitle {
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        margin-bottom: 6px;
+    }
+
+    .link {
+        font-size: 0.72rem;
+    }
+
+    .linkColumn {
+        gap: 8px;
     }
 
     .bottom {
@@ -201,5 +226,6 @@
     .bottomLinks {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 12px;
     }
 }
