@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import { getFeaturedProducts } from '@/data/products';
-import { getHomepageHeroImages, getCategoryImages } from '@/lib/shopify';
+import { getHeroSlides, getHomepageHeroImages, getCategoryImages } from '@/lib/shopify';
 import styles from './page.module.css';
 
 // Hero fallback colors when no Shopify image is available
@@ -19,11 +19,16 @@ const categoryFallbacks = {
 };
 
 export default async function Home() {
-  const [featuredProducts, heroImages, categoryImages] = await Promise.all([
+  // Try metaobjects first (simple images), fallback to collection products
+  const [featuredProducts, heroSlides, heroImagesLegacy, categoryImages] = await Promise.all([
     getFeaturedProducts(),
+    getHeroSlides(3).catch(() => []),
     getHomepageHeroImages('en-vedette', 3).catch(() => []),
     getCategoryImages().catch(() => ({})),
   ]);
+
+  // Use metaobject slides if available, otherwise fallback to collection products
+  const heroImages = heroSlides.length > 0 ? heroSlides : heroImagesLegacy;
 
   return (
     <div className="page-enter">
@@ -49,17 +54,27 @@ export default async function Home() {
               const heroItem = heroImages[i];
               const fallback = heroFallbacks[i];
 
-              return heroItem?.imageUrl ? (
-                <Link key={i} href={`/produit/${heroItem.handle}`} className={styles.heroImg}>
-                  <Image
-                    src={heroItem.imageUrl}
-                    alt={heroItem.altText}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    style={{ objectFit: 'cover' }}
-                  />
-                </Link>
-              ) : (
+              if (heroItem?.imageUrl) {
+                // If there's a link, wrap in Link; otherwise just a div
+                const Wrapper = heroItem.link ? Link : 'div';
+                const wrapperProps = heroItem.link
+                  ? { href: heroItem.link, className: styles.heroImg }
+                  : { className: styles.heroImg };
+
+                return (
+                  <Wrapper key={i} {...wrapperProps}>
+                    <Image
+                      src={heroItem.imageUrl}
+                      alt={heroItem.altText || 'Hero image'}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </Wrapper>
+                );
+              }
+
+              return (
                 <div key={i} className={styles.heroImg} style={{ backgroundColor: fallback.bg }}>
                   <span className={styles.heroImgText}>{fallback.text}</span>
                 </div>
