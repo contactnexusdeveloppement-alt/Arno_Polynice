@@ -280,9 +280,16 @@
 }
 
 @media (max-width: 768px) {
-  .catGrid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+  .heroVisual {
+    display: none;
+  }
+
+  .heroContent {
+    padding: 80px var(--container-padding) 60px;
+  }
+
+  .heroTitle {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
   }
 
   .heroCta {
@@ -292,5 +299,46 @@
 
   .heroCta .btn {
     width: 100%;
+  }
+
+  /* Categories: horizontal scroll on mobile */
+  .catGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .catImage {
+    aspect-ratio: 3 / 4;
+  }
+
+  .catName {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .catImageText {
+    font-size: 2rem;
+  }
+
+  /* Vision */
+  .visionImage {
+    min-height: 280px;
+  }
+
+  .visionContent {
+    padding: 40px var(--container-padding);
+  }
+
+  .visionTitle {
+    font-size: 1.4rem;
+  }
+
+  /* Featured section */
+  .sectionHeader {
+    margin-bottom: 30px;
+  }
+
+  .sectionCta {
+    margin-top: 30px;
   }
 }

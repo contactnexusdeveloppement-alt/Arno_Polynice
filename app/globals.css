@@ -89,11 +89,14 @@ button {
   font-size: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: var(--font-body);
   font-size: inherit;
   border: none;
@@ -102,7 +105,12 @@ input, textarea, select {
 }
 
 /* --- Typography --- */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -110,9 +118,17 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
-h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
 
 /* --- Container --- */
 .container {
@@ -143,8 +159,13 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
   border: 0;
 }
 
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-muted); }
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
 
 /* --- Button styles --- */
 .btn {
@@ -206,8 +227,8 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
 
 @media (max-width: 600px) {
   .product-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
@@ -217,18 +238,35 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutRight {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
 }
 
 /* --- Scrollbar --- */
@@ -255,5 +293,10 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
 
   .section {
     padding: 60px 0;
+  }
+
+  /* Disable transform on mobile to allow position:fixed for sticky CTA */
+  .page-enter {
+    animation: none;
   }
 }

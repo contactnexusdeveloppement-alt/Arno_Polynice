@@ -130,3 +130,29 @@
     color: var(--color-text-light);
     margin-top: 2px;
 }
+
+/* Mobile */
+@media (max-width: 600px) {
+    .imageWrapper {
+        margin-bottom: 8px;
+    }
+
+    .name {
+        font-size: 0.72rem;
+    }
+
+    .category {
+        font-size: 0.6rem;
+    }
+
+    .price {
+        font-size: 0.7rem;
+    }
+
+    .badge {
+        top: 8px;
+        left: 8px;
+        padding: 4px 8px;
+        font-size: 0.55rem;
+    }
+}

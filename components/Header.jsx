@@ -51,12 +51,6 @@ export default function Header() {
                         </span>
                     </button>
 
-                    {/* Logo */}
-                    <Link href="/" className={styles.logo} onClick={() => setIsMenuOpen(false)}>
-                        <span className={styles.logoText}>ARNO</span>
-                        <span className={styles.logoText}>POLYNICE</span>
-                    </Link>
-
                     {/* Left Nav */}
                     <nav className={styles.desktopNav}>
                         {leftLinks.map(link => (
