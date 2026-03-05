@@ -149,6 +149,26 @@
     border-radius: var(--radius-sm);
 }
 
+/* Made in France */
+.madeInFrance {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(0, 35, 149, 0.05);
+    border-left: 3px solid #002395;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #002395;
+    margin-bottom: 12px;
+}
+
+.madeInFranceFlag {
+    font-size: 1rem;
+}
+
 /* Section */
 .section {
     margin-top: 28px;

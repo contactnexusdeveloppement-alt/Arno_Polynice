@@ -122,6 +122,8 @@ function mapShopifyProduct(node) {
     sizes,
     variants,
     images,
+    tags: rawTags,
+    madeInFrance: tagsLower.includes('made-in-france') || tagsLower.includes('made in france'),
     description: node.description || 'Description à venir.',
     details: node.metafield?.value || 'Ajoutez le champ méta personnalisé `custom.details` sur Shopify pour afficher la composition ici.',
     availability,

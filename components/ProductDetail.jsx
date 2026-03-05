@@ -103,6 +103,14 @@ export default function ProductDetail({ product }) {
                             </p>
                         )}
 
+                        {/* Made in France badge */}
+                        {product.madeInFrance && (
+                            <div className={styles.madeInFrance}>
+                                <span className={styles.madeInFranceFlag}>🇫🇷</span>
+                                <span>Made in France</span>
+                            </div>
+                        )}
+
                         {/* Colors */}
                         <div className={styles.section}>
                             <label className={styles.label}>

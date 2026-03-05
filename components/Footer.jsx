@@ -95,9 +95,9 @@ export default function Footer() {
                         </p>
                     </div>
                     <div className={styles.bottomLinks}>
-                        <a href="#">Mentions légales</a>
-                        <a href="#">CGV</a>
-                        <a href="#">Politique de confidentialité</a>
+                        <Link href="/mentions-legales">Mentions légales</Link>
+                        <Link href="/cgv">CGV</Link>
+                        <Link href="/politique-de-confidentialite">Politique de confidentialité</Link>
                     </div>
                 </div>
             </div>
