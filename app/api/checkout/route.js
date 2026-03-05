@@ -75,7 +75,15 @@ export async function POST(req) {
             return NextResponse.json({ error: 'Impossible de créer le paiement' }, { status: 500 });
         }
 
-        return NextResponse.json({ checkoutUrl: cart.checkoutUrl });
+        // Replace custom domain with myshopify.com domain for checkout
+        // The custom domain points to Vercel which can't handle Shopify checkout
+        let checkoutUrl = cart.checkoutUrl;
+        checkoutUrl = checkoutUrl.replace(
+            /https?:\/\/[^/]+/,
+            `https://${SHOPIFY_DOMAIN}`
+        );
+
+        return NextResponse.json({ checkoutUrl });
     } catch (error) {
         console.error('Checkout error:', error);
         return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
