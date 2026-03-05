@@ -166,7 +166,27 @@
 }
 
 .madeInFranceFlag {
-    font-size: 1rem;
+    display: flex;
+    width: 20px;
+    height: 14px;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.flagBlue {
+    flex: 1;
+    background: #002395;
+}
+
+.flagWhite {
+    flex: 1;
+    background: #FFFFFF;
+}
+
+.flagRed {
+    flex: 1;
+    background: #ED2939;
 }
 
 /* Section */

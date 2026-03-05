@@ -106,17 +106,28 @@
     position: absolute;
     bottom: 12px;
     right: 12px;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    border-radius: 50%;
-    font-size: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 3;
+}
+
+.flagBlue {
+    flex: 1;
+    background: #002395;
+}
+
+.flagWhite {
+    flex: 1;
+    background: #FFFFFF;
+}
+
+.flagRed {
+    flex: 1;
+    background: #ED2939;
 }
 
 /* Info */
