@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
 import Link from 'next/link';
 import styles from '@/app/produit/[slug]/page.module.css';
 
 export default function ProductDetail({ product }) {
     const { addItem } = useCart();
+    const { t } = useLanguage();
 
     const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
 
@@ -59,14 +61,22 @@ export default function ProductDetail({ product }) {
         setTimeout(() => setAdded(false), 2000);
     };
 
+    const getCategoryLabel = () => {
+        const key = product.category.toLowerCase();
+        if (t(`categories.${key}`) !== `categories.${key}`) {
+            return t(`categories.${key}`);
+        }
+        return product.category.charAt(0).toUpperCase() + product.category.slice(1);
+    };
+
     return (
         <div className={`page-enter ${styles.productPage}`}>
             {/* Breadcrumb */}
             <div className={styles.breadcrumb}>
-                <Link href="/">Accueil</Link>
+                <Link href="/">{t('product.home')}</Link>
                 <span>/</span>
                 <Link href={`/${product.category}`}>
-                    {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+                    {getCategoryLabel()}
                 </Link>
                 <span>/</span>
                 <span className={styles.breadcrumbCurrent}>{product.name}</span>
@@ -131,14 +141,14 @@ export default function ProductDetail({ product }) {
                                     <span className={styles.flagWhite} />
                                     <span className={styles.flagRed} />
                                 </span>
-                                <span>Made in France</span>
+                                <span>{t('product.madeInFrance')}</span>
                             </div>
                         )}
 
                         {/* Colors */}
                         <div className={styles.section}>
                             <label className={styles.label}>
-                                Coloris — <span className={styles.labelValue}>{selectedColor}</span>
+                                {t('product.color')} — <span className={styles.labelValue}>{selectedColor}</span>
                             </label>
                             <div className={styles.swatches}>
                                 {product.colors.map(color => (
@@ -153,7 +163,7 @@ export default function ProductDetail({ product }) {
                                             }
                                         }}
                                         title={color.name}
-                                        aria-label={`Couleur ${color.name}`}
+                                        aria-label={`${t('product.color')} ${color.name}`}
                                     />
                                 ))}
                             </div>
@@ -161,7 +171,7 @@ export default function ProductDetail({ product }) {
 
                         {/* Sizes */}
                         <div className={styles.section}>
-                            <label className={styles.label}>Taille</label>
+                            <label className={styles.label}>{t('product.size')}</label>
                             <div className={styles.sizes}>
                                 {product.sizes.map(size => {
                                     const isAvailable = checkSizeAvailability(selectedColor, size);
@@ -171,7 +181,7 @@ export default function ProductDetail({ product }) {
                                             className={`${styles.sizeBtn} ${selectedSize === size ? styles.sizeBtnActive : ''} ${!isAvailable ? styles.sizeBtnUnavailable : ''}`}
                                             onClick={() => isAvailable && setSelectedSize(size)}
                                             disabled={!isAvailable}
-                                            title={!isAvailable ? 'Rupture de stock' : ''}
+                                            title={!isAvailable ? t('product.sizeUnavailable') : ''}
                                         >
                                             {size}
                                         </button>
@@ -179,7 +189,7 @@ export default function ProductDetail({ product }) {
                                 })}
                             </div>
                             {!selectedSize && (
-                                <p className={styles.sizeHint}>Veuillez sélectionner une taille</p>
+                                <p className={styles.sizeHint}>{t('product.selectSizeWarning')}</p>
                             )}
                         </div>
 
@@ -190,11 +200,11 @@ export default function ProductDetail({ product }) {
                                 onClick={handleAddToCart}
                                 disabled={!selectedSize}
                             >
-                                {added ? '✓ Ajouté au panier' : 'Ajouter au panier'}
+                                {added ? t('product.adding') : t('product.addToCart')}
                             </button>
                         ) : (
                             <button className={`btn btn--secondary ${styles.addToCart}`} disabled>
-                                Indisponible
+                                {t('product.unavailable')}
                             </button>
                         )}
 
@@ -208,7 +218,7 @@ export default function ProductDetail({ product }) {
                             className={styles.accordion}
                             onClick={() => setShowDetails(!showDetails)}
                         >
-                            <span>Détails & Composition</span>
+                            <span>{t('product.details')}</span>
                             <span className={`${styles.accordionIcon} ${showDetails ? styles.accordionOpen : ''}`}>+</span>
                         </button>
                         {showDetails && (

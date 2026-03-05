@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "femme": "Femme",
+    "homme": "Homme",
+    "unisexe": "Unisexe",
+    "notreHistoire": "Notre histoire",
+    "notreEthique": "Notre éthique",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle1": "La Mode",
+    "heroTitle2": "Artisanale",
+    "heroTitle3": "Française",
+    "heroSubtitle": "Chaque pièce est unique, confectionnée avec passion et savoir-faire.",
+    "discover": "Découvrir",
+    "ourStory": "Notre histoire",
+    "marquee": "Confection artisanale  ✦  Fait en France  ✦  Sur mesure  ✦",
+    "ourCreations": "Nos Créations",
+    "creationsSubtitle": "Des pièces pensées pour transcender les tendances",
+    "viewCollection": "Voir toute la collection",
+    "ourVision": "Notre vision",
+    "visionTitle": "L'Élégance dans sa Forme la Plus Pure",
+    "visionText": "Chez Arno Polynice, chaque vêtement raconte une histoire. Nous croyons en une mode responsable, artisanale, qui célèbre le travail de la main et le choix des matières nobles. Loin de la fast fashion, nos créations sont pensées pour durer et accompagner ceux qui les portent dans leur expression personnelle.",
+    "discoverEthics": "Découvrir notre éthique"
+  },
+  "categories": {
+    "femme": "Femme",
+    "homme": "Homme",
+    "unisexe": "Unisexe",
+    "all": "Tout",
+    "creation": "création",
+    "creations": "créations",
+    "noProducts": "Aucun produit dans cette catégorie pour le moment."
+  },
+  "product": {
+    "home": "Accueil",
+    "color": "Couleur",
+    "size": "Taille",
+    "selectSize": "Sélectionnez votre taille",
+    "addToCart": "Ajouter au panier",
+    "adding": "Ajouté ✓",
+    "unavailable": "Indisponible",
+    "details": "Détails & Entretien",
+    "madeInFrance": "Made in France",
+    "available": "En stock",
+    "preOrder": "Pré-commande",
+    "madeToOrder": "Fabrication sur commande",
+    "unavailableStatus": "Indisponible",
+    "availableDesc": "Expédié sous 48h",
+    "preOrderDesc": "Expédié sous 2-3 semaines",
+    "madeToOrderDesc": "Confectionné à la commande — Expédié sous 3-4 semaines",
+    "unavailableDesc": "Temporairement indisponible",
+    "delayWarning": "⏱ Délai de fabrication : ce produit est confectionné artisanalement à la commande. Comptez 2 à 4 semaines avant expédition.",
+    "selectSizeWarning": "Veuillez choisir une taille",
+    "sizeUnavailable": "Taille non disponible dans cette couleur"
+  },
+  "cart": {
+    "cart": "Panier",
+    "empty": "Votre panier est vide",
+    "continueShopping": "Continuer mes achats",
+    "size": "Taille",
+    "total": "Total",
+    "shippingNote": "Frais de livraison calculés à l'étape suivante",
+    "checkout": "Procéder au paiement",
+    "redirecting": "Redirection...",
+    "close": "Fermer",
+    "remove": "Retirer",
+    "paymentError": "Erreur lors du paiement",
+    "connectionError": "Erreur de connexion. Veuillez réessayer."
+  },
+  "footer": {
+    "stayInformed": "Restez informé",
+    "newsletterText": "Inscrivez-vous pour recevoir nos dernières créations et actualités.",
+    "emailPlaceholder": "Votre adresse email",
+    "shop": "Boutique",
+    "info": "Informations",
+    "followUs": "Suivez-nous",
+    "allRights": "Tous droits réservés.",
+    "createdBy": "Créé par",
+    "legalNotice": "Mentions légales",
+    "cgv": "CGV",
+    "privacyPolicy": "Politique de confidentialité"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Une question ? N'hésitez pas à nous écrire.",
+    "name": "Nom",
+    "email": "Email",
+    "subject": "Sujet",
+    "message": "Message",
+    "send": "Envoyer",
+    "namePlaceholder": "Votre nom",
+    "emailPlaceholder": "votre@email.com",
+    "subjectPlaceholder": "Sujet de votre message",
+    "messagePlaceholder": "Votre message..."
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "loginBtn": "Se connecter",
+    "registerBtn": "Créer un compte",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "forgotPassword": "Mot de passe oublié ?",
+    "logout": "Déconnexion",
+    "myAccount": "Mon compte"
+  },
+  "boutique": {
+    "title": "Toute la Collection",
+    "subtitle": "Découvrez l'ensemble de nos créations"
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español"
+  }
+}

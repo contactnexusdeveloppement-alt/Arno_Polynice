@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from './Footer.module.css';
 
 const socialLinks = [
@@ -11,31 +12,33 @@ const socialLinks = [
 ];
 
 const shopLinks = [
-    { label: 'Femme', href: '/femme' },
-    { label: 'Homme', href: '/homme' },
-    { label: 'Unisexe', href: '/unisexe' },
+    { key: 'nav.femme', href: '/femme' },
+    { key: 'nav.homme', href: '/homme' },
+    { key: 'nav.unisexe', href: '/unisexe' },
 ];
 
 const infoLinks = [
-    { label: 'Notre histoire', href: '/notre-histoire' },
-    { label: 'Notre éthique', href: '/notre-ethique' },
-    { label: 'Contact', href: '/contact' },
+    { key: 'nav.notreHistoire', href: '/notre-histoire' },
+    { key: 'nav.notreEthique', href: '/notre-ethique' },
+    { key: 'nav.contact', href: '/contact' },
 ];
 
 export default function Footer() {
+    const { t } = useLanguage();
+
     return (
         <footer className={styles.footer}>
             <div className={styles.container}>
                 {/* Newsletter */}
                 <div className={styles.newsletter}>
-                    <h3 className={styles.newsletterTitle}>Restez informé</h3>
+                    <h3 className={styles.newsletterTitle}>{t('footer.stayInformed')}</h3>
                     <p className={styles.newsletterText}>
-                        Inscrivez-vous pour recevoir nos dernières créations et actualités.
+                        {t('footer.newsletterText')}
                     </p>
                     <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
                         <input
                             type="email"
-                            placeholder="Votre adresse email"
+                            placeholder={t('footer.emailPlaceholder')}
                             className={styles.newsletterInput}
                         />
                         <button type="submit" className={styles.newsletterBtn}>
@@ -47,25 +50,25 @@ export default function Footer() {
                 {/* Links Grid */}
                 <div className={styles.linksGrid}>
                     <div className={styles.linkColumn}>
-                        <h4 className={styles.columnTitle}>Boutique</h4>
+                        <h4 className={styles.columnTitle}>{t('footer.shop')}</h4>
                         {shopLinks.map(link => (
                             <Link key={link.href} href={link.href} className={styles.link}>
-                                {link.label}
+                                {t(link.key)}
                             </Link>
                         ))}
                     </div>
 
                     <div className={styles.linkColumn}>
-                        <h4 className={styles.columnTitle}>Informations</h4>
+                        <h4 className={styles.columnTitle}>{t('footer.info')}</h4>
                         {infoLinks.map(link => (
                             <Link key={link.href} href={link.href} className={styles.link}>
-                                {link.label}
+                                {t(link.key)}
                             </Link>
                         ))}
                     </div>
 
                     <div className={styles.linkColumn}>
-                        <h4 className={styles.columnTitle}>Suivez-nous</h4>
+                        <h4 className={styles.columnTitle}>{t('footer.followUs')}</h4>
                         {socialLinks.map(social => (
                             <a
                                 key={social.name}
@@ -88,16 +91,16 @@ export default function Footer() {
                     </div>
                     <div className={styles.copyrightAndCredit}>
                         <p className={styles.copyright}>
-                            © {new Date().getFullYear()} Arno Polynice. Tous droits réservés.
+                            © {new Date().getFullYear()} Arno Polynice. {t('footer.allRights')}
                         </p>
                         <p className={styles.credit}>
-                            Créé par <a href="https://nexusdeveloppement.fr" target="_blank" rel="noopener noreferrer">Nexus Developpement</a>
+                            {t('footer.createdBy')} <a href="https://nexusdeveloppement.fr" target="_blank" rel="noopener noreferrer">Nexus Developpement</a>
                         </p>
                     </div>
                     <div className={styles.bottomLinks}>
-                        <Link href="/mentions-legales">Mentions légales</Link>
-                        <Link href="/cgv">CGV</Link>
-                        <Link href="/politique-de-confidentialite">Politique de confidentialité</Link>
+                        <Link href="/mentions-legales">{t('footer.legalNotice')}</Link>
+                        <Link href="/cgv">{t('footer.cgv')}</Link>
+                        <Link href="/politique-de-confidentialite">{t('footer.privacyPolicy')}</Link>
                     </div>
                 </div>
             </div>

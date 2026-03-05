@@ -3,26 +3,35 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from './Header.module.css';
 
 const leftLinks = [
-    { href: '/femme', label: 'Femme' },
-    { href: '/homme', label: 'Homme' },
-    { href: '/unisexe', label: 'Unisexe' },
+    { href: '/femme', key: 'nav.femme' },
+    { href: '/homme', key: 'nav.homme' },
+    { href: '/unisexe', key: 'nav.unisexe' },
 ];
 
 const rightLinks = [
-    { href: '/notre-histoire', label: 'Notre histoire' },
-    { href: '/notre-ethique', label: 'Notre éthique' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/notre-histoire', key: 'nav.notreHistoire' },
+    { href: '/notre-ethique', key: 'nav.notreEthique' },
+    { href: '/contact', key: 'nav.contact' },
 ];
 
 const allLinks = [...leftLinks, ...rightLinks];
 
+const languages = [
+    { code: 'fr', flag: '🇫🇷' },
+    { code: 'en', flag: '🇬🇧' },
+    { code: 'es', flag: '🇪🇸' },
+];
+
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isLangOpen, setIsLangOpen] = useState(false);
     const { totalItems, setIsOpen } = useCart();
+    const { language, setLanguage, t } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -34,6 +43,17 @@ export default function Header() {
         document.body.style.overflow = isMenuOpen ? 'hidden' : '';
         return () => { document.body.style.overflow = ''; };
     }, [isMenuOpen]);
+
+    // Close language dropdown when clicking outside
+    useEffect(() => {
+        const handleClick = () => setIsLangOpen(false);
+        if (isLangOpen) {
+            setTimeout(() => document.addEventListener('click', handleClick), 0);
+            return () => document.removeEventListener('click', handleClick);
+        }
+    }, [isLangOpen]);
+
+    const currentFlag = languages.find(l => l.code === language)?.flag || '🇫🇷';
 
     return (
         <>
@@ -55,7 +75,7 @@ export default function Header() {
                     <nav className={styles.desktopNav}>
                         {leftLinks.map(link => (
                             <Link key={link.href} href={link.href} className={styles.navLink}>
-                                {link.label}
+                                {t(link.key)}
                             </Link>
                         ))}
                     </nav>
@@ -71,21 +91,46 @@ export default function Header() {
                         <nav className={styles.desktopNav}>
                             {rightLinks.map(link => (
                                 <Link key={link.href} href={link.href} className={styles.navLink}>
-                                    {link.label}
+                                    {t(link.key)}
                                 </Link>
                             ))}
                         </nav>
 
                         {/* Actions */}
                         <div className={styles.actions}>
-                            <Link href="/compte" className={styles.actionBtn} aria-label="Mon compte">
+                            {/* Language Selector */}
+                            <div className={styles.langSelector}>
+                                <button
+                                    className={styles.langBtn}
+                                    onClick={(e) => { e.stopPropagation(); setIsLangOpen(!isLangOpen); }}
+                                    aria-label="Language"
+                                >
+                                    <span className={styles.langFlag}>{currentFlag}</span>
+                                </button>
+                                {isLangOpen && (
+                                    <div className={styles.langDropdown}>
+                                        {languages.map(lang => (
+                                            <button
+                                                key={lang.code}
+                                                className={`${styles.langOption} ${language === lang.code ? styles.langActive : ''}`}
+                                                onClick={() => { setLanguage(lang.code); setIsLangOpen(false); }}
+                                            >
+                                                <span>{lang.flag}</span>
+                                                <span>{t(`lang.${lang.code}`)}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <Link href="/compte" className={styles.actionBtn} aria-label={t('auth.myAccount')}>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                                     <circle cx="12" cy="7" r="4" />
                                 </svg>
                             </Link>
 
-                            <button className={styles.actionBtn} onClick={() => setIsOpen(true)} aria-label="Panier">
+                            <button className={styles.actionBtn} onClick={() => setIsOpen(true)} aria-label={t('cart.cart')}>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                                     <line x1="3" y1="6" x2="21" y2="6" />
@@ -110,8 +155,20 @@ export default function Header() {
                             onClick={() => setIsMenuOpen(false)}
                             style={{ animationDelay: `${i * 0.05}s` }}
                         >
-                            {link.label}
+                            {t(link.key)}
                         </Link>
+                    ))}
+                </div>
+                {/* Mobile Language Selector */}
+                <div className={styles.mobileLangSelector}>
+                    {languages.map(lang => (
+                        <button
+                            key={lang.code}
+                            className={`${styles.mobileLangBtn} ${language === lang.code ? styles.mobileLangActive : ''}`}
+                            onClick={() => setLanguage(lang.code)}
+                        >
+                            {lang.flag}
+                        </button>
                     ))}
                 </div>
                 <div className={styles.mobileSocials}>

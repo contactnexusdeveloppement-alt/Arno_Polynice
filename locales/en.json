@@ -1,0 +1,121 @@
+{
+    "nav": {
+        "femme": "Women",
+        "homme": "Men",
+        "unisexe": "Unisex",
+        "notreHistoire": "Our Story",
+        "notreEthique": "Our Ethics",
+        "contact": "Contact"
+    },
+    "home": {
+        "heroTitle1": "French",
+        "heroTitle2": "Handcrafted",
+        "heroTitle3": "Fashion",
+        "heroSubtitle": "Each piece is unique, crafted with passion and expertise.",
+        "discover": "Discover",
+        "ourStory": "Our Story",
+        "marquee": "Artisan craftsmanship  ✦  Made in France  ✦  Custom-made  ✦",
+        "ourCreations": "Our Creations",
+        "creationsSubtitle": "Pieces designed to transcend trends",
+        "viewCollection": "View the full collection",
+        "ourVision": "Our Vision",
+        "visionTitle": "Elegance in Its Purest Form",
+        "visionText": "At Arno Polynice, every garment tells a story. We believe in responsible, artisanal fashion that celebrates handwork and the choice of noble materials. Far from fast fashion, our creations are designed to last and accompany those who wear them in their personal expression.",
+        "discoverEthics": "Discover our ethics"
+    },
+    "categories": {
+        "femme": "Women",
+        "homme": "Men",
+        "unisexe": "Unisex",
+        "all": "All",
+        "creation": "creation",
+        "creations": "creations",
+        "noProducts": "No products in this category at the moment."
+    },
+    "product": {
+        "home": "Home",
+        "color": "Color",
+        "size": "Size",
+        "selectSize": "Select your size",
+        "addToCart": "Add to cart",
+        "adding": "Added ✓",
+        "unavailable": "Unavailable",
+        "details": "Details & Care",
+        "madeInFrance": "Made in France",
+        "available": "In stock",
+        "preOrder": "Pre-order",
+        "madeToOrder": "Made to order",
+        "unavailableStatus": "Unavailable",
+        "availableDesc": "Shipped within 48 hours",
+        "preOrderDesc": "Shipped within 2-3 weeks",
+        "madeToOrderDesc": "Crafted to order — Shipped within 3-4 weeks",
+        "unavailableDesc": "Temporarily unavailable",
+        "delayWarning": "⏱ Production time: this product is handcrafted to order. Allow 2 to 4 weeks before shipping.",
+        "selectSizeWarning": "Please choose a size",
+        "sizeUnavailable": "Size not available in this color"
+    },
+    "cart": {
+        "cart": "Cart",
+        "empty": "Your cart is empty",
+        "continueShopping": "Continue shopping",
+        "size": "Size",
+        "total": "Total",
+        "shippingNote": "Shipping costs calculated at the next step",
+        "checkout": "Proceed to checkout",
+        "redirecting": "Redirecting...",
+        "close": "Close",
+        "remove": "Remove",
+        "paymentError": "Payment error",
+        "connectionError": "Connection error. Please try again."
+    },
+    "footer": {
+        "stayInformed": "Stay informed",
+        "newsletterText": "Sign up to receive our latest creations and news.",
+        "emailPlaceholder": "Your email address",
+        "shop": "Shop",
+        "info": "Information",
+        "followUs": "Follow us",
+        "allRights": "All rights reserved.",
+        "createdBy": "Created by",
+        "legalNotice": "Legal notice",
+        "cgv": "Terms of sale",
+        "privacyPolicy": "Privacy policy"
+    },
+    "contact": {
+        "title": "Contact",
+        "subtitle": "Any questions? Don't hesitate to write to us.",
+        "name": "Name",
+        "email": "Email",
+        "subject": "Subject",
+        "message": "Message",
+        "send": "Send",
+        "namePlaceholder": "Your name",
+        "emailPlaceholder": "your@email.com",
+        "subjectPlaceholder": "Subject of your message",
+        "messagePlaceholder": "Your message..."
+    },
+    "auth": {
+        "login": "Login",
+        "register": "Register",
+        "email": "Email",
+        "password": "Password",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "loginBtn": "Log in",
+        "registerBtn": "Create account",
+        "noAccount": "Don't have an account?",
+        "hasAccount": "Already have an account?",
+        "forgotPassword": "Forgot password?",
+        "logout": "Log out",
+        "myAccount": "My account"
+    },
+    "boutique": {
+        "title": "Full Collection",
+        "subtitle": "Discover all our creations"
+    },
+    "lang": {
+        "fr": "Français",
+        "en": "English",
+        "es": "Español"
+    }
+}

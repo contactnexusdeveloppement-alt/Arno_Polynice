@@ -2,22 +2,39 @@
 
 import { useState } from 'react';
 import ProductCard from '@/components/ProductCard';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from './CategoryPage.module.css';
 
 export default function CategoryPage({ title, products, subcategories }) {
-    const [activeFilter, setActiveFilter] = useState('Tout');
+    const { t } = useLanguage();
+    const [activeFilter, setActiveFilter] = useState('all');
 
-    const filters = ['Tout', ...subcategories];
-    const filteredProducts = activeFilter === 'Tout'
+    const filters = ['all', ...subcategories];
+    const filteredProducts = activeFilter === 'all'
         ? products
         : products.filter(p => p.subcategory === activeFilter);
+
+    const getFilterLabel = (filter) => {
+        if (filter === 'all') return t('categories.all');
+        return filter;
+    };
+
+    const getCategoryTitle = () => {
+        const key = title.toLowerCase();
+        if (t(`categories.${key}`) !== `categories.${key}`) {
+            return t(`categories.${key}`);
+        }
+        return title;
+    };
 
     return (
         <div className="page-enter">
             {/* Page Header */}
             <section className={styles.pageHeader}>
-                <h1 className={styles.title}>{title}</h1>
-                <p className={styles.count}>{filteredProducts.length} création{filteredProducts.length > 1 ? 's' : ''}</p>
+                <h1 className={styles.title}>{getCategoryTitle()}</h1>
+                <p className={styles.count}>
+                    {filteredProducts.length} {filteredProducts.length > 1 ? t('categories.creations') : t('categories.creation')}
+                </p>
             </section>
 
             {/* Filters */}
@@ -29,7 +46,7 @@ export default function CategoryPage({ title, products, subcategories }) {
                             className={`${styles.filterBtn} ${activeFilter === filter ? styles.filterActive : ''}`}
                             onClick={() => setActiveFilter(filter)}
                         >
-                            {filter}
+                            {getFilterLabel(filter)}
                         </button>
                     ))}
                 </div>
@@ -46,7 +63,7 @@ export default function CategoryPage({ title, products, subcategories }) {
 
                     {filteredProducts.length === 0 && (
                         <p className={styles.noProducts}>
-                            Aucun produit dans cette catégorie pour le moment.
+                            {t('categories.noProducts')}
                         </p>
                     )}
                 </div>

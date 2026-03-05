@@ -1,5 +1,6 @@
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
@@ -14,14 +15,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body>
-        <CartProvider>
-          <Header />
-          <main style={{ paddingTop: 'var(--nav-height)' }}>
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <Header />
+            <main style={{ paddingTop: 'var(--nav-height)' }}>
+              {children}
+            </main>
+            <Footer />
+            <CartDrawer />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

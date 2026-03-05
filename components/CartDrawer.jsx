@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import Link from 'next/link';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
     const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
+    const { t } = useLanguage();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
 
     const handleCheckout = async () => {
@@ -21,11 +23,11 @@ export default function CartDrawer() {
             if (data.checkoutUrl) {
                 window.location.href = data.checkoutUrl;
             } else {
-                alert(data.error || 'Erreur lors du paiement');
+                alert(data.error || t('cart.paymentError'));
                 setIsCheckingOut(false);
             }
         } catch (err) {
-            alert('Erreur de connexion. Veuillez réessayer.');
+            alert(t('cart.connectionError'));
             setIsCheckingOut(false);
         }
     };
@@ -40,10 +42,10 @@ export default function CartDrawer() {
                 {/* Header */}
                 <div className={styles.header}>
                     <h2 className={styles.title}>
-                        Panier
+                        {t('cart.cart')}
                         {totalItems > 0 && <span className={styles.count}>({totalItems})</span>}
                     </h2>
-                    <button onClick={() => setIsOpen(false)} className={styles.closeBtn} aria-label="Fermer">
+                    <button onClick={() => setIsOpen(false)} className={styles.closeBtn} aria-label={t('cart.close')}>
                         ✕
                     </button>
                 </div>
@@ -51,9 +53,9 @@ export default function CartDrawer() {
                 {/* Content */}
                 {items.length === 0 ? (
                     <div className={styles.empty}>
-                        <p className={styles.emptyText}>Votre panier est vide</p>
+                        <p className={styles.emptyText}>{t('cart.empty')}</p>
                         <button onClick={() => setIsOpen(false)} className="btn btn--secondary btn--small">
-                            Continuer mes achats
+                            {t('cart.continueShopping')}
                         </button>
                     </div>
                 ) : (
@@ -75,7 +77,7 @@ export default function CartDrawer() {
                                         <div className={styles.itemMeta}>
                                             <span>{item.color}</span>
                                             <span>•</span>
-                                            <span>Taille {item.size}</span>
+                                            <span>{t('cart.size')} {item.size}</span>
                                         </div>
                                         <div className={styles.itemBottom}>
                                             <div className={styles.quantity}>
@@ -99,7 +101,7 @@ export default function CartDrawer() {
                                     <button
                                         onClick={() => removeItem(item.id, item.color, item.size)}
                                         className={styles.removeBtn}
-                                        aria-label="Retirer"
+                                        aria-label={t('cart.remove')}
                                     >
                                         ✕
                                     </button>
@@ -110,16 +112,16 @@ export default function CartDrawer() {
                         {/* Footer */}
                         <div className={styles.footer}>
                             <div className={styles.totalRow}>
-                                <span className={styles.totalLabel}>Total</span>
+                                <span className={styles.totalLabel}>{t('cart.total')}</span>
                                 <span className={styles.totalPrice}>{totalPrice},00 €</span>
                             </div>
-                            <p className={styles.shipping}>Frais de livraison calculés à l'étape suivante</p>
+                            <p className={styles.shipping}>{t('cart.shippingNote')}</p>
                             <button
                                 className={`btn btn--primary ${styles.checkoutBtn}`}
                                 onClick={handleCheckout}
                                 disabled={isCheckingOut}
                             >
-                                {isCheckingOut ? 'Redirection...' : 'Procéder au paiement'}
+                                {isCheckingOut ? t('cart.redirecting') : t('cart.checkout')}
                             </button>
                         </div>
                     </>
