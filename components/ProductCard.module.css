@@ -101,6 +101,24 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
+/* Made in France badge */
+.madeInFranceBadge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    z-index: 3;
+}
+
 /* Info */
 .info {
     display: flex;

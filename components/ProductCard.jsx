@@ -68,6 +68,11 @@ export default function ProductCard({ product, showPrice = false }) {
                         ))}
                     </div>
                 )}
+
+                {/* Made in France badge */}
+                {product.madeInFrance && (
+                    <span className={styles.madeInFranceBadge}>🇫🇷</span>
+                )}
             </div>
 
             <div className={styles.info}>
