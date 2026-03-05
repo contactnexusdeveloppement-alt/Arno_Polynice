@@ -32,9 +32,29 @@ export default function ProductDetail({ product }) {
     const handleAddToCart = () => {
         if (!selectedSize) return;
 
-        // Structure the item for the cart. 
-        // If it's a Shopify product, we might need variant IDs later, but for now we follow the existing cart structure.
-        addItem(product, selectedColor, selectedSize);
+        // Find the matching Shopify variant ID for checkout
+        let variantId = null;
+        if (product.variants && product.variants.length > 0) {
+            const variant = product.variants.find(v =>
+                v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === selectedColor) &&
+                v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
+            );
+            // Fallback: if no color/size combo match, try size only (for products with single color)
+            if (!variant) {
+                const sizeOnlyVariant = product.variants.find(v =>
+                    v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
+                );
+                if (sizeOnlyVariant) variantId = sizeOnlyVariant.id;
+            } else {
+                variantId = variant.id;
+            }
+            // Last fallback: first available variant
+            if (!variantId && product.variants[0]) {
+                variantId = product.variants[0].id;
+            }
+        }
+
+        addItem(product, selectedColor, selectedSize, 1, variantId);
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
     };

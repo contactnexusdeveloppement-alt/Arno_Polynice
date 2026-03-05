@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
         localStorage.setItem('arno-cart', JSON.stringify(items));
     }, [items]);
 
-    const addItem = useCallback((product, selectedColor, selectedSize, quantity = 1) => {
+    const addItem = useCallback((product, selectedColor, selectedSize, quantity = 1, variantId = null) => {
         setItems(prev => {
             const existingIndex = prev.findIndex(
                 item => item.id === product.id && item.color === selectedColor && item.size === selectedSize
@@ -36,6 +36,7 @@ export function CartProvider({ children }) {
             }
             return [...prev, {
                 id: product.id,
+                variantId: variantId,
                 name: product.name,
                 slug: product.slug,
                 price: product.price,

@@ -1,11 +1,34 @@
 'use client';
 
+import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
     const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
+    const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+    const handleCheckout = async () => {
+        setIsCheckingOut(true);
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items }),
+            });
+            const data = await res.json();
+            if (data.checkoutUrl) {
+                window.location.href = data.checkoutUrl;
+            } else {
+                alert(data.error || 'Erreur lors du paiement');
+                setIsCheckingOut(false);
+            }
+        } catch (err) {
+            alert('Erreur de connexion. Veuillez réessayer.');
+            setIsCheckingOut(false);
+        }
+    };
 
     return (
         <>
@@ -91,8 +114,12 @@ export default function CartDrawer() {
                                 <span className={styles.totalPrice}>{totalPrice},00 €</span>
                             </div>
                             <p className={styles.shipping}>Frais de livraison calculés à l'étape suivante</p>
-                            <button className={`btn btn--primary ${styles.checkoutBtn}`}>
-                                Procéder au paiement
+                            <button
+                                className={`btn btn--primary ${styles.checkoutBtn}`}
+                                onClick={handleCheckout}
+                                disabled={isCheckingOut}
+                            >
+                                {isCheckingOut ? 'Redirection...' : 'Procéder au paiement'}
                             </button>
                         </div>
                     </>
