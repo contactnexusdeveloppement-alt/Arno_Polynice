@@ -111,7 +111,7 @@ export default async function Home() {
             ))}
           </div>
           <div className={styles.sectionCta}>
-            <Link href="/femme" className="btn btn--secondary">Voir toute la collection</Link>
+            <Link href="/boutique" className="btn btn--secondary">Voir toute la collection</Link>
           </div>
         </div>
       </section>
