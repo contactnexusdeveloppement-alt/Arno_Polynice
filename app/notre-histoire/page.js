@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { getHistoireImages } from '@/lib/shopify';
 import styles from './page.module.css';
 
 export const metadata = {
@@ -5,14 +7,28 @@ export const metadata = {
     description: 'Découvrez l\'histoire d\'Arno Polynice, créateur de mode indépendant français.',
 };
 
-export default function NotreHistoirePage() {
+export default async function NotreHistoirePage() {
+    const histoireImages = await getHistoireImages().catch(() => []);
+    const heroImage = histoireImages.find(img => img.position === 1);
+    const contentImage = histoireImages.find(img => img.position === 2);
+
     return (
         <div className="page-enter">
             <section className={styles.storyPage}>
                 {/* Hero */}
                 <div className={styles.storyHero}>
-                    <div className={styles.storyHeroImage} style={{ backgroundColor: '#2C3E50' }}>
-                        <span className={styles.heroLetter}>AP</span>
+                    <div className={styles.storyHeroImage} style={!heroImage?.url ? { backgroundColor: '#2C3E50' } : undefined}>
+                        {heroImage?.url ? (
+                            <Image
+                                src={heroImage.url}
+                                alt={heroImage.altText}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                style={{ objectFit: 'cover' }}
+                            />
+                        ) : (
+                            <span className={styles.heroLetter}>AP</span>
+                        )}
                     </div>
                     <div className={styles.storyHeroContent}>
                         <span className={styles.label}>Notre histoire</span>
@@ -37,8 +53,18 @@ export default function NotreHistoirePage() {
                         </p>
                     </div>
 
-                    <div className={styles.imageBlock} style={{ backgroundColor: '#D4C5B2' }}>
-                        <span className={styles.imageLetter}>✦</span>
+                    <div className={styles.imageBlock} style={!contentImage?.url ? { backgroundColor: '#D4C5B2' } : undefined}>
+                        {contentImage?.url ? (
+                            <Image
+                                src={contentImage.url}
+                                alt={contentImage.altText}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 800px"
+                                style={{ objectFit: 'cover' }}
+                            />
+                        ) : (
+                            <span className={styles.imageLetter}>✦</span>
+                        )}
                     </div>
 
                     <div className={styles.block}>
