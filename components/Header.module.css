@@ -380,4 +380,12 @@
     .rightSection {
         margin-left: auto;
     }
+
+    .langSelector {
+        display: none;
+    }
+
+    .actions {
+        gap: 8px;
+    }
 }
