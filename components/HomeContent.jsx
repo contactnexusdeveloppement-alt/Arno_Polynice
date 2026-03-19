@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
@@ -19,7 +20,21 @@ const categoryFallbacks = {
 };
 
 export default function HomeContent({ featuredProducts, heroImages, categoryImages, visionImage }) {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const [products, setProducts] = useState(featuredProducts);
+
+    useEffect(() => {
+        if (language === 'fr') {
+            setProducts(featuredProducts);
+            return;
+        }
+        fetch(`/api/products?lang=${language}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.products) setProducts(data.products.filter(p => p.featured));
+            })
+            .catch(() => setProducts(featuredProducts));
+    }, [language, featuredProducts]);
 
     return (
         <div className="page-enter">
@@ -95,7 +110,7 @@ export default function HomeContent({ featuredProducts, heroImages, categoryImag
                         </p>
                     </div>
                     <div className="product-grid">
-                        {featuredProducts.map(product => (
+                        {products.map(product => (
                             <ProductCard key={product.id} product={product} showPrice={false} />
                         ))}
                     </div>

@@ -132,11 +132,11 @@ function mapShopifyProduct(node) {
   };
 }
 
-export async function getAllProducts() {
+export async function getAllProducts(language = 'fr') {
   try {
-    const shopifyNodes = await fetchShopifyProducts(50);
+    const shopifyNodes = await fetchShopifyProducts(50, language);
     const shopifyProducts = shopifyNodes.map(mapShopifyProduct);
-    console.log(`[getAllProducts] Got ${shopifyProducts.length} Shopify products`);
+    console.log(`[getAllProducts] Got ${shopifyProducts.length} Shopify products (lang: ${language})`);
     return shopifyProducts;
   } catch (error) {
     console.error('[getAllProducts] ERROR fetching Shopify products:', error.message);
@@ -144,27 +144,27 @@ export async function getAllProducts() {
   }
 }
 
-export async function getProductsByCategory(category) {
-  const all = await getAllProducts();
+export async function getProductsByCategory(category, language = 'fr') {
+  const all = await getAllProducts(language);
   return all.filter(p => p.category === category);
 }
 
-export async function getProductBySlug(slug) {
-  const all = await getAllProducts();
+export async function getProductBySlug(slug, language = 'fr') {
+  const all = await getAllProducts(language);
   return all.find(p => p.slug === slug);
 }
 
-export async function getFeaturedProducts() {
-  const all = await getAllProducts();
+export async function getFeaturedProducts(language = 'fr') {
+  const all = await getAllProducts(language);
   return all.filter(p => p.featured);
 }
 
-export async function getProductsBySubcategory(category, subcategory) {
-  const all = await getAllProducts();
+export async function getProductsBySubcategory(category, subcategory, language = 'fr') {
+  const all = await getAllProducts(language);
   return all.filter(p => p.category === category && p.subcategory === subcategory);
 }
 
-export async function getAvailableSubcategories(category) {
-  const categoryProducts = await getProductsByCategory(category);
+export async function getAvailableSubcategories(category, language = 'fr') {
+  const categoryProducts = await getProductsByCategory(category, language);
   return [...new Set(categoryProducts.map(p => p.subcategory))];
 }
