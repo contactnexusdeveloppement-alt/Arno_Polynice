@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
@@ -9,9 +9,23 @@ import styles from '@/app/produit/[slug]/page.module.css';
 
 export default function ProductDetail({ product }) {
     const { addItem } = useCart();
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const [currentProduct, setCurrentProduct] = useState(product);
 
-    const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || '');
+    useEffect(() => {
+        if (language === 'fr') {
+            setCurrentProduct(product);
+            return;
+        }
+        fetch(`/api/products?lang=${language}&slug=${product.slug}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.product) setCurrentProduct(data.product);
+            })
+            .catch(() => setCurrentProduct(product));
+    }, [language, product]);
+
+    const [selectedColor, setSelectedColor] = useState(currentProduct.colors[0]?.name || '');
 
     // Reset size if the selected size is not available for new color
     const checkSizeAvailability = (color, size) => {
@@ -28,22 +42,22 @@ export default function ProductDetail({ product }) {
     const [showDetails, setShowDetails] = useState(false);
     const [added, setAdded] = useState(false);
 
-    const availability = availabilityStatuses[product.availability] || availabilityStatuses['available'];
-    const canAddToCart = product.availability !== 'unavailable';
+    const availability = availabilityStatuses[currentProduct.availability] || availabilityStatuses['available'];
+    const canAddToCart = currentProduct.availability !== 'unavailable';
 
     const handleAddToCart = () => {
         if (!selectedSize) return;
 
         // Find the matching Shopify variant ID for checkout
         let variantId = null;
-        if (product.variants && product.variants.length > 0) {
-            const variant = product.variants.find(v =>
+        if (currentProduct.variants && currentProduct.variants.length > 0) {
+            const variant = currentProduct.variants.find(v =>
                 v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === selectedColor) &&
                 v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
             );
             // Fallback: if no color/size combo match, try size only (for products with single color)
             if (!variant) {
-                const sizeOnlyVariant = product.variants.find(v =>
+                const sizeOnlyVariant = currentProduct.variants.find(v =>
                     v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
                 );
                 if (sizeOnlyVariant) variantId = sizeOnlyVariant.id;
@@ -51,22 +65,22 @@ export default function ProductDetail({ product }) {
                 variantId = variant.id;
             }
             // Last fallback: first available variant
-            if (!variantId && product.variants[0]) {
-                variantId = product.variants[0].id;
+            if (!variantId && currentProduct.variants[0]) {
+                variantId = currentProduct.variants[0].id;
             }
         }
 
-        addItem(product, selectedColor, selectedSize, 1, variantId);
+        addItem(currentProduct, selectedColor, selectedSize, 1, variantId);
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
     };
 
     const getCategoryLabel = () => {
-        const key = product.category.toLowerCase();
+        const key = currentProduct.category.toLowerCase();
         if (t(`categories.${key}`) !== `categories.${key}`) {
             return t(`categories.${key}`);
         }
-        return product.category.charAt(0).toUpperCase() + product.category.slice(1);
+        return currentProduct.category.charAt(0).toUpperCase() + currentProduct.category.slice(1);
     };
 
     return (
@@ -75,11 +89,11 @@ export default function ProductDetail({ product }) {
             <div className={styles.breadcrumb}>
                 <Link href="/">{t('product.home')}</Link>
                 <span>/</span>
-                <Link href={`/${product.category}`}>
+                <Link href={`/${currentProduct.category}`}>
                     {getCategoryLabel()}
                 </Link>
                 <span>/</span>
-                <span className={styles.breadcrumbCurrent}>{product.name}</span>
+                <span className={styles.breadcrumbCurrent}>{currentProduct.name}</span>
             </div>
 
             <div className={styles.layout}>
@@ -88,22 +102,22 @@ export default function ProductDetail({ product }) {
                     <div
                         className={styles.mainImage}
                         style={{
-                            backgroundColor: product.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8',
-                            backgroundImage: product.images[activeImage] ? `url(${product.images[activeImage]})` : 'none',
+                            backgroundColor: currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8',
+                            backgroundImage: currentProduct.images[activeImage] ? `url(${currentProduct.images[activeImage]})` : 'none',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center'
                         }}
                     >
-                        {!product.images[activeImage] && <span className={styles.mainImageLetter}>{product.name.charAt(0)}</span>}
+                        {!currentProduct.images[activeImage] && <span className={styles.mainImageLetter}>{currentProduct.name.charAt(0)}</span>}
                     </div>
                     <div className={styles.thumbs}>
-                        {product.images.map((img, i) => (
+                        {currentProduct.images.map((img, i) => (
                             <div
                                 key={i}
                                 className={`${styles.thumb} ${activeImage === i ? styles.thumbActive : ''}`}
                                 onClick={() => setActiveImage(i)}
                                 style={{
-                                    backgroundColor: i === 0 ? (product.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8') : '#D4C5B2',
+                                    backgroundColor: i === 0 ? (currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8') : '#D4C5B2',
                                     backgroundImage: `url(${img})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center'
@@ -119,22 +133,22 @@ export default function ProductDetail({ product }) {
                 <div className={styles.info}>
                     <div className={styles.infoSticky}>
                         {/* Name & Price */}
-                        <h1 className={styles.productName}>{product.name}</h1>
-                        <p className={styles.price}>{product.price},00 €</p>
+                        <h1 className={styles.productName}>{currentProduct.name}</h1>
+                        <p className={styles.price}>{currentProduct.price},00 €</p>
 
                         {/* Availability */}
                         <div className={styles.availability} style={{ '--avail-color': availability.color }}>
                             <span className={styles.availIcon}>{availability.icon}</span>
                             <span>{availability.label}</span>
                         </div>
-                        {(product.availability === 'made_to_order' || product.availability === 'waiting_materials') && (
+                        {(currentProduct.availability === 'made_to_order' || currentProduct.availability === 'waiting_materials') && (
                             <p className={styles.delayWarning}>
                                 ⚠ {availability.delay}
                             </p>
                         )}
 
                         {/* Made in France badge */}
-                        {product.madeInFrance && (
+                        {currentProduct.madeInFrance && (
                             <div className={styles.madeInFrance}>
                                 <span className={styles.madeInFranceFlag}>
                                     <span className={styles.flagBlue} />
@@ -151,7 +165,7 @@ export default function ProductDetail({ product }) {
                                 {t('product.color')} — <span className={styles.labelValue}>{selectedColor}</span>
                             </label>
                             <div className={styles.swatches}>
-                                {product.colors.map(color => (
+                                {currentProduct.colors.map(color => (
                                     <button
                                         key={color.name}
                                         className={`${styles.swatch} ${selectedColor === color.name ? styles.swatchActive : ''}`}
@@ -173,7 +187,7 @@ export default function ProductDetail({ product }) {
                         <div className={styles.section}>
                             <label className={styles.label}>{t('product.size')}</label>
                             <div className={styles.sizes}>
-                                {product.sizes.map(size => {
+                                {currentProduct.sizes.map(size => {
                                     const isAvailable = checkSizeAvailability(selectedColor, size);
                                     return (
                                         <button
@@ -210,7 +224,7 @@ export default function ProductDetail({ product }) {
 
                         {/* Description */}
                         <div className={styles.description}>
-                            <p>{product.description}</p>
+                            <p>{currentProduct.description}</p>
                         </div>
 
                         {/* Details accordion */}
@@ -223,7 +237,7 @@ export default function ProductDetail({ product }) {
                         </button>
                         {showDetails && (
                             <div className={styles.accordionContent}>
-                                <p>{product.details}</p>
+                                <p>{currentProduct.details}</p>
                             </div>
                         )}
                     </div>
