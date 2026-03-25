@@ -49,6 +49,9 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: '6LAxHGBzD8D8sv7Ysi3oL96bjojLHagXPp0UG-P0H7Q',
+  },
   alternates: {
     canonical: 'https://www.arno-polynice.com',
   },
