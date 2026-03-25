@@ -10,6 +10,9 @@ export const metadata = {
   title: 'Arno Polynice — Créateur de Mode Indépendant',
   description: 'Découvrez les créations uniques d\'Arno Polynice. Mode artisanale française, confection sur mesure. Vêtements pour femme, homme et unisexe.',
   keywords: 'mode, créateur, indépendant, artisanal, fait main, France, Arno Polynice',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {
