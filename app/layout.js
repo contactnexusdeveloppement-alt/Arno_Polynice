@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body>
+        <div className="dev-banner">🚧 Site en développement 🚧</div>
         <LanguageProvider>
           <CartProvider>
             <PageLoader />
