@@ -7,19 +7,16 @@
 
 /* --- Dev Banner (TO REMOVE BEFORE LAUNCH) --- */
 .dev-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 10000;
   background: #1A1A1A;
   color: #C4943D;
   text-align: center;
-  padding: 10px 0;
+  padding: 14px 0;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.25em;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
