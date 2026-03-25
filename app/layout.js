@@ -31,11 +31,13 @@ export const metadata = {
     siteName: 'Arno Polynice',
     title: 'Arno Polynice — Créateur de Mode Indépendant | Vosges',
     description: 'Vêtements artisanaux confectionnés en France. Luxe abordable et streetwear par un jeune créateur des Vosges.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Arno Polynice — Créateur de Mode' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Arno Polynice — Créateur de Mode',
     description: 'Vêtements artisanaux confectionnés en France. Luxe abordable et streetwear par un jeune créateur des Vosges.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
