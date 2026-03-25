@@ -2,8 +2,9 @@ import CategoryPage from '@/components/CategoryPage';
 import { getAllProducts } from '@/data/products';
 
 export const metadata = {
-    title: 'Boutique — Arno Polynice',
-    description: 'Découvrez toutes les créations Arno Polynice. Mode artisanale française, pièces uniques confectionnées avec passion.',
+    title: 'Boutique — Toutes les Créations Arno Polynice',
+    description: 'Parcourez toutes les créations Arno Polynice. Mode artisanale française, pièces uniques confectionnées avec passion à Épinal dans les Vosges. Femme, homme, unisexe.',
+    alternates: { canonical: 'https://www.arno-polynice.com/boutique' },
 };
 
 export default async function BoutiquePage() {

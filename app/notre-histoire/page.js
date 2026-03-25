@@ -3,8 +3,9 @@ import { getHistoireImages } from '@/lib/shopify';
 import styles from './page.module.css';
 
 export const metadata = {
-    title: 'Notre Histoire — Arno Polynice',
-    description: 'Découvrez l\'histoire d\'Arno Polynice, créateur de mode indépendant français.',
+    title: 'Notre Histoire — La Vision d\'Arno Polynice',
+    description: 'De Épinal dans les Vosges à la création de mode : découvrez le parcours d\'Arno Polynice, jeune créateur français alliant luxe abordable et streetwear artisanal.',
+    alternates: { canonical: 'https://www.arno-polynice.com/notre-histoire' },
 };
 
 export default async function NotreHistoirePage() {

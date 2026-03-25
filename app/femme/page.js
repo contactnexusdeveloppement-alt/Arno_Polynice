@@ -2,8 +2,9 @@ import CategoryPage from '@/components/CategoryPage';
 import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 
 export const metadata = {
-    title: 'Femme — Arno Polynice',
-    description: 'Découvrez les créations pour femme d\'Arno Polynice.',
+    title: 'Collection Femme — Mode Artisanale Française',
+    description: 'Explorez la collection femme Arno Polynice : vêtements artisanaux confectionnés en France. Pièces uniques mêlant élégance et streetwear, créées dans les Vosges.',
+    alternates: { canonical: 'https://www.arno-polynice.com/femme' },
 };
 
 export default async function FemmePage() {

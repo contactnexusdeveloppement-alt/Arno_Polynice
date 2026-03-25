@@ -1,8 +1,9 @@
 import styles from './page.module.css';
 
 export const metadata = {
-    title: 'Notre Éthique — Arno Polynice',
-    description: 'Découvrez les engagements éthiques et environnementaux d\'Arno Polynice.',
+    title: 'Notre Éthique — Mode Responsable et Artisanale',
+    description: 'Les engagements d\'Arno Polynice : confection éthique, matériaux responsables, production locale dans les Vosges. Une mode artisanale respectueuse de l\'environnement.',
+    alternates: { canonical: 'https://www.arno-polynice.com/notre-ethique' },
 };
 
 export default function NotreEthiquePage() {

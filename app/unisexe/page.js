@@ -2,8 +2,9 @@ import CategoryPage from '@/components/CategoryPage';
 import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 
 export const metadata = {
-    title: 'Unisexe — Arno Polynice',
-    description: 'Découvrez les créations unisexe d\'Arno Polynice.',
+    title: 'Collection Unisexe — Mode Sans Genre',
+    description: 'Collection unisexe Arno Polynice : mode sans genre, confection artisanale française. Des pièces inclusives entre luxe abordable et streetwear contemporain.',
+    alternates: { canonical: 'https://www.arno-polynice.com/unisexe' },
 };
 
 export default async function UnisexePage() {

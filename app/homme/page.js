@@ -2,8 +2,9 @@ import CategoryPage from '@/components/CategoryPage';
 import { getProductsByCategory, getAvailableSubcategories } from '@/data/products';
 
 export const metadata = {
-    title: 'Homme — Arno Polynice',
-    description: 'Découvrez les créations pour homme d\'Arno Polynice.',
+    title: 'Collection Homme — Mode Artisanale Française',
+    description: 'Découvrez la collection homme Arno Polynice : streetwear artisanal et luxe abordable. Vêtements confectionnés en France par un créateur des Vosges.',
+    alternates: { canonical: 'https://www.arno-polynice.com/homme' },
 };
 
 export default async function HommePage() {
