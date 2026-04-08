@@ -64,6 +64,8 @@ export default function Header() {
                         className={styles.menuToggle}
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-label="Menu"
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-nav"
                     >
                         <span className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`}>
                             <span></span>
@@ -145,7 +147,7 @@ export default function Header() {
 
             {/* Mobile Menu Overlay */}
             <div className={`${styles.mobileOverlay} ${isMenuOpen ? styles.overlayOpen : ''}`} onClick={() => setIsMenuOpen(false)} />
-            <nav className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ''}`}>
+            <nav id="mobile-nav" className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ''}`} aria-hidden={!isMenuOpen}>
                 <div className={styles.mobileNavInner}>
                     {allLinks.map((link, i) => (
                         <Link

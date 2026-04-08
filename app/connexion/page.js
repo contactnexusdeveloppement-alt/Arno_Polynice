@@ -34,7 +34,7 @@ export default function LoginPage() {
                 <h1 className={styles.title}>Connexion</h1>
                 <p className={styles.subtitle}>Accédez à votre espace personnel Arno Polynice.</p>
 
-                {error && <div className={styles.errorBanner}>{error}</div>}
+                {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.inputGroup}>

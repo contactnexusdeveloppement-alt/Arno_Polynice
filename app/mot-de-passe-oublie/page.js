@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
                 <h1 className={styles.title}>Oubli de Code</h1>
                 <p className={styles.subtitle}>Saisissez votre email. Nous vous enverrons un lien de réinitialisation.</p>
 
-                {error && <div className={styles.errorBanner}>{error}</div>}
+                {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
                 {successMessage ? (
                     <div style={{ textAlign: 'center', marginBottom: '32px' }}>
