@@ -88,9 +88,6 @@ export default function RootLayout({ children }) {
             }),
           }}
         />
-        <div className="dev-banner">
-          {'SITE EN DÉVELOPPEMENT   •   '.repeat(50)}
-        </div>
         <LanguageProvider>
           <CartProvider>
             <PageLoader />

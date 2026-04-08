@@ -136,7 +136,6 @@ export async function getAllProducts(language = 'fr') {
   try {
     const shopifyNodes = await fetchShopifyProducts(50, language);
     const shopifyProducts = shopifyNodes.map(mapShopifyProduct);
-    console.log(`[getAllProducts] Got ${shopifyProducts.length} Shopify products (lang: ${language})`);
     return shopifyProducts;
   } catch (error) {
     console.error('[getAllProducts] ERROR fetching Shopify products:', error.message);
