@@ -43,7 +43,7 @@ export default function RegisterPage() {
                 <h1 className={styles.title}>Créer un compte</h1>
                 <p className={styles.subtitle}>Rejoignez l'univers Arno Polynice.</p>
 
-                {error && <div className={styles.errorBanner}>{error}</div>}
+                {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.row}>

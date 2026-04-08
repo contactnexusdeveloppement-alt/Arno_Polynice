@@ -3,41 +3,14 @@
    Inspired by Jacquemus minimalist luxury
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-
-/* --- Dev Watermark (TO REMOVE BEFORE LAUNCH) --- */
-.dev-banner {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  z-index: 10000;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.12);
-  transform: rotate(-30deg);
-  white-space: nowrap;
-  line-height: 4;
-  word-spacing: 1em;
-  overflow: hidden;
-}
-
 /* --- Design Tokens --- */
 :root {
   --color-bg: #F8F5F0;
   --color-bg-white: #FFFFFF;
   --color-bg-warm: #F0EBE3;
   --color-text: #1A1A1A;
-  --color-text-light: #6B6B6B;
-  --color-text-muted: #9A9A9A;
+  --color-text-light: #5A5A5A;
+  --color-text-muted: #6B6B6B;
   --color-accent: #D4C5B2;
   --color-accent-dark: #B8A898;
   --color-border: #E5E0D8;
@@ -48,8 +21,8 @@
   --color-error: #A63D40;
   --color-overlay: rgba(0, 0, 0, 0.4);
 
-  --font-heading: 'Barlow Condensed', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: var(--font-barlow-condensed), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
 
   --nav-height: 72px;
   --container-max: 1440px;
@@ -112,6 +85,27 @@ button {
   border: none;
   background: none;
   font-size: inherit;
+}
+
+/* --- Keyboard focus visibility (a11y) --- */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
 }
 
 ul,
@@ -250,10 +244,10 @@ h3 {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 

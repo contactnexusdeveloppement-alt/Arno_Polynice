@@ -101,6 +101,16 @@
   animation: marqueeScroll 30s linear infinite;
 }
 
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+}
+
 .marqueeItem {
   font-family: var(--font-heading);
   font-size: 0.75rem;

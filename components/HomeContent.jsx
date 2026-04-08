@@ -74,6 +74,7 @@ export default function HomeContent({ featuredProducts, heroImages, categoryImag
                                             fill
                                             sizes="(max-width: 768px) 50vw, 25vw"
                                             style={{ objectFit: 'cover' }}
+                                            priority={i === 0}
                                         />
                                     </Wrapper>
                                 );
