@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './Header.module.css';
@@ -31,6 +32,7 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLangOpen, setIsLangOpen] = useState(false);
     const { totalItems, setIsOpen } = useCart();
+    const pathname = usePathname();
     const { language, setLanguage, t } = useLanguage();
 
     useEffect(() => {
@@ -76,7 +78,12 @@ export default function Header() {
                     {/* Left Nav */}
                     <nav className={styles.desktopNav}>
                         {leftLinks.map(link => (
-                            <Link key={link.href} href={link.href} className={styles.navLink}>
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={styles.navLink}
+                                aria-current={pathname === link.href ? 'page' : undefined}
+                            >
                                 {t(link.key)}
                             </Link>
                         ))}
@@ -92,7 +99,12 @@ export default function Header() {
                     <div className={styles.rightSection}>
                         <nav className={styles.desktopNav}>
                             {rightLinks.map(link => (
-                                <Link key={link.href} href={link.href} className={styles.navLink}>
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={styles.navLink}
+                                    aria-current={pathname === link.href ? 'page' : undefined}
+                                >
                                     {t(link.key)}
                                 </Link>
                             ))}

@@ -244,12 +244,14 @@ export default function ProductDetail({ product }) {
                         <button
                             className={styles.accordion}
                             onClick={() => setShowDetails(!showDetails)}
+                            aria-expanded={showDetails}
+                            aria-controls="product-details-content"
                         >
                             <span>{t('product.details')}</span>
                             <span className={`${styles.accordionIcon} ${showDetails ? styles.accordionOpen : ''}`}>+</span>
                         </button>
                         {showDetails && (
-                            <div className={styles.accordionContent}>
+                            <div id="product-details-content" className={styles.accordionContent}>
                                 <p>{currentProduct.details}</p>
                             </div>
                         )}

@@ -40,8 +40,13 @@ export default function Footer() {
                             type="email"
                             placeholder={t('footer.emailPlaceholder')}
                             className={styles.newsletterInput}
+                            aria-label={t('footer.emailPlaceholder')}
                         />
-                        <button type="submit" className={styles.newsletterBtn}>
+                        <button
+                            type="submit"
+                            className={styles.newsletterBtn}
+                            aria-label={t('footer.subscribe') || 'S\'inscrire'}
+                        >
                             →
                         </button>
                     </form>

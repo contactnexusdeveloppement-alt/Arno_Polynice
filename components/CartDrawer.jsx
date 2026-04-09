@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import Link from 'next/link';
@@ -11,6 +11,16 @@ export default function CartDrawer() {
     const { t } = useLanguage();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [checkoutError, setCheckoutError] = useState('');
+
+    // Close on Escape key
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKey = (e) => {
+            if (e.key === 'Escape') setIsOpen(false);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isOpen, setIsOpen]);
 
     const handleCheckout = async () => {
         if (isCheckingOut) return;
@@ -87,13 +97,15 @@ export default function CartDrawer() {
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.color, item.size, item.quantity - 1)}
                                                     className={styles.qtyBtn}
+                                                    aria-label={`${t('cart.decrease') || 'Diminuer'} — ${item.name}`}
                                                 >
                                                     −
                                                 </button>
-                                                <span className={styles.qtyNum}>{item.quantity}</span>
+                                                <span className={styles.qtyNum} aria-live="polite">{item.quantity}</span>
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.color, item.size, item.quantity + 1)}
                                                     className={styles.qtyBtn}
+                                                    aria-label={`${t('cart.increase') || 'Augmenter'} — ${item.name}`}
                                                 >
                                                     +
                                                 </button>

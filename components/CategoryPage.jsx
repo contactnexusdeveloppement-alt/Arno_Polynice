@@ -45,6 +45,7 @@ export default function CategoryPage({ title, products, subcategories }) {
                             key={filter}
                             className={`${styles.filterBtn} ${activeFilter === filter ? styles.filterActive : ''}`}
                             onClick={() => setActiveFilter(filter)}
+                            aria-pressed={activeFilter === filter}
                         >
                             {getFilterLabel(filter)}
                         </button>
