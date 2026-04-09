@@ -419,6 +419,11 @@
         font-size: 1.3rem;
     }
 
+    .swatch {
+        width: 40px;
+        height: 40px;
+    }
+
     /* Sticky Add to Cart bar */
     .addToCart {
         position: fixed;

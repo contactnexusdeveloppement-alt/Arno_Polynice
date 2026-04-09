@@ -296,6 +296,11 @@
 }
 
 @media (max-width: 768px) {
+  .marqueeItem {
+    font-size: 0.68rem;
+    padding-right: 12px;
+  }
+
   .heroVisual {
     display: none;
   }
