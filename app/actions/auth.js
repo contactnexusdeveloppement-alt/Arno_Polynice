@@ -1,6 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { customerAccessTokenCreate, customerCreate, getCustomer } from '@/lib/shopifyAuth';
 
 const TOKEN_COOKIE_NAME = 'shopify_customer_token';
@@ -50,6 +51,14 @@ export async function registerAction(prevState, formData) {
             return { error: 'Veuillez remplir tous les champs.' };
         }
 
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return { error: 'Adresse email invalide.' };
+        }
+
+        if (password.length < 8) {
+            return { error: 'Le mot de passe doit contenir au moins 8 caractères.' };
+        }
+
         // 1. Create account on Shopify
         await customerCreate({ firstName, lastName, email, password });
 
@@ -78,6 +87,7 @@ export async function registerAction(prevState, formData) {
 export async function logoutAction() {
     const cookieStore = await cookies();
     cookieStore.delete(TOKEN_COOKIE_NAME);
+    redirect('/connexion');
 }
 
 /**

@@ -245,3 +245,13 @@
 .checkoutBtn {
     width: 100%;
 }
+
+.checkoutError {
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--color-error);
+    background-color: rgba(166, 61, 64, 0.08);
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-sm);
+}
