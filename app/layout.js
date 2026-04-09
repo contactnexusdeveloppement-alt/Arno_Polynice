@@ -1,5 +1,7 @@
 import './globals.css';
 import { Barlow_Condensed, Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { CartProvider } from '@/context/CartContext';
 
 const barlowCondensed = Barlow_Condensed({
@@ -132,6 +134,8 @@ export default function RootLayout({ children }) {
             <CartDrawer />
           </CartProvider>
         </LanguageProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
