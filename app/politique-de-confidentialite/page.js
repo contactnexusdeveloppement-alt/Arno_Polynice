@@ -11,7 +11,7 @@ export default function PolitiqueConfidentialitePage() {
             <section className={styles.legalPage}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Politique de Confidentialité</h1>
-                    <p className={styles.lastUpdate}>Dernière mise à jour : mars 2026</p>
+                    <p className={styles.lastUpdate}>Dernière mise à jour : avril 2026</p>
                 </div>
 
                 <div className={styles.content}>
@@ -22,7 +22,7 @@ export default function PolitiqueConfidentialitePage() {
                         </p>
                         <ul className={styles.list}>
                             <li><strong>Arno Polynice</strong> — Entreprise Individuelle (EI)</li>
-                            <li>Responsable : Adelson Pauguain</li>
+                            <li>Responsable : Adelson Paugain</li>
                             <li>Adresse : 68 rue André Vitu, 88000 Épinal, France</li>
                             <li>Email : <a href="mailto:arnopolynice@gmail.com">arnopolynice@gmail.com</a></li>
                         </ul>
@@ -54,7 +54,7 @@ export default function PolitiqueConfidentialitePage() {
                             <li>La gestion de la relation client</li>
                             <li>L'envoi de la newsletter (avec consentement)</li>
                             <li>L'amélioration de nos services et de l'expérience utilisateur</li>
-                            <li>L'analyse statistique de la fréquentation du site (Google Analytics)</li>
+                            <li>La mesure d'audience anonyme via Vercel Analytics (sans cookies, sans données personnelles)</li>
                         </ul>
                     </div>
 
@@ -86,15 +86,15 @@ export default function PolitiqueConfidentialitePage() {
                     <div className={styles.section}>
                         <h2 className={styles.sectionTitle}>6. Cookies</h2>
                         <p className={styles.text}>
-                            Le site utilise des cookies pour :
+                            Le site utilise uniquement des <strong>cookies strictement nécessaires</strong> à son
+                            fonctionnement (gestion du panier, session de connexion). Aucun cookie publicitaire
+                            ni traceur tiers n'est déposé.
                         </p>
-                        <ul className={styles.list}>
-                            <li><strong>Cookies essentiels</strong> : nécessaires au fonctionnement du site (panier, session)</li>
-                            <li><strong>Cookies analytiques</strong> : Google Analytics, pour mesurer l'audience et améliorer le site</li>
-                        </ul>
                         <p className={styles.text}>
-                            Vous pouvez gérer vos préférences de cookies à tout moment via les paramètres de votre
-                            navigateur. La désactivation de certains cookies peut affecter votre expérience de navigation.
+                            La mesure d'audience est assurée par <strong>Vercel Analytics</strong>, une solution
+                            respectueuse de la vie privée qui fonctionne <strong>sans cookies</strong> et ne collecte
+                            aucune donnée personnelle identifiable (pas d'adresse IP stockée, pas de fingerprinting).
+                            Aucun consentement préalable n'est donc requis pour cette mesure d'audience.
                         </p>
                     </div>
 
@@ -107,7 +107,8 @@ export default function PolitiqueConfidentialitePage() {
                         <ul className={styles.list}>
                             <li><strong>Shopify</strong> : plateforme e-commerce et paiement sécurisé</li>
                             <li><strong>Transporteurs</strong> : pour la livraison de vos commandes</li>
-                            <li><strong>Google Analytics</strong> : pour l'analyse statistique du site</li>
+                            <li><strong>Vercel</strong> : hébergement du site et mesure d'audience anonyme</li>
+                            <li><strong>Resend</strong> : acheminement des emails de contact</li>
                         </ul>
                     </div>
 

@@ -11,7 +11,7 @@ export default function CGVPage() {
             <section className={styles.legalPage}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Conditions Générales de Vente</h1>
-                    <p className={styles.lastUpdate}>Dernière mise à jour : mars 2026</p>
+                    <p className={styles.lastUpdate}>Dernière mise à jour : avril 2026</p>
                 </div>
 
                 <div className={styles.content}>
@@ -20,7 +20,7 @@ export default function CGVPage() {
                         <p className={styles.text}>
                             Les présentes Conditions Générales de Vente (CGV) régissent les ventes de produits
                             effectuées sur le site <strong>www.arno-polynice.com</strong>, édité par Arno Polynice,
-                            Entreprise Individuelle (EI), dont le responsable est Adelson Pauguain, domicilié au 68 rue
+                            Entreprise Individuelle (EI), dont le responsable est Adelson Paugain, domicilié au 68 rue
                             André Vitu, 88000 Épinal, France.
                         </p>
                         <p className={styles.text}>

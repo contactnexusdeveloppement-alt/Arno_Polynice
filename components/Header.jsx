@@ -186,9 +186,9 @@ export default function Header() {
                     ))}
                 </div>
                 <div className={styles.mobileSocials}>
-                    <a href="https://www.instagram.com/arno.polynice.__" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://www.instagram.com/arnopolynice/" target="_blank" rel="noopener noreferrer">Instagram</a>
                     <a href="https://www.tiktok.com/@arnopolynice" target="_blank" rel="noopener noreferrer">TikTok</a>
-                    <a href="https://www.facebook.com/Arno.Polynice" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://www.youtube.com/@Arno.Polynice" target="_blank" rel="noopener noreferrer">YouTube</a>
                 </div>
             </nav>
         </>

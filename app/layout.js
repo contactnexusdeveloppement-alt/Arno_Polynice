@@ -103,10 +103,9 @@ export default function RootLayout({ children }) {
                 addressCountry: 'FR',
               },
               sameAs: [
-                'https://www.instagram.com/arno.polynice.__',
+                'https://www.instagram.com/arnopolynice/',
                 'https://www.tiktok.com/@arnopolynice',
-                'https://www.facebook.com/Arno.Polynice',
-                'https://www.youtube.com/@AdelsonPaugain',
+                'https://www.youtube.com/@Arno.Polynice',
               ],
             }),
           }}

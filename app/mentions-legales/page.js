@@ -11,7 +11,7 @@ export default function MentionsLegalesPage() {
             <section className={styles.legalPage}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Mentions Légales</h1>
-                    <p className={styles.lastUpdate}>Dernière mise à jour : mars 2026</p>
+                    <p className={styles.lastUpdate}>Dernière mise à jour : avril 2026</p>
                 </div>
 
                 <div className={styles.content}>
@@ -23,7 +23,7 @@ export default function MentionsLegalesPage() {
                         <ul className={styles.list}>
                             <li>Raison sociale : <strong>Arno Polynice</strong></li>
                             <li>Forme juridique : Entreprise Individuelle (EI)</li>
-                            <li>Responsable de la publication : <strong>Adelson Pauguain</strong></li>
+                            <li>Responsable de la publication : <strong>Adelson Paugain</strong></li>
                             <li>Adresse : 68 rue André Vitu, 88000 Épinal, France</li>
                             <li>Email : <a href="mailto:arnopolynice@gmail.com">arnopolynice@gmail.com</a></li>
                             <li>TVA : Non assujetti à la TVA (Article 293B du CGI)</li>
@@ -73,10 +73,12 @@ export default function MentionsLegalesPage() {
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle}>5. Cookies</h2>
+                        <h2 className={styles.sectionTitle}>5. Cookies et Mesure d'Audience</h2>
                         <p className={styles.text}>
-                            Le site utilise des cookies pour améliorer l'expérience utilisateur et à des fins
-                            statistiques (Google Analytics). Pour plus d'informations, consultez notre{' '}
+                            Le site utilise uniquement des cookies strictement nécessaires à son bon fonctionnement
+                            (panier, session). La mesure d'audience est assurée par Vercel Analytics, une solution
+                            respectueuse de la vie privée qui ne dépose aucun cookie et ne collecte aucune donnée
+                            personnelle identifiable. Pour plus d'informations, consultez notre{' '}
                             <a href="/politique-de-confidentialite">Politique de Confidentialité</a>.
                         </p>
                     </div>

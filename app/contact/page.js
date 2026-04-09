@@ -116,17 +116,14 @@ export default function ContactPage() {
 
                         <div className={styles.infoBlock}>
                             <h3 className={styles.infoTitle}>Réseaux sociaux</h3>
-                            <a href="https://www.instagram.com/arno.polynice.__" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
-                                Instagram — @arno.polynice.__
+                            <a href="https://www.instagram.com/arnopolynice/" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
+                                Instagram — @arnopolynice
                             </a>
                             <a href="https://www.tiktok.com/@arnopolynice" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
                                 TikTok — @arnopolynice
                             </a>
-                            <a href="https://www.facebook.com/Arno.Polynice" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
-                                Facebook — Arno Polynice
-                            </a>
-                            <a href="https://www.youtube.com/@AdelsonPaugain" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
-                                YouTube — Adelson Paugain
+                            <a href="https://www.youtube.com/@Arno.Polynice" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
+                                YouTube — Arno Polynice
                             </a>
                         </div>
 

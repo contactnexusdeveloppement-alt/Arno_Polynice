@@ -5,10 +5,9 @@ import { useLanguage } from '@/context/LanguageContext';
 import styles from './Footer.module.css';
 
 const socialLinks = [
-    { name: 'Instagram', href: 'https://www.instagram.com/arno.polynice.__', icon: 'IG' },
+    { name: 'Instagram', href: 'https://www.instagram.com/arnopolynice/', icon: 'IG' },
     { name: 'TikTok', href: 'https://www.tiktok.com/@arnopolynice', icon: 'TK' },
-    { name: 'Facebook', href: 'https://www.facebook.com/Arno.Polynice', icon: 'FB' },
-    { name: 'YouTube', href: 'https://www.youtube.com/@AdelsonPaugain', icon: 'YT' },
+    { name: 'YouTube', href: 'https://www.youtube.com/@Arno.Polynice', icon: 'YT' },
 ];
 
 const shopLinks = [
