@@ -21,9 +21,10 @@ export default function PolitiqueConfidentialitePage() {
                             Le responsable du traitement des données personnelles est :
                         </p>
                         <ul className={styles.list}>
-                            <li><strong>Arno Polynice</strong> — Entreprise Individuelle (EI)</li>
+                            <li><strong>PAUGAIN ADELSON</strong> (nom commercial : Arno Polynice) — Entrepreneur individuel, micro-entreprise</li>
                             <li>Responsable : Adelson Paugain</li>
                             <li>Adresse : 68 rue André Vitu, 88000 Épinal, France</li>
+                            <li>SIRET : 103 064 036 00017</li>
                             <li>Email : <a href="mailto:arnopolynice@gmail.com">arnopolynice@gmail.com</a></li>
                         </ul>
                     </div>

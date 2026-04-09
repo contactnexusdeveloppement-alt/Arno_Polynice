@@ -19,9 +19,13 @@ export default function CGVPage() {
                         <h2 className={styles.sectionTitle}>1. Objet</h2>
                         <p className={styles.text}>
                             Les présentes Conditions Générales de Vente (CGV) régissent les ventes de produits
-                            effectuées sur le site <strong>www.arno-polynice.com</strong>, édité par Arno Polynice,
-                            Entreprise Individuelle (EI), dont le responsable est Adelson Paugain, domicilié au 68 rue
-                            André Vitu, 88000 Épinal, France.
+                            effectuées sur le site <strong>www.arno-polynice.com</strong>, édité par{' '}
+                            <strong>PAUGAIN ADELSON</strong> (nom commercial : Arno Polynice), entrepreneur individuel
+                            en micro-entreprise, domicilié au 68 rue André Vitu, 88000 Épinal, France.
+                        </p>
+                        <p className={styles.text}>
+                            SIRET : 103 064 036 00017 — Code APE : 14.13Z (Fabrication de vêtements de dessus).
+                            TVA non applicable, art. 293B du CGI.
                         </p>
                         <p className={styles.text}>
                             Toute commande passée sur le site implique l'acceptation pleine et entière des présentes CGV.

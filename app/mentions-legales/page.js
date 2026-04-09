@@ -21,12 +21,18 @@ export default function MentionsLegalesPage() {
                             Le site <strong>www.arno-polynice.com</strong> est édité par :
                         </p>
                         <ul className={styles.list}>
-                            <li>Raison sociale : <strong>Arno Polynice</strong></li>
-                            <li>Forme juridique : Entreprise Individuelle (EI)</li>
+                            <li>Raison sociale : <strong>PAUGAIN ADELSON</strong> (nom commercial : Arno Polynice)</li>
+                            <li>Forme juridique : Entrepreneur individuel — Micro-entreprise</li>
                             <li>Responsable de la publication : <strong>Adelson Paugain</strong></li>
-                            <li>Adresse : 68 rue André Vitu, 88000 Épinal, France</li>
+                            <li>Adresse du siège : 68 rue André Vitu, 88000 Épinal, France</li>
+                            <li>SIREN : <strong>103 064 036</strong></li>
+                            <li>SIRET : <strong>103 064 036 00017</strong></li>
+                            <li>Numéro de TVA intracommunautaire : FR61103064036</li>
+                            <li>Code APE / NAF : 14.13Z (Fabrication de vêtements de dessus)</li>
+                            <li>Activité : Fabrication et vente de vêtements et accessoires</li>
+                            <li>Inscription au Registre National des Entreprises (RNE)</li>
                             <li>Email : <a href="mailto:arnopolynice@gmail.com">arnopolynice@gmail.com</a></li>
-                            <li>TVA : Non assujetti à la TVA (Article 293B du CGI)</li>
+                            <li>TVA : Non assujetti à la TVA (Article 293B du CGI — franchise en base)</li>
                         </ul>
                     </div>
 
