@@ -10,9 +10,12 @@ export default function CartDrawer() {
     const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
     const { t } = useLanguage();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
+    const [checkoutError, setCheckoutError] = useState('');
 
     const handleCheckout = async () => {
+        if (isCheckingOut) return;
         setIsCheckingOut(true);
+        setCheckoutError('');
         try {
             const res = await fetch('/api/checkout', {
                 method: 'POST',
@@ -23,11 +26,11 @@ export default function CartDrawer() {
             if (data.checkoutUrl) {
                 window.location.href = data.checkoutUrl;
             } else {
-                alert(data.error || t('cart.paymentError'));
+                setCheckoutError(data.error || t('cart.paymentError'));
                 setIsCheckingOut(false);
             }
         } catch (err) {
-            alert(t('cart.connectionError'));
+            setCheckoutError(t('cart.connectionError'));
             setIsCheckingOut(false);
         }
     };
@@ -116,6 +119,11 @@ export default function CartDrawer() {
                                 <span className={styles.totalPrice}>{totalPrice},00 €</span>
                             </div>
                             <p className={styles.shipping}>{t('cart.shippingNote')}</p>
+                            {checkoutError && (
+                                <div className={styles.checkoutError} role="alert" aria-live="polite">
+                                    {checkoutError}
+                                </div>
+                            )}
                             <button
                                 className={`btn btn--primary ${styles.checkoutBtn}`}
                                 onClick={handleCheckout}

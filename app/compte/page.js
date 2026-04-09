@@ -1,5 +1,6 @@
-import { getSessionCustomer, logoutAction } from '@/app/actions/auth';
+import { getSessionCustomer } from '@/app/actions/auth';
 import { redirect } from 'next/navigation';
+import LogoutButton from './LogoutButton';
 import styles from './page.module.css';
 
 // Force dynamic to avoid caching authenticated pages
@@ -20,9 +21,7 @@ export default async function AccountPage() {
                         <h1 className={styles.title}>Mon compte</h1>
                         <p className={styles.subtitle}>Bonjour, {customer.firstName || customer.email} !</p>
                     </div>
-                    <form action={logoutAction}>
-                        <button type="submit" className={styles.logoutBtn}>Se déconnecter</button>
-                    </form>
+                    <LogoutButton className={styles.logoutBtn} />
                 </header>
 
                 <div className={styles.content}>

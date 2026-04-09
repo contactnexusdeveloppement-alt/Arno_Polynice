@@ -46,7 +46,7 @@ export default function ProductDetail({ product }) {
     const canAddToCart = currentProduct.availability !== 'unavailable';
 
     const handleAddToCart = () => {
-        if (!selectedSize) return;
+        if (!selectedSize || added) return;
 
         // Find the matching Shopify variant ID for checkout
         let variantId = null;
@@ -212,7 +212,7 @@ export default function ProductDetail({ product }) {
                             <button
                                 className={`btn btn--primary ${styles.addToCart} ${added ? styles.addedToCart : ''}`}
                                 onClick={handleAddToCart}
-                                disabled={!selectedSize}
+                                disabled={!selectedSize || added}
                             >
                                 {added ? t('product.adding') : t('product.addToCart')}
                             </button>

@@ -147,3 +147,25 @@
         grid-template-columns: 1fr;
     }
 }
+
+.successBanner,
+.errorBanner {
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+}
+
+.successBanner {
+    background-color: rgba(74, 124, 89, 0.08);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.errorBanner {
+    background-color: rgba(166, 61, 64, 0.08);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}

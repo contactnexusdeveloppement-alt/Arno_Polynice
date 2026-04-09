@@ -1,8 +1,51 @@
 'use client';
 
+import { useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from './page.module.css';
 
 export default function ContactPage() {
+    const { t } = useLanguage();
+    const [status, setStatus] = useState('idle'); // idle | sending | success | error
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (status === 'sending') return;
+
+        setStatus('sending');
+        setErrorMessage('');
+
+        const formData = new FormData(e.target);
+        const data = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+        };
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.error || 'Erreur lors de l\'envoi');
+            }
+
+            setStatus('success');
+            e.target.reset();
+        } catch (err) {
+            setStatus('error');
+            setErrorMessage(err.message || 'Une erreur est survenue. Veuillez réessayer.');
+        }
+    };
+
     return (
         <div className="page-enter">
             <section className={styles.contactPage}>
@@ -15,24 +58,24 @@ export default function ContactPage() {
 
                 <div className={styles.grid}>
                     {/* Form */}
-                    <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+                    <form className={styles.form} onSubmit={handleSubmit} noValidate>
                         <div className={styles.formRow}>
                             <div className={styles.formGroup}>
-                                <label className={styles.formLabel}>Prénom</label>
-                                <input type="text" className={styles.formInput} placeholder="Votre prénom" required />
+                                <label className={styles.formLabel} htmlFor="firstName">Prénom</label>
+                                <input id="firstName" name="firstName" type="text" className={styles.formInput} placeholder="Votre prénom" required disabled={status === 'sending'} />
                             </div>
                             <div className={styles.formGroup}>
-                                <label className={styles.formLabel}>Nom</label>
-                                <input type="text" className={styles.formInput} placeholder="Votre nom" required />
+                                <label className={styles.formLabel} htmlFor="lastName">Nom</label>
+                                <input id="lastName" name="lastName" type="text" className={styles.formInput} placeholder="Votre nom" required disabled={status === 'sending'} />
                             </div>
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel}>Email</label>
-                            <input type="email" className={styles.formInput} placeholder="votre@email.com" required />
+                            <label className={styles.formLabel} htmlFor="email">Email</label>
+                            <input id="email" name="email" type="email" className={styles.formInput} placeholder="votre@email.com" required disabled={status === 'sending'} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel}>Sujet</label>
-                            <select className={styles.formInput} defaultValue="">
+                            <label className={styles.formLabel} htmlFor="subject">Sujet</label>
+                            <select id="subject" name="subject" className={styles.formInput} defaultValue="" required disabled={status === 'sending'}>
                                 <option value="" disabled>Sélectionnez un sujet</option>
                                 <option value="commande">Question sur une commande</option>
                                 <option value="personnalisation">Personnalisation / Sur mesure</option>
@@ -42,11 +85,23 @@ export default function ContactPage() {
                             </select>
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel}>Message</label>
-                            <textarea className={styles.formTextarea} rows="6" placeholder="Votre message..." required />
+                            <label className={styles.formLabel} htmlFor="message">Message</label>
+                            <textarea id="message" name="message" className={styles.formTextarea} rows="6" placeholder="Votre message..." required disabled={status === 'sending'} />
                         </div>
-                        <button type="submit" className="btn btn--primary">
-                            Envoyer
+
+                        {status === 'success' && (
+                            <div className={styles.successBanner} role="status" aria-live="polite">
+                                ✓ Votre message a bien été envoyé. Nous vous répondrons sous 24 à 48 heures.
+                            </div>
+                        )}
+                        {status === 'error' && (
+                            <div className={styles.errorBanner} role="alert" aria-live="polite">
+                                {errorMessage}
+                            </div>
+                        )}
+
+                        <button type="submit" className="btn btn--primary" disabled={status === 'sending'}>
+                            {status === 'sending' ? 'Envoi en cours...' : 'Envoyer'}
                         </button>
                     </form>
 
@@ -54,8 +109,8 @@ export default function ContactPage() {
                     <div className={styles.contactInfo}>
                         <div className={styles.infoBlock}>
                             <h3 className={styles.infoTitle}>Email</h3>
-                            <a href="mailto:contact@arnopolynice.com" className={styles.infoLink}>
-                                contact@arnopolynice.com
+                            <a href="mailto:arnopolynice@gmail.com" className={styles.infoLink}>
+                                arnopolynice@gmail.com
                             </a>
                         </div>
 
