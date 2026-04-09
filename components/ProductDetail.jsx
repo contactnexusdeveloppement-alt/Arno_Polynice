@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@/app/produit/[slug]/page.module.css';
 
 export default function ProductDetail({ product }) {
@@ -101,30 +102,42 @@ export default function ProductDetail({ product }) {
                 <div className={styles.gallery}>
                     <div
                         className={styles.mainImage}
-                        style={{
-                            backgroundColor: currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8',
-                            backgroundImage: currentProduct.images[activeImage] ? `url(${currentProduct.images[activeImage]})` : 'none',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                        }}
+                        style={{ backgroundColor: currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8' }}
                     >
-                        {!currentProduct.images[activeImage] && <span className={styles.mainImageLetter}>{currentProduct.name.charAt(0)}</span>}
+                        {currentProduct.images[activeImage] ? (
+                            <Image
+                                src={currentProduct.images[activeImage]}
+                                alt={`${currentProduct.name} — ${selectedColor}`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                priority
+                                className={styles.mainImageImg}
+                            />
+                        ) : (
+                            <span className={styles.mainImageLetter}>{currentProduct.name.charAt(0)}</span>
+                        )}
                     </div>
                     <div className={styles.thumbs}>
                         {currentProduct.images.map((img, i) => (
-                            <div
+                            <button
+                                type="button"
                                 key={i}
                                 className={`${styles.thumb} ${activeImage === i ? styles.thumbActive : ''}`}
                                 onClick={() => setActiveImage(i)}
-                                style={{
-                                    backgroundColor: i === 0 ? (currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8') : '#D4C5B2',
-                                    backgroundImage: `url(${img})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center'
-                                }}
+                                aria-label={`${t('product.viewImage') || 'Voir image'} ${i + 1}`}
                             >
-                                {!img && <span className={styles.thumbLetter}>{i + 1}</span>}
-                            </div>
+                                {img ? (
+                                    <Image
+                                        src={img}
+                                        alt=""
+                                        fill
+                                        sizes="72px"
+                                        className={styles.thumbImg}
+                                    />
+                                ) : (
+                                    <span className={styles.thumbLetter}>{i + 1}</span>
+                                )}
+                            </button>
                         ))}
                     </div>
                 </div>

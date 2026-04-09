@@ -2,13 +2,17 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { availabilityStatuses } from '@/data/products';
 import styles from './ProductCard.module.css';
 
-export default function ProductCard({ product, showPrice = false }) {
+export default function ProductCard({ product, showPrice = false, priority = false }) {
     const [isHovered, setIsHovered] = useState(false);
     const availability = availabilityStatuses[product.availability];
     const isUnavailable = product.availability === 'unavailable';
+    const primaryImage = product.images?.[0];
+    const secondaryImage = product.images?.[1];
+    const fallbackColor = product.colors[0]?.hex || '#E5E0D8';
 
     return (
         <Link
@@ -17,33 +21,32 @@ export default function ProductCard({ product, showPrice = false }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div className={styles.imageWrapper}>
-                <div
-                    className={styles.image}
-                    style={{
-                        backgroundColor: product.colors[0]?.hex || '#E5E0D8',
-                        backgroundImage: product.images && product.images[0] ? `url(${product.images[0]})` : 'none',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        transform: isHovered ? 'scale(1.03)' : 'scale(1)',
-                    }}
-                >
-                    {/* Secondary Image for Hover */}
-                    {product.images && product.images[1] && (
-                        <div
-                            className={`${styles.secondaryImage} ${isHovered ? styles.secondaryImageVisible : ''}`}
-                            style={{
-                                backgroundImage: `url(${product.images[1]})`
-                            }}
-                        />
-                    )}
+            <div className={styles.imageWrapper} style={{ backgroundColor: fallbackColor }}>
+                {primaryImage ? (
+                    <Image
+                        src={primaryImage}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 600px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className={`${styles.image} ${isHovered ? styles.imageZoom : ''}`}
+                        priority={priority}
+                    />
+                ) : (
+                    <span className={styles.imagePlaceholder}>
+                        {product.name.charAt(0)}
+                    </span>
+                )}
 
-                    {(!product.images || !product.images[0]) && (
-                        <span className={styles.imagePlaceholder}>
-                            {product.name.charAt(0)}
-                        </span>
-                    )}
-                </div>
+                {secondaryImage && (
+                    <Image
+                        src={secondaryImage}
+                        alt=""
+                        aria-hidden="true"
+                        fill
+                        sizes="(max-width: 600px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className={`${styles.secondaryImage} ${isHovered ? styles.secondaryImageVisible : ''}`}
+                    />
+                )}
 
                 {/* Availability badge */}
                 {product.availability !== 'available' && (
