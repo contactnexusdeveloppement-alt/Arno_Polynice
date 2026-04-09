@@ -92,6 +92,7 @@ export default function RootLayout({ children }) {
               '@type': 'Organization',
               name: 'Arno Polynice',
               url: 'https://www.arno-polynice.com',
+              logo: 'https://www.arno-polynice.com/og-image.png',
               description: 'Créateur de mode indépendant, confection artisanale française. Luxe abordable et streetwear.',
               address: {
                 '@type': 'PostalAddress',
@@ -105,6 +106,18 @@ export default function RootLayout({ children }) {
                 'https://www.facebook.com/Arno.Polynice',
                 'https://www.youtube.com/@AdelsonPaugain',
               ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Arno Polynice',
+              url: 'https://www.arno-polynice.com',
+              inLanguage: 'fr-FR',
             }),
           }}
         />
