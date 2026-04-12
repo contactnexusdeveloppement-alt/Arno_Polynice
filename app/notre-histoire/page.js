@@ -140,6 +140,7 @@ export default function NotreHistoirePage() {
                                 fill
                                 sizes="(max-width: 768px) 100vw, 800px"
                                 className={styles.coverImage}
+                                style={{ objectPosition: 'center 20%' }}
                             />
                         </div>
                         <div className={styles.sectionContent}>
