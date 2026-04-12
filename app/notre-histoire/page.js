@@ -17,11 +17,11 @@ export default function NotreHistoirePage() {
                         <Image
                             src="/images/histoire/mon-histoire.jpg"
                             alt="Adelson Paugain, fondateur d'Arno Polynice"
-                            width={3446}
-                            height={4307}
+                            fill
                             sizes="(max-width: 768px) 100vw, 50vw"
                             priority
-                            className={styles.heroImg}
+                            className={styles.coverImage}
+                            style={{ objectPosition: 'center 15%' }}
                         />
                     </div>
                     <div className={styles.storyHeroContent}>
@@ -49,10 +49,10 @@ export default function NotreHistoirePage() {
                             <Image
                                 src="/images/histoire/nos-produits.jpg"
                                 alt="Collection Arno Polynice — shooting en plein air"
-                                width={4000}
-                                height={6000}
+                                fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.sectionImg}
+                                className={styles.coverImage}
+                                style={{ objectPosition: 'center 25%' }}
                             />
                         </div>
                         <div className={styles.sectionContent}>
@@ -77,10 +77,9 @@ export default function NotreHistoirePage() {
                             <Image
                                 src="/images/histoire/notre-adn.jpg"
                                 alt="Détail d'une veste Arno Polynice avec rivets dorés — atelier"
-                                width={6000}
-                                height={4000}
+                                fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.sectionImg}
+                                className={styles.coverImage}
                             />
                         </div>
                         <div className={styles.sectionContent}>
@@ -110,10 +109,10 @@ export default function NotreHistoirePage() {
                             <Image
                                 src="/images/histoire/collaboration.jpg"
                                 alt="Meloofchrist en concert portant une veste Arno Polynice"
-                                width={2672}
-                                height={2672}
+                                fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.sectionImg}
+                                className={styles.coverImage}
+                                style={{ objectPosition: 'center 20%' }}
                             />
                         </div>
                         <div className={styles.sectionContent}>
@@ -141,10 +140,10 @@ export default function NotreHistoirePage() {
                             <Image
                                 src="/images/histoire/elegance-provencale.jpg"
                                 alt="Shooting bord de mer — ensembles Arno Polynice"
-                                width={3424}
-                                height={4280}
+                                fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.sectionImg}
+                                className={styles.coverImage}
+                                style={{ objectPosition: 'center 30%' }}
                             />
                         </div>
                         <div className={styles.sectionContent}>
@@ -171,10 +170,9 @@ export default function NotreHistoirePage() {
                             <Image
                                 src="/images/histoire/ensembles-plis.jpg"
                                 alt="Veste Arno Polynice avec croix — détail dos"
-                                width={4000}
-                                height={3999}
+                                fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.sectionImg}
+                                className={styles.coverImage}
                             />
                         </div>
                         <div className={styles.sectionContent}>
