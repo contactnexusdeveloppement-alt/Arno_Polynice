@@ -154,40 +154,58 @@ export default function NotreHistoirePage() {
                     {/* Section 4 — Légèreté Estivale (texte gauche / grille 3 photos droite) */}
                     <div className={`${styles.section} ${styles.sectionReverse}`}>
                         <div className={styles.sectionContent}>
-                            <span className={styles.sectionLabel}>Notre univers</span>
-                            <h2 className={styles.sectionTitle}>Notre ADN</h2>
+                            <span className={styles.sectionLabel}>Pièce unique</span>
+                            <h2 className={styles.sectionTitle}>L'Éclat du Soir</h2>
                             <p className={styles.sectionQuote}>
-                                Quand chaque vêtement est une identité.
+                                Quand l'ombre devient lumière.
                             </p>
                             <p className={styles.sectionText}>
-                                Chez Arno Polynice, chaque pièce est bien plus qu'un vêtement ! Chacune
-                                raconte une histoire, traduit une vision, exprime une façon de penser.
+                                Il existe des vêtements que l'on porte, et d'autres que l'on habite.
+                                Cet ensemble est de ceux-là.
                             </p>
                             <p className={styles.sectionText}>
-                                Loin des tendances éphémères, nos créations explorent des univers où
-                                l'individu est libre, la matière vivante, et la coupe un langage.
+                                Dans un anthracite profond aux reflets discrets, la veste épouse le
+                                corps avec une autorité douce, tandis que le pantalon large tombe en
+                                colonnes parfaites — une silhouette à la fois rigoureuse et libre.
                             </p>
                             <p className={styles.sectionText}>
-                                Urbain, brut et poétique, notre univers est multiple mais notre message
-                                est clair : porter Arno Polynice, c'est incarner une identité forte.
+                                Mais ce qui arrête le regard, c'est la broderie. Des rivières de
+                                cristaux courent et ruissellent sur le tissu en lignes fluides,
+                                glissant de la veste jusqu'aux jambes du pantalon comme une
+                                constellation mise en mouvement. Chaque point a été posé à la main
+                                selon la technique ancestrale du point de Lunéville, ce savoir-faire
+                                né en Lorraine au XVIII<sup>e</sup> siècle — une aiguille crochetée,
+                                un geste millimétré, une patience infinie, que Marie Torres a su
+                                manier à la perfection.
+                            </p>
+                            <p className={styles.sectionText}>
+                                Porter cet ensemble, c'est choisir l'artisanat contre l'éphémère.
+                                La main humaine contre la machine.
+                            </p>
+                            <p className={styles.sectionText}>
+                                Elle n'entre pas dans une salle. Elle en devient le centre de gravité.
+                            </p>
+                            <p className={styles.sectionCaption}>
+                                Broderie point de Lunéville, réalisée entièrement à la main par
+                                Marie Torres — pièce unique portée par Anais Drion.
                             </p>
                         </div>
                         <div className={styles.imageGridStacked}>
                             <HistoryImage
-                                src="/images/histoire/05-bd.webp"
-                                alt="Autre vue du modèle en tenue brodée Arno Polynice"
+                                src="/images/histoire/05-bd-v2.webp"
+                                alt="Anais Drion portant l'ensemble brodé point de Lunéville"
                                 className={styles.gridTop}
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             <HistoryImage
-                                src="/images/histoire/05-bg.webp"
-                                alt="Détail de la tenue brodée Arno Polynice"
+                                src="/images/histoire/05-bg-v2.webp"
+                                alt="Détail de la broderie point de Lunéville sur la tenue d'Anais Drion"
                                 className={styles.gridBottomLeft}
                                 sizes="(max-width: 768px) 50vw, 25vw"
                             />
                             <HistoryImage
-                                src="/images/histoire/05-haut.webp"
-                                alt="Mannequin en tenue brodée Arno Polynice"
+                                src="/images/histoire/05-haut-v2.webp"
+                                alt="Détail de l'ensemble brodé Arno Polynice"
                                 className={styles.gridBottomRight}
                                 sizes="(max-width: 768px) 50vw, 25vw"
                             />

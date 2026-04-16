@@ -147,6 +147,18 @@
     margin-bottom: 14px;
 }
 
+/* Caption / mention technique en bas d'un texte (ex. crédits artisan) */
+.sectionCaption {
+    font-size: 0.78rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
 /* ============ Image wrapper (next/image fill) ============ */
 .imageWrapper {
     position: relative;
