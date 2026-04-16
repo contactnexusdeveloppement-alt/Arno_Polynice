@@ -27,7 +27,6 @@ export default function MentionsLegalesPage() {
                             <li>Adresse du siège : 68 rue André Vitu, 88000 Épinal, France</li>
                             <li>SIREN : <strong>103 064 036</strong></li>
                             <li>SIRET : <strong>103 064 036 00017</strong></li>
-                            <li>Numéro de TVA intracommunautaire : FR61103064036</li>
                             <li>Code APE / NAF : 14.13Z (Fabrication de vêtements de dessus)</li>
                             <li>Activité : Fabrication et vente de vêtements et accessoires</li>
                             <li>Inscription au Registre National des Entreprises (RNE)</li>

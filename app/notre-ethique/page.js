@@ -21,9 +21,7 @@ export default function NotreEthiquePage() {
 
                 <div className={styles.values}>
                     <div className={styles.value}>
-                        <div className={styles.valueIcon} style={{ backgroundColor: '#4A7C59' }}>
-                            <span>🌿</span>
-                        </div>
+                        <span className={styles.valueNumber} aria-hidden="true">01</span>
                         <h2 className={styles.valueTitle}>Matières Responsables</h2>
                         <p className={styles.valueText}>
                             Nous sélectionnons nos tissus avec exigence : lin français, coton biologique,
@@ -33,9 +31,7 @@ export default function NotreEthiquePage() {
                     </div>
 
                     <div className={styles.value}>
-                        <div className={styles.valueIcon} style={{ backgroundColor: '#3D4F5F' }}>
-                            <span>✋</span>
-                        </div>
+                        <span className={styles.valueNumber} aria-hidden="true">02</span>
                         <h2 className={styles.valueTitle}>Fabrication Artisanale</h2>
                         <p className={styles.valueText}>
                             Pas de production de masse. Chaque pièce est confectionnée en petite série ou
@@ -45,9 +41,7 @@ export default function NotreEthiquePage() {
                     </div>
 
                     <div className={styles.value}>
-                        <div className={styles.valueIcon} style={{ backgroundColor: '#C4943D' }}>
-                            <span>♻</span>
-                        </div>
+                        <span className={styles.valueNumber} aria-hidden="true">03</span>
                         <h2 className={styles.valueTitle}>Anti-gaspillage</h2>
                         <p className={styles.valueText}>
                             Notre modèle de production à la commande minimise les invendus et le gaspillage
@@ -57,9 +51,7 @@ export default function NotreEthiquePage() {
                     </div>
 
                     <div className={styles.value}>
-                        <div className={styles.valueIcon} style={{ backgroundColor: '#722F37' }}>
-                            <span>🤝</span>
-                        </div>
+                        <span className={styles.valueNumber} aria-hidden="true">04</span>
                         <h2 className={styles.valueTitle}>Transparence</h2>
                         <p className={styles.valueText}>
                             Nous détaillons la composition de chaque pièce, son lieu de fabrication et les
