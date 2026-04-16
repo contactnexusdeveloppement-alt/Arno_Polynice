@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Sources d'images brutes (lourdes — converties en WebP via scripts/convert-histoire.js)
+/public/images/histoire-new/
+
+# Configuration locale Claude (launch.json, etc.)
+/.claude/

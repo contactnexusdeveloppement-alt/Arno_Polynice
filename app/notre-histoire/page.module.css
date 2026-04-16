@@ -1,14 +1,16 @@
 .storyPage {
     max-width: var(--container-max);
-    margin: 0 auto;
-    padding-bottom: 100px;
+    margin: 0 auto -60px;
+    /* margin-bottom négatif pour réduire l'espace avec le footer global (qui a margin-top 100px) */
+    padding: 40px 40px 0;
 }
 
-/* Hero */
+/* ============ Hero ============ */
 .storyHero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 85vh;
+    grid-template-columns: 5fr 7fr;
+    gap: 60px;
+    min-height: 80vh;
 }
 
 .storyHeroImage {
@@ -20,7 +22,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px;
+    padding: 40px 20px;
 }
 
 .label {
@@ -48,7 +50,7 @@
     max-width: 460px;
 }
 
-/* Sections */
+/* ============ Sections ============ */
 .content {
     padding: 0;
 }
@@ -56,16 +58,35 @@
 .section {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 40px;
     min-height: 70vh;
-    border-top: 1px solid var(--color-border-light);
+    margin-top: 40px;
 }
 
-.section:nth-child(even) {
-    direction: rtl;
+/* Classe explicite d'inversion (texte à gauche, image/grille à droite) */
+.sectionReverse {
+    /* ordre naturel du DOM = texte puis image => pas besoin de trick */
 }
 
-.section:nth-child(even) > * {
-    direction: ltr;
+/* Modificateurs : redistribution des colonnes pour donner plus de place à l'image */
+.sectionPhotoLarge {
+    grid-template-columns: 3fr 2fr;
+    /* photo gauche prend 60% */
+}
+
+/* Variante : image visible en entier (container portrait pour matcher photo 4:5)
+   - colonne photo plus étroite (~40%)
+   - hauteur augmentée pour que le ratio cellule soit légèrement plus portrait que l'image
+   - texte se décale et s'élargit */
+.sectionPhotoFull {
+    grid-template-columns: 2fr 3fr;
+    min-height: 78vh;
+}
+
+.sectionGridLarge {
+    grid-template-columns: 2fr 3fr;
+    /* texte gauche, grille droite prend 60% */
+    min-height: 78vh;
 }
 
 .sectionImage {
@@ -73,15 +94,11 @@
     overflow: hidden;
 }
 
-.coverImage {
-    object-fit: cover;
-}
-
 .sectionContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 50px 60px;
+    padding: 40px 20px;
 }
 
 .sectionLabel {
@@ -119,21 +136,152 @@
     margin-bottom: 14px;
 }
 
-/* Responsive */
+/* ============ Image wrapper (next/image fill) ============ */
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    overflow: hidden;
+}
+
+/* Variante : cellule avec aspect-ratio fixe (la hauteur découle de la largeur)
+   utilisée pour les photos qui doivent toujours s'afficher au bon ratio
+   peu importe la taille du viewport */
+.aspectFixed {
+    height: auto;
+    min-height: 0;
+    align-self: center;
+}
+
+.coverImage {
+    object-fit: cover;
+}
+
+/* ============ Placeholder ============ */
+.placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    background-color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(0, 0, 0, 0.05) 100%
+    );
+    pointer-events: none;
+}
+
+.placeholderMonogram {
+    position: relative;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.35;
+    padding-left: 0.25em;
+    /* compense le letter-spacing visuel */
+    user-select: none;
+}
+
+/* ============ Grille stacked (sections 2 & 5) ============ */
+/* 1 grande photo portrait en haut + 2 carrées côte à côte en bas */
+.imageGridStacked {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.6fr 1fr;
+    gap: 16px;
+    min-height: 70vh;
+}
+
+/* Modificateur : agrandit la rangée du haut + total plus généreux
+   pour que la photo "à 3" portrait ne soit pas coupée au niveau des têtes */
+.imageGridStackedTall {
+    grid-template-rows: 1.8fr 1fr;
+    min-height: 92vh;
+}
+
+.gridTop {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+.gridBottomLeft {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.gridBottomRight {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* ============ Grille side-stack (section 4) ============ */
+/* 1 grande photo portrait à gauche + 2 carrées empilées à droite */
+.imageGridSideStack {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    min-height: 70vh;
+}
+
+.gridMain {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+.gridSideTop {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.gridSideBottom {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* ============ Responsive ============ */
 @media (max-width: 1024px) {
-    .storyHeroContent {
-        padding: 40px;
+    .storyPage {
+        padding: 24px 24px 0;
+        margin-bottom: -50px;
     }
 
+    .storyHero,
+    .section {
+        gap: 24px;
+    }
+
+    .storyHeroContent,
     .sectionContent {
-        padding: 36px 40px;
+        padding: 24px 8px;
     }
 }
 
 @media (max-width: 768px) {
+    .storyPage {
+        padding: 16px 16px 0;
+        margin-bottom: -40px;
+    }
+
     .storyHero {
         grid-template-columns: 1fr;
         min-height: auto;
+        gap: 20px;
     }
 
     .storyHeroImage {
@@ -141,16 +289,14 @@
     }
 
     .storyHeroContent {
-        padding: 40px var(--container-padding);
+        padding: 16px 4px;
     }
 
     .section {
         grid-template-columns: 1fr;
         min-height: auto;
-    }
-
-    .section:nth-child(even) {
-        direction: ltr;
+        gap: 20px;
+        margin-top: 24px;
     }
 
     .sectionImage {
@@ -158,10 +304,43 @@
     }
 
     .sectionContent {
-        padding: 32px var(--container-padding);
+        padding: 16px 4px;
     }
 
     .sectionTitle {
         font-size: 1.3rem;
+    }
+
+    /* Grilles multi-photos sur mobile : portrait plein + 2 carrées côte à côte */
+    .imageGridStacked,
+    .imageGridSideStack {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        min-height: auto;
+    }
+
+    .imageGridStacked .gridTop,
+    .imageGridSideStack .gridMain {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        aspect-ratio: 4 / 5;
+    }
+
+    .imageGridStacked .gridBottomLeft,
+    .imageGridSideStack .gridSideTop {
+        grid-column: 1;
+        grid-row: 2;
+        aspect-ratio: 1;
+    }
+
+    .imageGridStacked .gridBottomRight,
+    .imageGridSideStack .gridSideBottom {
+        grid-column: 2;
+        grid-row: 2;
+        aspect-ratio: 1;
+    }
+
+    .placeholder {
+        min-height: 0;
     }
 }

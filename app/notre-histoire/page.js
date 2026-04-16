@@ -7,23 +7,52 @@ export const metadata = {
     alternates: { canonical: 'https://www.arno-polynice.com/notre-histoire' },
 };
 
+function HistoryImage({ src, alt, className = '', priority = false, sizes, position = 'center', aspect }) {
+    // Si aspect fourni (ex "3 / 4"), on force la cellule à ce ratio
+    const wrapperStyle = aspect ? { aspectRatio: aspect } : undefined;
+    const wrapperClass = aspect
+        ? `${styles.imageWrapper} ${styles.aspectFixed} ${className}`
+        : `${styles.imageWrapper} ${className}`;
+    return (
+        <div className={wrapperClass} style={wrapperStyle}>
+            <Image
+                src={src}
+                alt={alt}
+                fill
+                sizes={sizes}
+                priority={priority}
+                className={styles.coverImage}
+                style={{ objectPosition: position }}
+            />
+        </div>
+    );
+}
+
+function Placeholder({ className = '' }) {
+    return (
+        <div
+            className={`${styles.placeholder} ${className}`}
+            role="img"
+            aria-label="Photo à venir"
+        >
+            <span className={styles.placeholderMonogram} aria-hidden="true">AP</span>
+        </div>
+    );
+}
+
 export default function NotreHistoirePage() {
     return (
         <div className="page-enter">
             <section className={styles.storyPage}>
-                {/* Hero — Mon histoire */}
+                {/* Section 1 — Mon histoire (photo gauche / texte droite) */}
                 <div className={styles.storyHero}>
-                    <div className={styles.storyHeroImage}>
-                        <Image
-                            src="/images/histoire/mon-histoire.jpg"
-                            alt="Adelson Paugain, fondateur d'Arno Polynice"
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            priority
-                            className={styles.coverImage}
-                            style={{ objectPosition: 'center 15%' }}
-                        />
-                    </div>
+                    <HistoryImage
+                        src="/images/histoire/01-hero.webp"
+                        alt="Adelson Paugain, fondateur d'Arno Polynice"
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        aspect="3 / 4"
+                    />
                     <div className={styles.storyHeroContent}>
                         <span className={styles.label}>A propos de la marque</span>
                         <h1 className={styles.title}>Mon Histoire</h1>
@@ -41,20 +70,9 @@ export default function NotreHistoirePage() {
                     </div>
                 </div>
 
-                {/* Content Blocks */}
                 <div className={styles.content}>
-                    {/* Section 2 — Nos produits */}
-                    <div className={styles.section}>
-                        <div className={styles.sectionImage}>
-                            <Image
-                                src="/images/histoire/nos-produits.jpg"
-                                alt="Collection Arno Polynice — shooting en plein air"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.coverImage}
-                                style={{ objectPosition: 'center 25%' }}
-                            />
-                        </div>
+                    {/* Section 2 — Nos Produits (texte gauche / grille 3 photos droite) */}
+                    <div className={`${styles.section} ${styles.sectionReverse}`}>
                         <div className={styles.sectionContent}>
                             <h2 className={styles.sectionTitle}>Nos Produits</h2>
                             <p className={styles.sectionText}>
@@ -69,19 +87,33 @@ export default function NotreHistoirePage() {
                                 vêtements du quotidien qui ont une vraie personnalité.
                             </p>
                         </div>
+                        <div className={`${styles.imageGridStacked} ${styles.imageGridStackedTall}`}>
+                            <HistoryImage
+                                src="/images/histoire/02-haut.webp"
+                                alt="Trois mannequins en tenue Arno Polynice avec shorts"
+                                className={styles.gridTop}
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                            <HistoryImage
+                                src="/images/histoire/02-bg.webp"
+                                alt="Mannequin Mady en ensemble bleu Arno Polynice"
+                                className={styles.gridBottomLeft}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                                aspect="1 / 1"
+                            />
+                            <Placeholder className={styles.gridBottomRight} />
+                        </div>
                     </div>
 
-                    {/* Section 3 — Notre ADN */}
-                    <div className={styles.section}>
-                        <div className={styles.sectionImage}>
-                            <Image
-                                src="/images/histoire/notre-adn.jpg"
-                                alt="Détail d'une veste Arno Polynice avec rivets dorés — atelier"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.coverImage}
-                            />
-                        </div>
+                    {/* Section 3 — Notre ADN (photo gauche / texte droite) */}
+                    <div className={`${styles.section} ${styles.sectionPhotoFull}`}>
+                        <HistoryImage
+                            src="/images/histoire/03-adn.webp"
+                            alt="Détail d'un ensemble Arno Polynice bleu et gris"
+                            className={styles.sectionImage}
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            aspect="3 / 4"
+                        />
                         <div className={styles.sectionContent}>
                             <span className={styles.sectionLabel}>Notre univers</span>
                             <h2 className={styles.sectionTitle}>Notre ADN</h2>
@@ -103,18 +135,8 @@ export default function NotreHistoirePage() {
                         </div>
                     </div>
 
-                    {/* Section 4 — Nos collaborations */}
-                    <div className={styles.section}>
-                        <div className={styles.sectionImage}>
-                            <Image
-                                src="/images/histoire/collaboration.jpg"
-                                alt="Meloofchrist en concert portant une veste Arno Polynice"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.coverImage}
-                                style={{ objectPosition: 'center 20%' }}
-                            />
-                        </div>
+                    {/* Section 4 — Collaboration Exclusive (texte gauche / grille 3 photos droite) */}
+                    <div className={`${styles.section} ${styles.sectionReverse} ${styles.sectionGridLarge}`}>
                         <div className={styles.sectionContent}>
                             <span className={styles.sectionLabel}>Nos collaborations</span>
                             <h2 className={styles.sectionTitle}>Collaboration Exclusive</h2>
@@ -132,18 +154,48 @@ export default function NotreHistoirePage() {
                                 l'univers de l'artiste tout en la façonnant également à notre image.
                             </p>
                         </div>
+                        <div className={styles.imageGridSideStack}>
+                            <HistoryImage
+                                src="/images/histoire/04-main.webp"
+                                alt="Meloofchrist en concert portant une veste Arno Polynice"
+                                className={styles.gridMain}
+                                sizes="(max-width: 768px) 100vw, 30vw"
+                            />
+                            <HistoryImage
+                                src="/images/histoire/04-hd.webp"
+                                alt="Veste Arno Polynice — vue de dos"
+                                className={styles.gridSideTop}
+                                sizes="(max-width: 768px) 50vw, 20vw"
+                            />
+                            <HistoryImage
+                                src="/images/histoire/04-bd.webp"
+                                alt="Veste Arno Polynice — pose détaillée"
+                                className={styles.gridSideBottom}
+                                sizes="(max-width: 768px) 50vw, 20vw"
+                            />
+                        </div>
                     </div>
 
-                    {/* Section 5 — L'élégance à la provençale */}
+                    {/* Section 5 — Légèreté Estivale (grille 3 photos gauche / texte droite) */}
                     <div className={styles.section}>
-                        <div className={styles.sectionImage}>
-                            <Image
-                                src="/images/histoire/elegance-provencale.jpg"
-                                alt="Shooting bord de mer — ensembles Arno Polynice"
-                                fill
+                        <div className={styles.imageGridStacked}>
+                            <HistoryImage
+                                src="/images/histoire/05-haut.webp"
+                                alt="Mannequin en tenue brodée Arno Polynice"
+                                className={styles.gridTop}
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.coverImage}
-                                style={{ objectPosition: 'center 30%' }}
+                            />
+                            <HistoryImage
+                                src="/images/histoire/05-bg.webp"
+                                alt="Détail de la tenue brodée Arno Polynice"
+                                className={styles.gridBottomLeft}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                            />
+                            <HistoryImage
+                                src="/images/histoire/05-bd.webp"
+                                alt="Autre vue du modèle en tenue brodée Arno Polynice"
+                                className={styles.gridBottomRight}
+                                sizes="(max-width: 768px) 50vw, 25vw"
                             />
                         </div>
                         <div className={styles.sectionContent}>
@@ -164,17 +216,8 @@ export default function NotreHistoirePage() {
                         </div>
                     </div>
 
-                    {/* Section 6 — Ensembles à plis */}
-                    <div className={styles.section}>
-                        <div className={styles.sectionImage}>
-                            <Image
-                                src="/images/histoire/ensembles-plis.jpg"
-                                alt="Veste Arno Polynice avec croix — détail dos"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={styles.coverImage}
-                            />
-                        </div>
+                    {/* Section 6 — Nouvelle Collection (texte gauche / photo droite) */}
+                    <div className={`${styles.section} ${styles.sectionReverse}`}>
                         <div className={styles.sectionContent}>
                             <span className={styles.sectionLabel}>Ensembles à plis</span>
                             <h2 className={styles.sectionTitle}>Nouvelle Collection, Nouvelle Énergie</h2>
@@ -199,6 +242,12 @@ export default function NotreHistoirePage() {
                                 un sergé de coton gris foncé.
                             </p>
                         </div>
+                        <HistoryImage
+                            src="/images/histoire/06-nouvelle.webp"
+                            alt="Mannequin portant la nouvelle collection Arno Polynice avec chemise"
+                            className={styles.sectionImage}
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
                     </div>
                 </div>
             </section>
