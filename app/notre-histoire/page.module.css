@@ -25,6 +25,11 @@
     padding: 40px 20px;
 }
 
+/* Bloc titre + label affiché uniquement en mobile (caché sur desktop) */
+.storyHeroMobileTitle {
+    display: none;
+}
+
 .label {
     font-family: var(--font-heading);
     font-size: 0.7rem;
@@ -86,6 +91,12 @@
 .sectionGridLarge {
     grid-template-columns: 2fr 3fr;
     /* texte gauche, grille droite prend 60% */
+    min-height: 78vh;
+}
+
+/* Variante miroir : grille gauche prend 60%, texte droite (utilisée après inversion sections) */
+.sectionGridFirst {
+    grid-template-columns: 3fr 2fr;
     min-height: 78vh;
 }
 
@@ -279,9 +290,23 @@
     }
 
     .storyHero {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         min-height: auto;
         gap: 20px;
+    }
+
+    /* Hero mobile : afficher le titre au-dessus de la photo */
+    .storyHeroMobileTitle {
+        display: flex;
+        flex-direction: column;
+        padding: 8px 4px 0;
+    }
+
+    /* Dans storyHeroContent sur mobile, cacher le duplicata label + titre */
+    .storyHeroContent > .label,
+    .storyHeroContent > .title {
+        display: none;
     }
 
     .storyHeroImage {
@@ -289,14 +314,24 @@
     }
 
     .storyHeroContent {
-        padding: 16px 4px;
+        padding: 0 4px 16px;
     }
 
+    /* Sections : toujours texte puis image sur mobile (peu importe l'ordre DOM) */
     .section {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         min-height: auto;
         gap: 20px;
         margin-top: 24px;
+    }
+
+    .section > .sectionContent {
+        order: 1;
+    }
+
+    .section > :not(.sectionContent) {
+        order: 2;
     }
 
     .sectionImage {

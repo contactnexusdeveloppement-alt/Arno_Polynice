@@ -17,7 +17,7 @@ const FILES = [
     { in: '01-hero.jpg', out: '01-hero.webp', maxWidth: 1400 },
     { in: '02-haut.jpg', out: '02-haut.webp', maxWidth: 1400 },
     { in: '02-bg.jpg', out: '02-bg.webp', maxWidth: 900 },
-    // 02-bd : pas d'image, reste en placeholder
+    { in: '02-bd.jpg', out: '02-bd.webp', maxWidth: 900 },
     { in: '03-adn.jpg', out: '03-adn.webp', maxWidth: 1400 },
     { in: '04-main.JPG', out: '04-main.webp', maxWidth: 1400 },
     { in: '04-hd.JPG', out: '04-hd.webp', maxWidth: 900 },
