@@ -375,6 +375,8 @@ const doc = new Document({
             bulletBold('hero_slide', ' — les grandes images qui défilent en haut de la page d\'accueil.'),
             bulletBold('vision_image', ' — l\'image de la section "Vision" sur la page d\'accueil.'),
             bulletBold('histoire_image', ' — les images affichées sur la page Notre Histoire.'),
+            bulletBold('ethics_page', ' — le titre, l\'introduction et la citation de la page Notre Éthique.'),
+            bulletBold('ethics_value', ' — les 4 engagements (Matières, Fabrication, Anti-gaspillage, Transparence) de la page Notre Éthique.'),
 
             h2('Modifier un hero slide (image d\'accueil)'),
             numbered('Metaobjects → hero_slide → cliquez sur l\'entrée existante à modifier.'),
@@ -394,6 +396,30 @@ const doc = new Document({
             numbered('Remplacez l\'image comme précédemment.'),
             numbered('Save.'),
             warning('Les noms des entrées (ex. "01-hero", "02-haut") correspondent aux emplacements précis sur la page. Ne les renommez pas sans demander au développeur, sinon l\'image ne s\'affichera plus.'),
+
+            h2('Modifier la page Notre Éthique (texte + citation)'),
+            p('La page « Notre Éthique » est entièrement éditable depuis Shopify. Elle se compose de deux types d\'entrées :'),
+            bulletBold('Ethics Page (1 entrée)', ' — le label "Nos engagements", le titre principal "Notre Éthique", l\'introduction sous le titre, et la citation finale + son auteur.'),
+            bulletBold('Ethics Value (4 entrées)', ' — les 4 engagements affichés en grille (numéro, titre, description). Une entrée par engagement.'),
+
+            h3('Modifier le titre, l\'intro ou la citation'),
+            numbered('Metaobjects → Ethics Page → cliquez sur l\'entrée existante (il n\'y en a qu\'une).'),
+            numbered('Modifiez les champs souhaités : Label, Title, Intro, Quote text, Quote author.'),
+            numbered('Save.'),
+
+            h3('Modifier un engagement (Matières, Fabrication, etc.)'),
+            numbered('Metaobjects → Ethics Value → cliquez sur l\'entrée à modifier.'),
+            numbered('Modifiez le titre (ex. "Matières Responsables") ou la description.'),
+            numbered('Le champ Number contrôle le grand chiffre affiché à côté (ex. "01"). Le champ Position contrôle l\'ordre d\'affichage (1, 2, 3, 4).'),
+            numbered('Save.'),
+
+            h3('Ajouter ou supprimer un engagement'),
+            p('Vous pouvez avoir plus ou moins de 4 engagements. Le site les affichera tous dans l\'ordre indiqué par le champ Position.'),
+            numbered('Pour ajouter : Metaobjects → Ethics Value → bouton Add entry → remplissez Position (5, 6...), Number, Title, Text → Save.'),
+            numbered('Pour supprimer : ouvrez l\'entrée → bouton ... → Delete entry.'),
+
+            tip('Le site se met à jour automatiquement environ 5 minutes après vos modifications. Si vous ne voyez pas le changement immédiatement, attendez puis rafraîchissez.'),
+            warning('Ne modifiez pas les "noms" internes des champs (label, title, intro, etc.). Vous ne pouvez modifier que leur contenu (la valeur saisie).'),
             new Paragraph({ children: [new PageBreak()] }),
 
             // =============== 7. LIVRAISON ===============
