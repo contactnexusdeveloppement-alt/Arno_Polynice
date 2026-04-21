@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { registerAction } from '@/app/actions/auth';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from '@/app/connexion/page.module.css';
 
 export default function RegisterPage() {
     const router = useRouter();
+    const { t } = useLanguage();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -21,7 +23,7 @@ export default function RegisterPage() {
         const confirmPassword = formData.get('confirmPassword');
 
         if (password !== confirmPassword) {
-            setError('Les mots de passe ne correspondent pas.');
+            setError(t('auth.passwordMismatch'));
             setIsLoading(false);
             return;
         }
@@ -40,15 +42,15 @@ export default function RegisterPage() {
     return (
         <div className={`page-enter ${styles.authPage}`}>
             <div className={styles.authContainer} style={{ maxWidth: '500px' }}>
-                <h1 className={styles.title}>Créer un compte</h1>
-                <p className={styles.subtitle}>Rejoignez l'univers Arno Polynice.</p>
+                <h1 className={styles.title}>{t('auth.createAccount')}</h1>
+                <p className={styles.subtitle}>{t('auth.registerSubtitle')}</p>
 
                 {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.row}>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="firstName">Prénom</label>
+                            <label htmlFor="firstName">{t('auth.firstName')}</label>
                             <input
                                 type="text"
                                 id="firstName"
@@ -57,7 +59,7 @@ export default function RegisterPage() {
                             />
                         </div>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="lastName">Nom</label>
+                            <label htmlFor="lastName">{t('auth.lastName')}</label>
                             <input
                                 type="text"
                                 id="lastName"
@@ -68,7 +70,7 @@ export default function RegisterPage() {
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{t('auth.email')}</label>
                         <input
                             type="email"
                             id="email"
@@ -78,7 +80,7 @@ export default function RegisterPage() {
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="password">Mot de passe</label>
+                        <label htmlFor="password">{t('auth.password')}</label>
                         <input
                             type="password"
                             id="password"
@@ -89,7 +91,7 @@ export default function RegisterPage() {
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+                        <label htmlFor="confirmPassword">{t('auth.confirmPassword')}</label>
                         <input
                             type="password"
                             id="confirmPassword"
@@ -104,12 +106,12 @@ export default function RegisterPage() {
                         className={`btn btn--primary ${styles.submitBtn}`}
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Création en cours...' : 'S\'inscrire'}
+                        {isLoading ? t('auth.registerInProgress') : t('auth.registerBtn')}
                     </button>
                 </form>
 
                 <div className={styles.switchAuth}>
-                    <p>Déjà client ? <Link href="/connexion" className={styles.linkBold}>Se connecter</Link></p>
+                    <p>{t('auth.alreadyCustomer')} <Link href="/connexion" className={styles.linkBold}>{t('auth.signIn')}</Link></p>
                 </div>
             </div>
         </div>

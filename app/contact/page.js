@@ -35,14 +35,14 @@ export default function ContactPage() {
             const result = await res.json();
 
             if (!res.ok) {
-                throw new Error(result.error || 'Erreur lors de l\'envoi');
+                throw new Error(result.error || t('contact.genericError'));
             }
 
             setStatus('success');
             e.target.reset();
         } catch (err) {
             setStatus('error');
-            setErrorMessage(err.message || 'Une erreur est survenue. Veuillez réessayer.');
+            setErrorMessage(err.message || t('contact.genericError'));
         }
     };
 
@@ -50,10 +50,8 @@ export default function ContactPage() {
         <div className="page-enter">
             <section className={styles.contactPage}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>Contact</h1>
-                    <p className={styles.subtitle}>
-                        Une question, une commande sur mesure ou une collaboration ? N'hésitez pas à nous écrire.
-                    </p>
+                    <h1 className={styles.title}>{t('contact.title')}</h1>
+                    <p className={styles.subtitle}>{t('contact.subtitle')}</p>
                 </div>
 
                 <div className={styles.grid}>
@@ -61,37 +59,37 @@ export default function ContactPage() {
                     <form className={styles.form} onSubmit={handleSubmit} noValidate>
                         <div className={styles.formRow}>
                             <div className={styles.formGroup}>
-                                <label className={styles.formLabel} htmlFor="firstName">Prénom</label>
-                                <input id="firstName" name="firstName" type="text" className={styles.formInput} placeholder="Votre prénom" required disabled={status === 'sending'} />
+                                <label className={styles.formLabel} htmlFor="firstName">{t('contact.firstName')}</label>
+                                <input id="firstName" name="firstName" type="text" className={styles.formInput} placeholder={t('contact.firstNamePlaceholder')} required disabled={status === 'sending'} />
                             </div>
                             <div className={styles.formGroup}>
-                                <label className={styles.formLabel} htmlFor="lastName">Nom</label>
-                                <input id="lastName" name="lastName" type="text" className={styles.formInput} placeholder="Votre nom" required disabled={status === 'sending'} />
+                                <label className={styles.formLabel} htmlFor="lastName">{t('contact.lastName')}</label>
+                                <input id="lastName" name="lastName" type="text" className={styles.formInput} placeholder={t('contact.lastNamePlaceholder')} required disabled={status === 'sending'} />
                             </div>
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel} htmlFor="email">Email</label>
-                            <input id="email" name="email" type="email" className={styles.formInput} placeholder="votre@email.com" required disabled={status === 'sending'} />
+                            <label className={styles.formLabel} htmlFor="email">{t('contact.email')}</label>
+                            <input id="email" name="email" type="email" className={styles.formInput} placeholder={t('contact.emailPlaceholder')} required disabled={status === 'sending'} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel} htmlFor="subject">Sujet</label>
+                            <label className={styles.formLabel} htmlFor="subject">{t('contact.subject')}</label>
                             <select id="subject" name="subject" className={styles.formInput} defaultValue="" required disabled={status === 'sending'}>
-                                <option value="" disabled>Sélectionnez un sujet</option>
-                                <option value="commande">Question sur une commande</option>
-                                <option value="personnalisation">Personnalisation / Sur mesure</option>
-                                <option value="collaboration">Collaboration</option>
-                                <option value="presse">Presse</option>
-                                <option value="autre">Autre</option>
+                                <option value="" disabled>{t('contact.selectSubject')}</option>
+                                <option value="commande">{t('contact.subjectOrder')}</option>
+                                <option value="personnalisation">{t('contact.subjectCustom')}</option>
+                                <option value="collaboration">{t('contact.subjectCollab')}</option>
+                                <option value="presse">{t('contact.subjectPress')}</option>
+                                <option value="autre">{t('contact.subjectOther')}</option>
                             </select>
                         </div>
                         <div className={styles.formGroup}>
-                            <label className={styles.formLabel} htmlFor="message">Message</label>
-                            <textarea id="message" name="message" className={styles.formTextarea} rows="6" placeholder="Votre message..." required disabled={status === 'sending'} />
+                            <label className={styles.formLabel} htmlFor="message">{t('contact.message')}</label>
+                            <textarea id="message" name="message" className={styles.formTextarea} rows="6" placeholder={t('contact.messagePlaceholder')} required disabled={status === 'sending'} />
                         </div>
 
                         {status === 'success' && (
                             <div className={styles.successBanner} role="status" aria-live="polite">
-                                ✓ Votre message a bien été envoyé. Nous vous répondrons sous 24 à 48 heures.
+                                {t('contact.messageSent')}
                             </div>
                         )}
                         {status === 'error' && (
@@ -101,21 +99,21 @@ export default function ContactPage() {
                         )}
 
                         <button type="submit" className="btn btn--primary" disabled={status === 'sending'}>
-                            {status === 'sending' ? 'Envoi en cours...' : 'Envoyer'}
+                            {status === 'sending' ? t('contact.sending') : t('contact.send')}
                         </button>
                     </form>
 
                     {/* Info */}
                     <div className={styles.contactInfo}>
                         <div className={styles.infoBlock}>
-                            <h3 className={styles.infoTitle}>Email</h3>
+                            <h3 className={styles.infoTitle}>{t('contact.email')}</h3>
                             <a href="mailto:arnopolynice@gmail.com" className={styles.infoLink}>
                                 arnopolynice@gmail.com
                             </a>
                         </div>
 
                         <div className={styles.infoBlock}>
-                            <h3 className={styles.infoTitle}>Réseaux sociaux</h3>
+                            <h3 className={styles.infoTitle}>{t('contact.socialNetworks')}</h3>
                             <a href="https://www.instagram.com/arnopolynice/" target="_blank" rel="noopener noreferrer" className={styles.infoLink}>
                                 Instagram — @arnopolynice
                             </a>
@@ -128,11 +126,8 @@ export default function ContactPage() {
                         </div>
 
                         <div className={styles.infoBlock}>
-                            <h3 className={styles.infoTitle}>Délais de réponse</h3>
-                            <p className={styles.infoText}>
-                                Nous répondons généralement sous 24 à 48 heures.
-                                Pour les commandes personnalisées, un rendez-vous atelier peut être organisé.
-                            </p>
+                            <h3 className={styles.infoTitle}>{t('contact.responseTime')}</h3>
+                            <p className={styles.infoText}>{t('contact.responseTimeText')}</p>
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ export default function Footer() {
                         <button
                             type="submit"
                             className={styles.newsletterBtn}
-                            aria-label={t('footer.subscribe') || 'S\'inscrire'}
+                            aria-label={t('footer.subscribe')}
                         >
                             →
                         </button>

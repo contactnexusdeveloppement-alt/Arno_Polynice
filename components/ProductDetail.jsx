@@ -124,7 +124,7 @@ export default function ProductDetail({ product }) {
                                 key={i}
                                 className={`${styles.thumb} ${activeImage === i ? styles.thumbActive : ''}`}
                                 onClick={() => setActiveImage(i)}
-                                aria-label={`${t('product.viewImage') || 'Voir image'} ${i + 1}`}
+                                aria-label={`${t('product.viewImage')} ${i + 1}`}
                             >
                                 {img ? (
                                     <Image

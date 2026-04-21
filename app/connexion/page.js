@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { loginAction } from '@/app/actions/auth';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from './page.module.css';
 
 export default function LoginPage() {
     const router = useRouter();
+    const { t } = useLanguage();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -31,25 +33,25 @@ export default function LoginPage() {
     return (
         <div className={`page-enter ${styles.authPage}`}>
             <div className={styles.authContainer}>
-                <h1 className={styles.title}>Connexion</h1>
-                <p className={styles.subtitle}>Accédez à votre espace personnel Arno Polynice.</p>
+                <h1 className={styles.title}>{t('auth.login')}</h1>
+                <p className={styles.subtitle}>{t('auth.loginSubtitle')}</p>
 
                 {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{t('auth.email')}</label>
                         <input
                             type="email"
                             id="email"
                             name="email"
                             required
-                            placeholder="vous@exemple.com"
+                            placeholder={t('auth.emailPlaceholder')}
                         />
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="password">Mot de passe</label>
+                        <label htmlFor="password">{t('auth.password')}</label>
                         <input
                             type="password"
                             id="password"
@@ -60,7 +62,7 @@ export default function LoginPage() {
                     </div>
 
                     <div className={styles.formLinks}>
-                        <Link href="/mot-de-passe-oublie" className={styles.link}>Mot de passe oublié ?</Link>
+                        <Link href="/mot-de-passe-oublie" className={styles.link}>{t('auth.forgotPassword')}</Link>
                     </div>
 
                     <button
@@ -68,12 +70,12 @@ export default function LoginPage() {
                         className={`btn btn--primary ${styles.submitBtn}`}
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+                        {isLoading ? t('auth.loginInProgress') : t('auth.loginBtn')}
                     </button>
                 </form>
 
                 <div className={styles.switchAuth}>
-                    <p>Nouveau client ? <Link href="/inscription" className={styles.linkBold}>Créer un compte</Link></p>
+                    <p>{t('auth.newCustomer')} <Link href="/inscription" className={styles.linkBold}>{t('auth.createAccount')}</Link></p>
                 </div>
             </div>
         </div>

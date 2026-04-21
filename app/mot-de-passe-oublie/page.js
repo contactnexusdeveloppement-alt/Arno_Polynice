@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { recoverAction } from '@/app/actions/auth';
+import { useLanguage } from '@/context/LanguageContext';
 import styles from '@/app/connexion/page.module.css';
 
 export default function ForgotPasswordPage() {
+    const { t } = useLanguage();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -22,7 +24,7 @@ export default function ForgotPasswordPage() {
         if (result?.error) {
             setError(result.error);
         } else {
-            setSuccessMessage("Si cet email correspond à un compte, vous recevrez bientôt un lien pour réinitialiser le mot de passe.");
+            setSuccessMessage(t('auth.successMessage'));
         }
         setIsLoading(false);
     }
@@ -30,8 +32,8 @@ export default function ForgotPasswordPage() {
     return (
         <div className={`page-enter ${styles.authPage}`}>
             <div className={styles.authContainer}>
-                <h1 className={styles.title}>Oubli de Code</h1>
-                <p className={styles.subtitle}>Saisissez votre email. Nous vous enverrons un lien de réinitialisation.</p>
+                <h1 className={styles.title}>{t('auth.forgotTitle')}</h1>
+                <p className={styles.subtitle}>{t('auth.forgotSubtitle')}</p>
 
                 {error && <div className={styles.errorBanner} role="alert" aria-live="polite">{error}</div>}
 
@@ -41,19 +43,19 @@ export default function ForgotPasswordPage() {
                             {successMessage}
                         </p>
                         <Link href="/connexion" className={`btn btn--primary ${styles.submitBtn}`} style={{ display: 'inline-block', width: 'auto' }}>
-                            Retour à la connexion
+                            {t('auth.backToLogin')}
                         </Link>
                     </div>
                 ) : (
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.inputGroup}>
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">{t('auth.email')}</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 required
-                                placeholder="vous@exemple.com"
+                                placeholder={t('auth.emailPlaceholder')}
                             />
                         </div>
 
@@ -62,13 +64,13 @@ export default function ForgotPasswordPage() {
                             className={`btn btn--primary ${styles.submitBtn}`}
                             disabled={isLoading}
                         >
-                            {isLoading ? 'Envoi en cours...' : 'Envoyer le lien'}
+                            {isLoading ? t('auth.sending') : t('auth.sendLink')}
                         </button>
                     </form>
                 )}
 
                 <div className={styles.switchAuth} style={{ borderTop: successMessage ? 'none' : '' }}>
-                    <p>Je me souviens de mon mot de passe. <Link href="/connexion" className={styles.linkBold}>Se connecter</Link></p>
+                    <p>{t('auth.rememberPassword')} <Link href="/connexion" className={styles.linkBold}>{t('auth.signIn')}</Link></p>
                 </div>
             </div>
         </div>

@@ -97,7 +97,7 @@ export default function CartDrawer() {
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.color, item.size, item.quantity - 1)}
                                                     className={styles.qtyBtn}
-                                                    aria-label={`${t('cart.decrease') || 'Diminuer'} — ${item.name}`}
+                                                    aria-label={`${t('cart.decrease')} — ${item.name}`}
                                                 >
                                                     −
                                                 </button>
@@ -105,7 +105,7 @@ export default function CartDrawer() {
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.color, item.size, item.quantity + 1)}
                                                     className={styles.qtyBtn}
-                                                    aria-label={`${t('cart.increase') || 'Augmenter'} — ${item.name}`}
+                                                    aria-label={`${t('cart.increase')} — ${item.name}`}
                                                 >
                                                     +
                                                 </button>
