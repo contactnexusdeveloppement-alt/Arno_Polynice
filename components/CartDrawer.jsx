@@ -6,6 +6,17 @@ import { useLanguage } from '@/context/LanguageContext';
 import Link from 'next/link';
 import styles from './CartDrawer.module.css';
 
+// Mapping code d'erreur backend → clé i18n (cart.xxx).
+// Garantit que toute erreur checkout est affichée dans la langue courante.
+const ERROR_CODE_TO_KEY = {
+    emptyCart: 'cart.emptyCartError',
+    noVariants: 'cart.variantUnavailable',
+    timeout: 'cart.timeoutError',
+    outOfStock: 'cart.outOfStock',
+    checkoutCreateFailed: 'cart.checkoutCreateError',
+    serverError: 'cart.paymentError',
+};
+
 export default function CartDrawer() {
     const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
     const { t } = useLanguage();
@@ -34,11 +45,15 @@ export default function CartDrawer() {
             });
             const data = await res.json();
             if (data.checkoutUrl) {
+                // Redirection : on laisse isCheckingOut=true pour garder le spinner actif
+                // pendant la navigation (évite un flash du bouton "Procéder au paiement").
                 window.location.href = data.checkoutUrl;
-            } else {
-                setCheckoutError(data.error || t('cart.paymentError'));
-                setIsCheckingOut(false);
+                return;
             }
+            // Mapping code backend → message localisé.
+            const errorKey = ERROR_CODE_TO_KEY[data.error] || 'cart.paymentError';
+            setCheckoutError(t(errorKey));
+            setIsCheckingOut(false);
         } catch (err) {
             setCheckoutError(t('cart.connectionError'));
             setIsCheckingOut(false);
@@ -140,8 +155,12 @@ export default function CartDrawer() {
                                 className={`btn btn--primary ${styles.checkoutBtn}`}
                                 onClick={handleCheckout}
                                 disabled={isCheckingOut}
+                                aria-busy={isCheckingOut}
                             >
-                                {isCheckingOut ? t('cart.redirecting') : t('cart.checkout')}
+                                <span className={styles.checkoutBtnContent}>
+                                    {isCheckingOut && <span className={styles.spinner} aria-hidden="true" />}
+                                    {isCheckingOut ? t('cart.redirecting') : t('cart.checkout')}
+                                </span>
                             </button>
                         </div>
                     </>

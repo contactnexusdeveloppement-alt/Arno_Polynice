@@ -42,32 +42,43 @@ export default function ProductDetail({ product }) {
     const [activeImage, setActiveImage] = useState(0);
     const [showDetails, setShowDetails] = useState(false);
     const [added, setAdded] = useState(false);
+    const [addError, setAddError] = useState('');
 
     const availability = availabilityStatuses[currentProduct.availability] || availabilityStatuses['available'];
     const canAddToCart = currentProduct.availability !== 'unavailable';
+    const isShopifyProduct = Array.isArray(currentProduct.variants) && currentProduct.variants.length > 0;
 
     const handleAddToCart = () => {
         if (!selectedSize || added) return;
 
-        // Find the matching Shopify variant ID for checkout
+        setAddError('');
+
+        // Recherche de la variante Shopify (checkout via merchandiseId).
+        // Stratégie :
+        //   1) Match exact couleur + taille
+        //   2) Fallback : taille seule (ex: produit à couleur unique)
+        //   3) Échec → on refuse l'ajout et on affiche un message clair
+        //      (plutôt que d'envoyer une variante aléatoire au checkout)
         let variantId = null;
-        if (currentProduct.variants && currentProduct.variants.length > 0) {
+        if (isShopifyProduct) {
             const variant = currentProduct.variants.find(v =>
                 v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === selectedColor) &&
                 v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
             );
-            // Fallback: if no color/size combo match, try size only (for products with single color)
-            if (!variant) {
+            if (variant) {
+                variantId = variant.id;
+            } else {
+                // Fallback légitime : produit sans option "Couleur"
                 const sizeOnlyVariant = currentProduct.variants.find(v =>
                     v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
                 );
                 if (sizeOnlyVariant) variantId = sizeOnlyVariant.id;
-            } else {
-                variantId = variant.id;
             }
-            // Last fallback: first available variant
-            if (!variantId && currentProduct.variants[0]) {
-                variantId = currentProduct.variants[0].id;
+
+            if (!variantId) {
+                // On refuse l'ajout : mieux vaut un message clair qu'un checkout qui plante.
+                setAddError(t('productPage.variantMissing'));
+                return;
             }
         }
 
@@ -233,6 +244,11 @@ export default function ProductDetail({ product }) {
                             <button className={`btn btn--secondary ${styles.addToCart}`} disabled>
                                 {t('product.unavailable')}
                             </button>
+                        )}
+                        {addError && (
+                            <p className={styles.sizeHint} role="alert" aria-live="polite">
+                                {addError}
+                            </p>
                         )}
 
                         {/* Description */}

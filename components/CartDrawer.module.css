@@ -244,6 +244,36 @@
 
 .checkoutBtn {
     width: 100%;
+    position: relative;
+}
+
+/* Spinner affiché pendant le traitement du checkout.
+   Conteneur inline-flex pour aligner texte + cercle animé. */
+.checkoutBtnContent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation-duration: 2s;
+    }
 }
 
 .checkoutError {

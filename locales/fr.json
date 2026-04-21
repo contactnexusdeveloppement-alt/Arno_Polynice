@@ -69,7 +69,16 @@
     "decrease": "Diminuer",
     "increase": "Augmenter",
     "paymentError": "Erreur lors du paiement",
-    "connectionError": "Erreur de connexion. Veuillez réessayer."
+    "connectionError": "Erreur de connexion. Veuillez réessayer.",
+    "timeoutError": "Le paiement prend plus de temps que prévu. Veuillez réessayer dans un instant.",
+    "emptyCartError": "Votre panier est vide.",
+    "outOfStock": "Un article de votre panier n'est plus disponible. Veuillez le retirer pour continuer.",
+    "variantUnavailable": "Cette combinaison (couleur + taille) n'est pas disponible. Choisissez une autre option.",
+    "checkoutCreateError": "Impossible de créer le paiement. Vérifiez votre panier et réessayez."
+  },
+  "productPage": {
+    "selectColorSize": "Veuillez sélectionner une couleur et une taille.",
+    "variantMissing": "Cette combinaison n'est pas disponible pour le moment."
   },
   "footer": {
     "stayInformed": "Restez informé",

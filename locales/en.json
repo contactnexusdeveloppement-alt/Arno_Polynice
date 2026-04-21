@@ -69,7 +69,16 @@
     "decrease": "Decrease",
     "increase": "Increase",
     "paymentError": "Payment error",
-    "connectionError": "Connection error. Please try again."
+    "connectionError": "Connection error. Please try again.",
+    "timeoutError": "Payment is taking longer than expected. Please try again in a moment.",
+    "emptyCartError": "Your cart is empty.",
+    "outOfStock": "An item in your cart is no longer available. Please remove it to continue.",
+    "variantUnavailable": "This combination (color + size) is not available. Please choose another option.",
+    "checkoutCreateError": "Unable to create payment. Please check your cart and try again."
+  },
+  "productPage": {
+    "selectColorSize": "Please select a color and a size.",
+    "variantMissing": "This combination is currently unavailable."
   },
   "footer": {
     "stayInformed": "Stay informed",
