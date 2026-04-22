@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './CartDrawer.module.css';
 
 // Mapping code d'erreur backend → clé i18n (cart.xxx).
@@ -22,6 +23,34 @@ export default function CartDrawer() {
     const { t } = useLanguage();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [checkoutError, setCheckoutError] = useState('');
+
+    // État de session (cookie HttpOnly → on passe par /api/me).
+    // On affiche un encart "Se connecter" si l'utilisateur n'est pas connecté,
+    // pour favoriser la création de compte sans bloquer le guest checkout.
+    const [authState, setAuthState] = useState({ status: 'loading', firstName: null });
+
+    // Recharge la session à l'ouverture du panier (au cas où l'utilisateur
+    // se connecte depuis un autre onglet pendant qu'il ajoute au panier).
+    useEffect(() => {
+        if (!isOpen) return;
+        let cancelled = false;
+        fetch('/api/me', { credentials: 'same-origin' })
+            .then(res => res.json())
+            .then(data => {
+                if (cancelled) return;
+                setAuthState(data?.loggedIn
+                    ? { status: 'authenticated', firstName: data.firstName || null }
+                    : { status: 'guest', firstName: null }
+                );
+            })
+            .catch(() => {
+                if (cancelled) return;
+                // En cas d'erreur réseau, on considère l'utilisateur comme invité
+                // (fallback safe : affiche l'encart, ne bloque rien).
+                setAuthState({ status: 'guest', firstName: null });
+            });
+        return () => { cancelled = true; };
+    }, [isOpen]);
 
     // Close on Escape key
     useEffect(() => {
@@ -91,9 +120,25 @@ export default function CartDrawer() {
                         <div className={styles.items}>
                             {items.map((item, index) => (
                                 <div key={`${item.id}-${item.color}-${item.size}`} className={styles.item}>
-                                    <div className={styles.itemImage} style={{ backgroundColor: item.colorHex || '#E5E0D8' }}>
-                                        <span className={styles.itemImageLetter}>{item.name.charAt(0)}</span>
-                                    </div>
+                                    <Link
+                                        href={`/produit/${item.slug}`}
+                                        onClick={() => setIsOpen(false)}
+                                        className={styles.itemImage}
+                                        style={{ backgroundColor: item.colorHex || '#E5E0D8' }}
+                                        aria-label={item.name}
+                                    >
+                                        {item.image ? (
+                                            <Image
+                                                src={item.image}
+                                                alt={`${item.name} — ${item.color}`}
+                                                fill
+                                                sizes="80px"
+                                                className={styles.itemImageImg}
+                                            />
+                                        ) : (
+                                            <span className={styles.itemImageLetter}>{item.name.charAt(0)}</span>
+                                        )}
+                                    </Link>
                                     <div className={styles.itemInfo}>
                                         <Link
                                             href={`/produit/${item.slug}`}
@@ -146,6 +191,38 @@ export default function CartDrawer() {
                                 <span className={styles.totalPrice}>{totalPrice},00 €</span>
                             </div>
                             <p className={styles.shipping}>{t('cart.shippingNote')}</p>
+
+                            {/* Encart auth — invité : incite à se connecter, pas bloquant.
+                                On masque pendant le 'loading' pour éviter un flash. */}
+                            {authState.status === 'guest' && (
+                                <div className={styles.loginPrompt}>
+                                    <p className={styles.loginPromptTitle}>{t('cart.loginPromptTitle')}</p>
+                                    <p className={styles.loginPromptText}>{t('cart.loginPromptText')}</p>
+                                    <div className={styles.loginPromptActions}>
+                                        <Link
+                                            href="/connexion"
+                                            className={styles.loginPromptCta}
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {t('cart.loginPromptCta')}
+                                        </Link>
+                                        <span className={styles.loginPromptOr}>{t('cart.loginPromptOr')}</span>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Variante connecté : message de bienvenue discret */}
+                            {authState.status === 'authenticated' && (
+                                <div className={`${styles.loginPrompt} ${styles.loginPromptWelcome}`}>
+                                    <p className={styles.loginPromptTitle}>
+                                        {t('cart.welcomeBack').replace(
+                                            '{name}',
+                                            authState.firstName || ''
+                                        ).replace(/\s+,/, ',').trim()}
+                                    </p>
+                                </div>
+                            )}
+
                             {checkoutError && (
                                 <div className={styles.checkoutError} role="alert" aria-live="polite">
                                     {checkoutError}

@@ -74,7 +74,12 @@
     "emptyCartError": "Your cart is empty.",
     "outOfStock": "An item in your cart is no longer available. Please remove it to continue.",
     "variantUnavailable": "This combination (color + size) is not available. Please choose another option.",
-    "checkoutCreateError": "Unable to create payment. Please check your cart and try again."
+    "checkoutCreateError": "Unable to create payment. Please check your cart and try again.",
+    "loginPromptTitle": "Already a customer?",
+    "loginPromptText": "Sign in to access your orders and enjoy exclusive benefits.",
+    "loginPromptCta": "Sign in",
+    "loginPromptOr": "or continue as a guest",
+    "welcomeBack": "Hello {name}, ready to complete your order?"
   },
   "productPage": {
     "selectColorSize": "Please select a color and a size.",

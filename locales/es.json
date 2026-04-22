@@ -74,7 +74,12 @@
     "emptyCartError": "Su carrito está vacío.",
     "outOfStock": "Un artículo de su carrito ya no está disponible. Por favor, retírelo para continuar.",
     "variantUnavailable": "Esta combinación (color + talla) no está disponible. Elija otra opción.",
-    "checkoutCreateError": "No se puede crear el pago. Compruebe su carrito e inténtelo de nuevo."
+    "checkoutCreateError": "No se puede crear el pago. Compruebe su carrito e inténtelo de nuevo.",
+    "loginPromptTitle": "¿Ya es cliente?",
+    "loginPromptText": "Inicie sesión para ver sus pedidos y disfrutar de ventajas exclusivas.",
+    "loginPromptCta": "Iniciar sesión",
+    "loginPromptOr": "o continuar como invitado",
+    "welcomeBack": "Hola {name}, ¿listo para finalizar su pedido?"
   },
   "productPage": {
     "selectColorSize": "Por favor, seleccione un color y una talla.",

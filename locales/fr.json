@@ -74,7 +74,12 @@
     "emptyCartError": "Votre panier est vide.",
     "outOfStock": "Un article de votre panier n'est plus disponible. Veuillez le retirer pour continuer.",
     "variantUnavailable": "Cette combinaison (couleur + taille) n'est pas disponible. Choisissez une autre option.",
-    "checkoutCreateError": "Impossible de créer le paiement. Vérifiez votre panier et réessayez."
+    "checkoutCreateError": "Impossible de créer le paiement. Vérifiez votre panier et réessayez.",
+    "loginPromptTitle": "Déjà client ?",
+    "loginPromptText": "Connectez-vous pour retrouver vos commandes et bénéficier d'avantages exclusifs.",
+    "loginPromptCta": "Se connecter",
+    "loginPromptOr": "ou continuer en tant qu'invité",
+    "welcomeBack": "Bonjour {name}, prêt à finaliser votre commande ?"
   },
   "productPage": {
     "selectColorSize": "Veuillez sélectionner une couleur et une taille.",
