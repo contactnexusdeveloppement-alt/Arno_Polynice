@@ -301,8 +301,53 @@
     padding-right: 12px;
   }
 
+  /* Hero mobile : on transforme la grille bento desktop en un carrousel
+     horizontal swipeable (scroll-snap natif CSS, pas de JS).
+     - On garde les 3 photos visibles, l'utilisateur swipe gauche/droite.
+     - flex: 0 0 78% laisse apparaître un bord de la photo suivante,
+       ce qui suggère visuellement qu'il y en a d'autres à découvrir.
+     - scroll-snap cale chaque photo pile au centre quand on relâche.
+     - On masque la scrollbar pour rester épuré. */
   .heroVisual {
+    display: block;
+    padding: 0;
+    margin-top: -8px;
+  }
+
+  .heroImageGrid {
+    display: flex;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    aspect-ratio: auto;
+    max-width: none;
+    width: 100%;
+    gap: 12px;
+    padding: 0 var(--container-padding) 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .heroImageGrid::-webkit-scrollbar {
     display: none;
+  }
+
+  .heroImg {
+    flex: 0 0 78%;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
+    border-radius: 4px;
+  }
+
+  /* Reset du `grid-row: 1 / 3` desktop sur la 1re image (sinon hauteur
+     bizarre en flex). */
+  .heroImg:first-child {
+    grid-row: auto;
+  }
+
+  .heroImg:hover {
+    transform: none;
   }
 
   .heroContent {
