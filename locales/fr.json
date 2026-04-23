@@ -38,6 +38,8 @@
     "title": "Accessoires",
     "intro": "Ceintures, trousses de toilette, lunettes — la touche finale, conçue avec le même soin que nos pièces principales.",
     "filterLabel": "Filtrer par genre",
+    "subFilterLabel": "Filtrer par type",
+    "subFilterAll": "Tous",
     "noProductsForGender": "Aucun accessoire dans cette catégorie pour le moment. Revenez bientôt."
   },
   "press": {

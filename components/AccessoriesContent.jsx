@@ -6,12 +6,16 @@ import { useLanguage } from '@/context/LanguageContext';
 import styles from './AccessoriesContent.module.css';
 
 /**
- * Page Accessoires : 3 onglets Femme/Homme/Unisexe avec un curseur underline
- * qui glisse entre les options. Filtrage instantané (pas de rechargement).
+ * Page Accessoires : 2 niveaux de filtre.
+ *   1) Switcher principal Femme/Homme/Unisexe avec curseur underline animé
+ *   2) Pills sous-catégories (Tous / Sacs / Trousses / Lunettes…) calculées
+ *      dynamiquement depuis les `subcategory` (Shopify product type) des
+ *      produits du genre actif.
  *
- * Les produits doivent être taggés `femme`/`homme`/`unisexe` côté Shopify
- * et avoir le product type "Accessoires" (ou la subcategory "Accessoires"
- * via le mapping data/products.js).
+ * Convention Shopify :
+ *   - Tag "accessoires" pour identifier la rubrique
+ *   - Tag genre : femme / homme / unisexe
+ *   - Type de produit : sous-catégorie ("Sacs", "Trousses", "Lunettes"…)
  */
 
 const TABS = [
@@ -20,9 +24,12 @@ const TABS = [
     { id: 'unisexe', i18nKey: 'categories.unisexe' },
 ];
 
+const ALL_FILTER = '__all__';
+
 export default function AccessoriesContent({ products }) {
     const { t } = useLanguage();
     const [activeTab, setActiveTab] = useState('femme');
+    const [activeSubcategory, setActiveSubcategory] = useState(ALL_FILTER);
 
     // Refs sur chaque bouton pour positionner le curseur underline avec la bonne largeur
     const tabRefs = useRef({});
@@ -36,10 +43,40 @@ export default function AccessoriesContent({ products }) {
         setIndicator({ left: node.offsetLeft, width: node.offsetWidth });
     }, [activeTab, t]);
 
-    const filtered = useMemo(
+    // Produits du genre actif
+    const productsForGender = useMemo(
         () => products.filter(p => p.category === activeTab),
         [products, activeTab]
     );
+
+    // Sous-catégories dispo pour ce genre, classées par fréquence d'apparition
+    // (les sous-cats avec le plus de produits viennent en premier).
+    const subcategories = useMemo(() => {
+        const counts = new Map();
+        productsForGender.forEach(p => {
+            const sub = (p.subcategory || '').trim();
+            // On exclut les libellés génériques qui ne sont pas de vraies sous-cats
+            if (!sub || sub.toLowerCase() === 'autre' || sub.toLowerCase() === 'accessoires') return;
+            counts.set(sub, (counts.get(sub) || 0) + 1);
+        });
+        return [...counts.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(([name]) => name);
+    }, [productsForGender]);
+
+    // Quand on change de genre, on revient automatiquement sur "Tous" si la
+    // sous-cat sélectionnée n'existe pas pour ce nouveau genre.
+    useLayoutEffect(() => {
+        if (activeSubcategory !== ALL_FILTER && !subcategories.includes(activeSubcategory)) {
+            setActiveSubcategory(ALL_FILTER);
+        }
+    }, [activeSubcategory, subcategories]);
+
+    // Filtre final : genre + sous-catégorie
+    const filtered = useMemo(() => {
+        if (activeSubcategory === ALL_FILTER) return productsForGender;
+        return productsForGender.filter(p => p.subcategory === activeSubcategory);
+    }, [productsForGender, activeSubcategory]);
 
     return (
         <div className="page-enter">
@@ -69,6 +106,33 @@ export default function AccessoriesContent({ products }) {
                         style={{ left: indicator.left, width: indicator.width }}
                     />
                 </div>
+
+                {/* Sous-filtres : pills (Tous / Sacs / Trousses / Lunettes…).
+                    Affichés seulement si au moins une sous-catégorie existe. */}
+                {subcategories.length > 0 && (
+                    <div className={styles.subFilters} role="group" aria-label={t('accessories.subFilterLabel')}>
+                        <button
+                            type="button"
+                            className={`${styles.subFilter} ${activeSubcategory === ALL_FILTER ? styles.subFilterActive : ''}`}
+                            onClick={() => setActiveSubcategory(ALL_FILTER)}
+                            aria-pressed={activeSubcategory === ALL_FILTER}
+                        >
+                            {t('accessories.subFilterAll')}
+                        </button>
+                        {subcategories.map(sub => (
+                            <button
+                                key={sub}
+                                type="button"
+                                className={`${styles.subFilter} ${activeSubcategory === sub ? styles.subFilterActive : ''}`}
+                                onClick={() => setActiveSubcategory(sub)}
+                                aria-pressed={activeSubcategory === sub}
+                            >
+                                {sub}
+                            </button>
+                        ))}
+                    </div>
+                )}
+
                 <p className={styles.count}>
                     {filtered.length} {filtered.length > 1 ? t('categories.creations') : t('categories.creation')}
                 </p>

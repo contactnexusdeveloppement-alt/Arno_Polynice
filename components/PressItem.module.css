@@ -1,79 +1,131 @@
-/* Carte d'une parution presse — article ou vidéo.
-   Layout grille pour les articles (logo gauche + contenu droite),
-   pleine largeur pour les vidéos (16:9 + meta sous la vidéo). */
+/* Section "parution presse" — calquée sur le pattern Notre Histoire :
+   grille 2 colonnes (image | texte), alternance gauche/droite via .sectionReverse */
 
-.item {
+.section {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 40px;
-    padding: 40px 0;
-    border-bottom: 1px solid var(--color-border);
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    min-height: 60vh;
+    margin-bottom: 60px;
+    align-items: center;
 }
 
-.item:first-child {
-    padding-top: 0;
+.section:last-child {
+    margin-bottom: 0;
 }
 
-.item:last-child {
-    border-bottom: none;
+/* Inversion visuelle : on remet le visuel à droite (DOM order 2),
+   donc le texte se retrouve à gauche. */
+.sectionReverse .visual {
+    order: 2;
 }
 
-/* ============ Logo média (article) ============ */
-.logoWrapper {
+.sectionReverse .content {
+    order: 1;
+}
+
+/* ============ Visuel (image ou vidéo) ============ */
+.visual {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
+    min-height: 360px;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
     background-color: var(--color-accent);
+}
+
+.image {
+    object-fit: cover;
+}
+
+/* Embed vidéo : 16:9 forcé pour ne pas casser la grille */
+.videoWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-accent);
+}
+
+.videoWrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Placeholder beige + monogramme (cohérent avec Notre Histoire) */
+.placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    background-color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     border-radius: var(--radius-sm);
 }
 
-.logo {
-    object-fit: contain;
-    padding: 18px;
-}
-
-.logoPlaceholder {
+.placeholder::after {
+    content: '';
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-accent);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(0, 0, 0, 0.05) 100%);
+    pointer-events: none;
 }
 
-.logoPlaceholder span {
+.placeholderMonogram {
+    position: relative;
     font-family: var(--font-heading);
-    font-size: 3rem;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.25);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 0.25em;
     text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.35;
+    padding-left: 0.25em;
+    user-select: none;
 }
 
-/* ============ Contenu (article) ============ */
+/* ============ Bloc texte ============ */
 .content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: center;
+    padding: 20px 10px;
 }
 
-.mediaName {
+.label {
     font-family: var(--font-heading);
     font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--color-text-muted);
+    margin-bottom: 14px;
 }
 
-.articleTitle {
+.title {
     font-family: var(--font-heading);
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
     font-weight: 600;
     letter-spacing: 0.02em;
     line-height: 1.3;
-    margin: 0;
+    margin: 0 0 20px;
 }
 
 .excerpt {
@@ -81,9 +133,9 @@
     font-size: 0.95rem;
     font-style: italic;
     font-weight: 300;
-    color: var(--color-text-light);
-    line-height: 1.7;
-    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.85;
+    margin: 0 0 24px;
     padding-left: 16px;
     border-left: 2px solid var(--color-border);
 }
@@ -92,25 +144,26 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    margin-top: 8px;
     flex-wrap: wrap;
+    margin-top: auto;
 }
 
 .date {
     font-size: 0.8rem;
     color: var(--color-text-muted);
+    font-style: italic;
 }
 
 .readMore {
     font-family: var(--font-heading);
     font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-text);
     text-decoration: none;
     border-bottom: 1px solid var(--color-text);
-    padding-bottom: 2px;
+    padding-bottom: 3px;
     transition: opacity var(--transition-base);
 }
 
@@ -118,56 +171,47 @@
     opacity: 0.6;
 }
 
-/* ============ Variante VIDÉO ============ */
-.itemVideo {
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-.videoWrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-color: var(--color-accent);
-    overflow: hidden;
-    border-radius: var(--radius-sm);
-}
-
-.videoWrapper iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.videoMeta {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.videoTitle {
-    font-family: var(--font-heading);
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    line-height: 1.3;
-    margin: 0;
-}
-
 /* ============ Responsive ============ */
-@media (max-width: 768px) {
-    .item {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 32px 0;
+@media (max-width: 1024px) {
+    .section {
+        gap: 40px;
+        min-height: auto;
     }
-    .logoWrapper {
-        aspect-ratio: 16 / 9;
-        max-width: 280px;
+    .visual,
+    .imageWrapper,
+    .placeholder {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+    /* Sur mobile : toujours visuel d'abord, texte ensuite (ignore reversed) */
+    .sectionReverse .visual,
+    .visual {
+        order: 1;
+    }
+    .sectionReverse .content,
+    .content {
+        order: 2;
+        padding: 0;
+    }
+    .imageWrapper,
+    .placeholder {
+        aspect-ratio: 4 / 3;
+        min-height: 0;
+    }
+    .visual {
+        min-height: 0;
     }
     .footer {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 16px;
     }
 }

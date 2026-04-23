@@ -38,6 +38,8 @@
     "title": "Accessories",
     "intro": "Belts, toiletry bags, eyewear — the finishing touch, crafted with the same care as our main pieces.",
     "filterLabel": "Filter by gender",
+    "subFilterLabel": "Filter by type",
+    "subFilterAll": "All",
     "noProductsForGender": "No accessories in this category yet. Check back soon."
   },
   "press": {

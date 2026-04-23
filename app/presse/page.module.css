@@ -1,9 +1,9 @@
 /* Page Presse — header centré + liste des parutions */
 
 .pressPage {
-    max-width: 920px;
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 60px 24px 80px;
+    padding: 60px 40px 80px;
 }
 
 .header {

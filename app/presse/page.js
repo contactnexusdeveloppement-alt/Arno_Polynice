@@ -40,8 +40,12 @@ export default async function PressePage() {
 
                 {items.length > 0 ? (
                     <div className={styles.itemsList}>
-                        {items.map(item => (
-                            <PressItem key={item.id} item={item} />
+                        {items.map((item, index) => (
+                            <PressItem
+                                key={item.id}
+                                item={item}
+                                reversed={index % 2 === 1}
+                            />
                         ))}
                     </div>
                 ) : (

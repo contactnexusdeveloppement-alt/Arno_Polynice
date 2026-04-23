@@ -261,6 +261,11 @@ h3 {
 }
 
 /* --- Page transitions --- */
+/* IMPORTANT : on n'utilise PAS de `transform` ici. Tout ancestor avec un
+   transform actif casse `position: fixed` des enfants (bug WebKit/Blink :
+   le fixed devient relatif au parent transformé au lieu du viewport).
+   Sans cela, le bouton "Ajouter au panier" sticky en bas sur mobile
+   disparaît hors écran. Effet fadeIn par opacity seule, plus safe. */
 .page-enter {
   animation: fadeIn 0.4s ease forwards;
 }
@@ -268,12 +273,10 @@ h3 {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -323,10 +326,8 @@ h3 {
     padding: 60px 0;
   }
 
-  /* Disable transform on mobile to allow position:fixed for sticky CTA */
-  .page-enter {
-    animation: none;
-  }
+  /* L'animation fadeIn n'utilise plus de transform, donc elle peut tourner
+     sans casser les `position: fixed` enfants (CTA sticky du panier). */
 }
 
 /* --- Page Loader --- */

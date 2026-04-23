@@ -281,6 +281,18 @@ const doc = new Document({
             numbered('Cliquez sur Save en haut à droite.'),
             tip('Pour qu\'un produit apparaisse dans les bonnes rubriques (Femme / Homme / Unisexe), ajoutez-le aux bonnes collections dans "Collections" en bas à droite de la page produit.'),
 
+            h2('Ajouter un accessoire (sacs, trousses, lunettes, ceintures, etc.)'),
+            p('La rubrique "Accessoires" du site est rangée sur deux niveaux : par genre (Femme / Homme / Unisexe) ET par type d\'accessoire (Sacs, Trousses, Lunettes…). Tu n\'as rien de spécial à configurer côté admin — il suffit de bien remplir 3 champs sur le produit :'),
+            numbered('Crée le produit normalement (Title, photos, prix, variantes…).'),
+            numbered('Dans la section Product organization à droite :'),
+            bullet('Type (Type de produit) : indique la SOUS-CATÉGORIE de l\'accessoire (Sacs, Trousses, Lunettes, Ceintures…). C\'est ce mot exact qui apparaîtra comme bouton de filtre sur la page /accessoires.', 1),
+            bullet('Tags : ajoute le tag accessoires (en minuscules). C\'est ce tag qui dit au site "ce produit doit aller dans la rubrique Accessoires".', 1),
+            bullet('Tags : ajoute aussi UN tag de genre parmi femme, homme, unisexe (en minuscules). C\'est ce tag qui détermine sous quel onglet (Femme / Homme / Unisexe) le produit apparaîtra.', 1),
+            numbered('Save.'),
+            tip('Exemple concret : une trousse de toilette pour femme → Type "Trousses" + tags accessoires, femme. Une paire de lunettes mixtes → Type "Lunettes" + tags accessoires, unisexe. Le produit apparaît automatiquement sous le bon onglet et le bon filtre, sans aucune autre action.'),
+            tip('Les boutons de filtre par type (Sacs, Trousses, Lunettes…) apparaissent automatiquement sur la page : tant que tu as au moins un produit avec ce Type, le bouton s\'affiche. Pas besoin de les déclarer ailleurs.'),
+            warning('Respecte bien la casse : Type avec une majuscule (ex. "Sacs", "Trousses"), et tags en minuscules ("accessoires", "femme"…). Sinon le produit n\'apparaîtra pas au bon endroit.'),
+
             h2('Modifier un produit existant'),
             numbered('Products → cliquez sur le nom du produit.'),
             numbered('Modifiez les champs souhaités.'),
@@ -377,6 +389,8 @@ const doc = new Document({
             bulletBold('histoire_image', ' — les images affichées sur la page Notre Histoire.'),
             bulletBold('ethics_page', ' — le titre, l\'introduction et la citation de la page Notre Éthique.'),
             bulletBold('ethics_value', ' — les 4 engagements (Matières, Fabrication, Anti-gaspillage, Transparence) de la page Notre Éthique.'),
+            bulletBold('press_page', ' — l\'en-tête (label, titre, intro) de la page Presse.'),
+            bulletBold('press_item', ' — chaque parution presse (article ou vidéo) affichée sur la page Presse.'),
 
             h2('Modifier un hero slide (image d\'accueil)'),
             numbered('Metaobjects → hero_slide → cliquez sur l\'entrée existante à modifier.'),
@@ -420,6 +434,38 @@ const doc = new Document({
 
             tip('Le site se met à jour automatiquement environ 5 minutes après vos modifications. Si vous ne voyez pas le changement immédiatement, attendez puis rafraîchissez.'),
             warning('Ne modifiez pas les "noms" internes des champs (label, title, intro, etc.). Vous ne pouvez modifier que leur contenu (la valeur saisie).'),
+
+            h2('Ajouter ou modifier une parution Presse'),
+            p('La page Presse du site (/presse) liste vos articles de journal, interviews et vidéos. Chaque parution est une "section" alternant gauche/droite, avec une image et un bloc texte (cliquant vers l\'article original ou intégrant la vidéo).'),
+            p('Deux types d\'entrées à gérer :'),
+            bulletBold('Press Page (1 entrée)', ' — l\'en-tête de la page : label "Médias" en haut, titre principal "Arno Polynice dans les médias", et l\'intro juste en-dessous.'),
+            bulletBold('Press Item (autant que de parutions)', ' — une entrée par article ou vidéo. Chaque entrée s\'affiche comme une section indépendante sur la page.'),
+
+            h3('Modifier l\'en-tête de la page Presse'),
+            numbered('Metaobjects → Press Page → cliquez sur l\'entrée (il n\'y en a qu\'une).'),
+            numbered('Modifiez Label (petite mention en haut), Title (gros titre) ou Intro (sous-titre).'),
+            numbered('Save.'),
+
+            h3('Ajouter une nouvelle parution (article OU vidéo)'),
+            numbered('Metaobjects → Press Item → bouton Add entry (en haut à droite).'),
+            numbered('Remplissez les 8 champs :'),
+            bulletBold('Position', ' — un nombre qui contrôle l\'ordre d\'affichage. Mettez 1 pour la plus récente, 2 pour la suivante, etc. Si vous voulez insérer une nouvelle parution en haut, mettez-la à 1 et incrémentez les autres.', 1),
+            bulletBold('Type', ' — tapez exactement article OU video (en minuscules, sans accent). Détermine si on affiche une image (article) ou un embed YouTube/Vimeo (vidéo).', 1),
+            bulletBold('Media name', ' — nom du média (ex. "Le Monde", "Vogue", "France Inter"). S\'affichera comme petite mention en haut du bloc texte.', 1),
+            bulletBold('Title', ' — titre de l\'article ou de la vidéo (gros titre du bloc).', 1),
+            bulletBold('Excerpt', ' — extrait court de l\'article ou description de la vidéo (1-2 phrases). S\'affichera en italique entre guillemets « ».', 1),
+            bulletBold('Publish date', ' — date de publication au format AAAA-MM-JJ (ex. 2026-04-23). Le site la formatera automatiquement selon la langue ("23 avril 2026" en FR, "23 April 2026" en EN, etc.).', 1),
+            bulletBold('Url', ' — pour un article : lien vers l\'article original (ouvert dans un nouvel onglet via le bouton "Lire l\'article →"). Pour une vidéo : lien YouTube ou Vimeo (ex. https://www.youtube.com/watch?v=XYZ123 ou https://vimeo.com/123456789), automatiquement converti en player intégré.', 1),
+            bulletBold('Main image', ' — uploadez une image (la couverture de l\'article, une photo du shooting, le logo du média, etc.). Pour les vidéos, ce champ est facultatif (l\'embed remplace l\'image). Format recommandé : 1200×900 pixels en .jpg ou .webp.', 1),
+            numbered('Save.'),
+            tip('Pour une vidéo YouTube : copiez simplement le lien depuis la barre d\'adresse de la vidéo (ex. https://www.youtube.com/watch?v=dQw4w9WgXcQ) et collez-le dans Url. Le site se charge de transformer ça en player intégré, vous n\'avez rien d\'autre à faire.'),
+
+            h3('Modifier ou supprimer une parution'),
+            numbered('Metaobjects → Press Item → cliquez sur l\'entrée à modifier.'),
+            numbered('Modifiez les champs souhaités → Save.'),
+            numbered('Pour supprimer : ouvrez l\'entrée → bouton ... en haut à droite → Delete entry.'),
+
+            tip('Le site affiche les parutions en alternance gauche/droite (image gauche puis image droite, etc.) automatiquement selon leur position. Pas besoin de gérer ça vous-même.'),
             new Paragraph({ children: [new PageBreak()] }),
 
             // =============== 7. LIVRAISON ===============

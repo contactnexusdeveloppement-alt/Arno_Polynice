@@ -86,6 +86,45 @@
     }
 }
 
+/* Sous-filtres : pills cliquables sous le switcher principal.
+   Affiche les sous-catégories (Sacs, Trousses, Lunettes…) calculées
+   dynamiquement depuis le product type Shopify de chaque produit. */
+.subFilters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.subFilter {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.subFilter:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+.subFilterActive {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+}
+
+.subFilterActive:hover {
+    color: var(--color-bg);
+}
+
 .count {
     font-family: var(--font-heading);
     font-size: 0.7rem;

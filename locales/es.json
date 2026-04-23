@@ -38,6 +38,8 @@
     "title": "Accesorios",
     "intro": "Cinturones, neceseres, gafas — el toque final, diseñado con el mismo cuidado que nuestras piezas principales.",
     "filterLabel": "Filtrar por género",
+    "subFilterLabel": "Filtrar por tipo",
+    "subFilterAll": "Todos",
     "noProductsForGender": "Aún no hay accesorios en esta categoría. Vuelva pronto."
   },
   "press": {

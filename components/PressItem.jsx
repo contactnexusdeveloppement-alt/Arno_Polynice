@@ -5,18 +5,18 @@ import { useLanguage } from '@/context/LanguageContext';
 import styles from './PressItem.module.css';
 
 /**
- * Affiche une parution presse :
- *   - type "article" : logo média + titre + extrait + date + lien externe
- *   - type "video"   : embed YouTube/Vimeo + titre + date
+ * Une parution presse rendue comme une SECTION style Notre Histoire :
+ *   - Layout grid 2 colonnes : image (ou vidéo embed) + bloc texte
+ *   - Alternance gauche/droite gérée par la prop `reversed` (passée
+ *     par le parent selon l'index pair/impair)
  *
- * L'URL renseignée par le client peut être :
- *   - article : https://media.fr/article-xyz → ouvert dans nouvel onglet
- *   - video   : https://www.youtube.com/watch?v=XYZ → converti en embed
+ * Champs metaobject press_item utilisés :
+ *   position, type (article|video), media_name, title, excerpt,
+ *   publish_date, url, main_image
  */
 
 function getYouTubeEmbed(url) {
     if (!url) return null;
-    // youtube.com/watch?v=XYZ ou youtu.be/XYZ ou youtube.com/embed/XYZ
     const patterns = [
         /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
         /youtu\.be\/([a-zA-Z0-9_-]{11})/,
@@ -32,11 +32,9 @@ function getYouTubeEmbed(url) {
 function getVimeoEmbed(url) {
     if (!url) return null;
     const m = url.match(/vimeo\.com\/(\d+)/);
-    if (m) return `https://player.vimeo.com/video/${m[1]}`;
-    return null;
+    return m ? `https://player.vimeo.com/video/${m[1]}` : null;
 }
 
-// Map langue UI → locale BCP-47 pour le formatage de date
 const LOCALE_MAP = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES' };
 
 function formatDate(dateStr, lang) {
@@ -52,7 +50,7 @@ function formatDate(dateStr, lang) {
     }
 }
 
-export default function PressItem({ item }) {
+export default function PressItem({ item, reversed = false }) {
     const { t, language } = useLanguage();
     const isVideo = item.type === 'video';
     const embedUrl = isVideo
@@ -60,55 +58,55 @@ export default function PressItem({ item }) {
         : null;
     const dateLabel = formatDate(item.publishDate, language);
 
-    if (isVideo && embedUrl) {
-        return (
-            <article className={`${styles.item} ${styles.itemVideo}`}>
-                <div className={styles.videoWrapper}>
-                    <iframe
-                        src={embedUrl}
-                        title={item.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        loading="lazy"
-                    />
-                </div>
-                <div className={styles.videoMeta}>
-                    {item.mediaName && <span className={styles.mediaName}>{item.mediaName}</span>}
-                    <h2 className={styles.videoTitle}>{item.title}</h2>
-                    {dateLabel && <span className={styles.date}>{dateLabel}</span>}
-                </div>
-            </article>
-        );
-    }
+    // Le DOM va dans l'ordre : visuel puis texte. Pour inverser visuellement
+    // (texte à gauche), on passe `reversed=true` qui ajoute la classe CSS
+    // qui fait order:2 sur le visuel.
+    const sectionClass = `${styles.section} ${reversed ? styles.sectionReverse : ''}`;
 
-    // Article (par défaut). Lien externe dans un nouvel onglet pour ne pas perdre le visiteur.
     return (
-        <article className={styles.item}>
-            <div className={styles.logoWrapper}>
-                {item.mediaLogo?.url ? (
-                    <Image
-                        src={item.mediaLogo.url}
-                        alt={item.mediaLogo.alt || item.mediaName || 'Logo média'}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 200px"
-                        className={styles.logo}
-                    />
+        <article className={sectionClass}>
+            {/* Visuel : iframe vidéo ou image */}
+            <div className={styles.visual}>
+                {isVideo && embedUrl ? (
+                    <div className={styles.videoWrapper}>
+                        <iframe
+                            src={embedUrl}
+                            title={item.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            loading="lazy"
+                        />
+                    </div>
+                ) : item.mainImage?.url ? (
+                    <div className={styles.imageWrapper}>
+                        <Image
+                            src={item.mainImage.url}
+                            alt={item.mainImage.alt || item.title || item.mediaName || 'Parution presse'}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className={styles.image}
+                        />
+                    </div>
                 ) : (
-                    <div className={styles.logoPlaceholder}>
-                        <span>{item.mediaName?.charAt(0) || '?'}</span>
+                    <div className={styles.placeholder} role="img" aria-label="Image à venir">
+                        <span className={styles.placeholderMonogram}>AP</span>
                     </div>
                 )}
             </div>
+
+            {/* Bloc texte */}
             <div className={styles.content}>
-                {item.mediaName && <span className={styles.mediaName}>{item.mediaName}</span>}
-                <h2 className={styles.articleTitle}>{item.title}</h2>
+                {item.mediaName && (
+                    <span className={styles.label}>{item.mediaName}</span>
+                )}
+                <h2 className={styles.title}>{item.title}</h2>
                 {item.excerpt && (
                     <p className={styles.excerpt}>« {item.excerpt} »</p>
                 )}
                 <div className={styles.footer}>
                     {dateLabel && <span className={styles.date}>{dateLabel}</span>}
-                    {item.url && (
+                    {!isVideo && item.url && (
                         <a
                             href={item.url}
                             target="_blank"
