@@ -91,27 +91,8 @@ export default function ProductDetail({ product }) {
         setTimeout(() => setAdded(false), 2000);
     };
 
-    const getCategoryLabel = () => {
-        const key = currentProduct.category.toLowerCase();
-        if (t(`categories.${key}`) !== `categories.${key}`) {
-            return t(`categories.${key}`);
-        }
-        return currentProduct.category.charAt(0).toUpperCase() + currentProduct.category.slice(1);
-    };
-
     return (
         <div className={`page-enter ${styles.productPage}`}>
-            {/* Breadcrumb */}
-            <div className={styles.breadcrumb}>
-                <Link href="/">{t('product.home')}</Link>
-                <span>/</span>
-                <Link href={`/${currentProduct.category}`}>
-                    {getCategoryLabel()}
-                </Link>
-                <span>/</span>
-                <span className={styles.breadcrumbCurrent}>{currentProduct.name}</span>
-            </div>
-
             <div className={styles.layout}>
                 {/* Images */}
                 <div className={styles.gallery}>
