@@ -32,7 +32,11 @@
 /* Layout */
 .layout {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+    /* Colonnes rééquilibrées : avant 1.2fr/0.8fr donnait une image trop
+       grande sur desktop (obligation de scroller pour voir le bloc info).
+       1fr/1fr + max-height plus bas produit une image qui tient dans le
+       viewport sur la majorité des écrans. */
+    grid-template-columns: 1fr 1fr;
     gap: 60px;
     max-width: var(--container-max);
     margin: 0 auto;
@@ -58,6 +62,16 @@
        tout en libérant les swipes horizontaux pour la navigation
        entre images (gérée en JS via onTouchStart/End). */
     touch-action: pan-y;
+    /* Cap la hauteur sur desktop pour que l'image + bloc infos à droite
+       tiennent idéalement dans le viewport sans scroll vertical excessif.
+       L'aspect-ratio 3/4 est préservé ; si la hauteur atteint 80vh, la
+       largeur calculée est automatiquement réduite. Centré horizontalement
+       via margin auto pour éviter un décalage dans la colonne de gauche. */
+    max-height: calc(100vh - var(--nav-height) - 60px);
+    width: auto;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Flèches de navigation galerie (desktop + tablette).
