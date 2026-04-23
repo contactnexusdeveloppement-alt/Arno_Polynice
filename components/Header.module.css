@@ -56,25 +56,30 @@
 .desktopNav {
     display: flex;
     align-items: center;
-    gap: 32px;
+    /* Gaps resserrés pour laisser de la place au logo centré sans chevauchement
+       sur les écrans 1024-1440px. Sur très grand écran, on élargit via
+       @media (min-width: 1440px) plus bas. */
+    gap: 22px;
 }
 
 .rightSection {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 22px;
 }
 
 .navLink {
     font-family: var(--font-body);
-    font-size: 0.75rem;
+    /* Taille légèrement réduite pour accommoder 4 liens de chaque côté du logo */
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text);
     text-decoration: none;
     transition: opacity var(--transition-fast);
     position: relative;
+    white-space: nowrap;
 }
 
 .navLink::after {
@@ -358,7 +363,26 @@
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+
+/* Sur grand écran (>= 1440px), on peut se permettre des gaps plus aérés
+   et un letter-spacing plus classique car on a assez de place. */
+@media (min-width: 1440px) {
+    .desktopNav {
+        gap: 32px;
+    }
+    .rightSection {
+        gap: 32px;
+    }
+    .navLink {
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+    }
+}
+
+/* Breakpoint mobile remonté à 1200px : avec 4 liens à gauche + 4 à droite
+   + logo centré, sous 1200px ça se chevauche. On bascule plus tôt en
+   hamburger pour éviter ça. */
+@media (max-width: 1200px) {
     .desktopNav {
         display: none;
     }
