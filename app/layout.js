@@ -80,6 +80,11 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  // viewport-fit=cover : indispensable pour que `env(safe-area-inset-*)`
+  // retourne autre chose que 0 sur iOS Safari (notch + home indicator).
+  // Sans ça, le bouton sticky "Ajouter au panier" en bas est caché par
+  // la barre du navigateur sur mobile.
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }) {
