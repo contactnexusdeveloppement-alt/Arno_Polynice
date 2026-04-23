@@ -312,6 +312,18 @@
     cursor: not-allowed;
 }
 
+/* Variante "en attente d'une taille" : le bouton reste PLEINEMENT visible
+   (opacity 1) avec un fond gris neutre + un curseur interdit. Évite le
+   "bouton fantôme" à 40% d'opacité qui passait inaperçu sur mobile. */
+.addToCart.addToCartWaiting,
+.addToCart.addToCartWaiting:disabled {
+    opacity: 1;
+    background-color: var(--color-text-muted);
+    border-color: var(--color-text-muted);
+    color: var(--color-bg);
+    cursor: not-allowed;
+}
+
 .addedToCart {
     background-color: var(--color-success) !important;
     border-color: var(--color-success) !important;

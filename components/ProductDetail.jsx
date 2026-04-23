@@ -231,14 +231,24 @@ export default function ProductDetail({ product }) {
                             )}
                         </div>
 
-                        {/* Add to cart */}
+                        {/* Add to cart.
+                            Libellé dynamique quand le bouton est disabled pour éviter
+                            l'effet "bouton invisible" sur mobile : le visiteur comprend
+                            tout de suite ce qu'il manque (taille à sélectionner).
+                            La classe `addToCartWaiting` garde le bouton pleinement
+                            visible même en disabled (plus de opacity 0.4 translucide). */}
                         {canAddToCart ? (
                             <button
-                                className={`btn btn--primary ${styles.addToCart} ${added ? styles.addedToCart : ''}`}
+                                className={`btn btn--primary ${styles.addToCart} ${added ? styles.addedToCart : ''} ${!selectedSize ? styles.addToCartWaiting : ''}`}
                                 onClick={handleAddToCart}
                                 disabled={!selectedSize || added}
                             >
-                                {added ? t('product.adding') : t('product.addToCart')}
+                                {added
+                                    ? t('product.adding')
+                                    : !selectedSize
+                                        ? t('product.selectSizeFirst')
+                                        : t('product.addToCart')
+                                }
                             </button>
                         ) : (
                             <button className={`btn btn--secondary ${styles.addToCart}`} disabled>
