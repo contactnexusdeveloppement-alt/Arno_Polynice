@@ -441,10 +441,12 @@
 
     /* Sticky Add to Cart bar.
        z-index 999 : sous le header (1000) mais au-dessus de tout le reste.
-       Le `padding` est volontairement défini en shorthand pour BATTRE
-       le `.btn { padding: 14px 40px }` global (même spécificité, mais
-       l'ordre de la cascade nous est défavorable depuis CSS Modules).
-       env(safe-area-inset-bottom) : respecte la barre Safari iOS / le
+       NOTE : on passe par des propriétés INDIVIDUELLES + !important pour
+       battre le `.btn { padding: 14px 40px }` global. Le shorthand
+       mixant `var(--container-padding) max(...)` était mal minifié par
+       PostCSS (les deux fonctions collées sans espace invalidaient la
+       déclaration entière), d'où le fallback silencieux sur .btn.
+       env(safe-area-inset-bottom) : respecte la barre Safari iOS + le
        home indicator. Nécessite `viewport-fit=cover` côté <meta>. */
     .addToCart {
         position: fixed;
@@ -453,7 +455,10 @@
         right: 0;
         margin: 0;
         z-index: 999;
-        padding: 16px var(--container-padding) max(16px, env(safe-area-inset-bottom));
+        padding-top: 16px !important;
+        padding-right: var(--container-padding) !important;
+        padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        padding-left: var(--container-padding) !important;
         background: var(--color-bg);
         border-top: 1px solid var(--color-border);
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
