@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
@@ -43,6 +43,10 @@ export default function ProductDetail({ product }) {
     const [showDetails, setShowDetails] = useState(false);
     const [added, setAdded] = useState(false);
     const [addError, setAddError] = useState('');
+
+    // Ref pour mémoriser le point de départ d'un swipe touch sur la galerie
+    // (sans re-render, donc utile en useRef et non useState).
+    const galleryTouchRef = useRef(null);
 
     const availability = availabilityStatuses[currentProduct.availability] || availabilityStatuses['available'];
     const canAddToCart = currentProduct.availability !== 'unavailable';
@@ -114,6 +118,31 @@ export default function ProductDetail({ product }) {
                     <div
                         className={styles.mainImage}
                         style={{ backgroundColor: currentProduct.colors.find(c => c.name === selectedColor)?.hex || '#E5E0D8' }}
+                        onTouchStart={(e) => {
+                            // Mémorise le point de départ du swipe pour la détection de direction
+                            galleryTouchRef.current = {
+                                startX: e.touches[0].clientX,
+                                startY: e.touches[0].clientY,
+                            };
+                        }}
+                        onTouchEnd={(e) => {
+                            const start = galleryTouchRef.current;
+                            if (!start) return;
+                            const dx = e.changedTouches[0].clientX - start.startX;
+                            const dy = e.changedTouches[0].clientY - start.startY;
+                            // Seuil min 40px horizontal, et plus horizontal que vertical (sinon c'est un scroll)
+                            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                                const total = currentProduct.images.length;
+                                if (total > 1) {
+                                    // dx < 0 : swipe vers la gauche → image suivante
+                                    // dx > 0 : swipe vers la droite → image précédente
+                                    setActiveImage((prev) =>
+                                        dx < 0 ? (prev + 1) % total : (prev - 1 + total) % total
+                                    );
+                                }
+                            }
+                            galleryTouchRef.current = null;
+                        }}
                     >
                         {currentProduct.images[activeImage] ? (
                             <Image
@@ -126,6 +155,41 @@ export default function ProductDetail({ product }) {
                             />
                         ) : (
                             <span className={styles.mainImageLetter}>{currentProduct.name.charAt(0)}</span>
+                        )}
+
+                        {/* Flèches de navigation — visibles sur desktop, cachées en CSS sur mobile
+                            (mobile utilise le swipe tactile). Affichées seulement s'il y a +1 image. */}
+                        {currentProduct.images.length > 1 && (
+                            <>
+                                <button
+                                    type="button"
+                                    className={`${styles.galleryArrow} ${styles.galleryArrowPrev}`}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        const total = currentProduct.images.length;
+                                        setActiveImage((prev) => (prev - 1 + total) % total);
+                                    }}
+                                    aria-label={t('product.previousImage')}
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                        <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${styles.galleryArrow} ${styles.galleryArrowNext}`}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        const total = currentProduct.images.length;
+                                        setActiveImage((prev) => (prev + 1) % total);
+                                    }}
+                                    aria-label={t('product.nextImage')}
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                        <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
+                            </>
                         )}
                     </div>
                     <div className={styles.thumbs}>
