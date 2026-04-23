@@ -11,11 +11,13 @@ const leftLinks = [
     { href: '/femme', key: 'nav.femme' },
     { href: '/homme', key: 'nav.homme' },
     { href: '/unisexe', key: 'nav.unisexe' },
+    { href: '/accessoires', key: 'nav.accessoires' },
 ];
 
 const rightLinks = [
     { href: '/notre-histoire', key: 'nav.notreHistoire' },
     { href: '/notre-ethique', key: 'nav.notreEthique' },
+    { href: '/presse', key: 'nav.presse' },
     { href: '/contact', key: 'nav.contact' },
 ];
 

@@ -3,8 +3,10 @@
     "femme": "Femme",
     "homme": "Homme",
     "unisexe": "Unisexe",
+    "accessoires": "Accessoires",
     "notreHistoire": "Notre histoire",
     "notreEthique": "Notre éthique",
+    "presse": "Presse",
     "contact": "Contact"
   },
   "home": {
@@ -31,6 +33,19 @@
     "creation": "création",
     "creations": "créations",
     "noProducts": "Aucun produit dans cette catégorie pour le moment."
+  },
+  "accessories": {
+    "title": "Accessoires",
+    "intro": "Ceintures, trousses de toilette, lunettes — la touche finale, conçue avec le même soin que nos pièces principales.",
+    "filterLabel": "Filtrer par genre",
+    "noProductsForGender": "Aucun accessoire dans cette catégorie pour le moment. Revenez bientôt."
+  },
+  "press": {
+    "label": "Médias",
+    "title": "Arno Polynice dans les médias",
+    "intro": "Articles de presse, interviews et vidéos qui parlent du travail d'Arno Polynice et de la marque.",
+    "readArticle": "Lire l'article",
+    "empty": "Aucune parution publiée pour le moment. Revenez bientôt !"
   },
   "product": {
     "home": "Accueil",

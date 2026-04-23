@@ -1,0 +1,60 @@
+/* Page Presse — header centré + liste des parutions */
+
+.pressPage {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+}
+
+.header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 60px;
+}
+
+.label {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 18px;
+}
+
+.title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: 0.01em;
+}
+
+.intro {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.8;
+    margin: 0;
+}
+
+.itemsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .pressPage {
+        padding: 40px 20px 60px;
+    }
+    .header {
+        margin-bottom: 40px;
+    }
+}

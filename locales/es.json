@@ -3,8 +3,10 @@
     "femme": "Mujer",
     "homme": "Hombre",
     "unisexe": "Unisex",
+    "accessoires": "Accesorios",
     "notreHistoire": "Nuestra historia",
     "notreEthique": "Nuestra ética",
+    "presse": "Prensa",
     "contact": "Contacto"
   },
   "home": {
@@ -31,6 +33,19 @@
     "creation": "creación",
     "creations": "creaciones",
     "noProducts": "No hay productos en esta categoría por el momento."
+  },
+  "accessories": {
+    "title": "Accesorios",
+    "intro": "Cinturones, neceseres, gafas — el toque final, diseñado con el mismo cuidado que nuestras piezas principales.",
+    "filterLabel": "Filtrar por género",
+    "noProductsForGender": "Aún no hay accesorios en esta categoría. Vuelva pronto."
+  },
+  "press": {
+    "label": "Medios",
+    "title": "Arno Polynice en los medios",
+    "intro": "Artículos de prensa, entrevistas y vídeos que hablan del trabajo de Arno Polynice y de la marca.",
+    "readArticle": "Leer el artículo",
+    "empty": "Ninguna publicación por ahora. ¡Vuelva pronto!"
   },
   "product": {
     "home": "Inicio",

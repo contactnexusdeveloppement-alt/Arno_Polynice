@@ -167,3 +167,18 @@ export async function getAvailableSubcategories(category, language = 'fr') {
   const categoryProducts = await getProductsByCategory(category, language);
   return [...new Set(categoryProducts.map(p => p.subcategory))];
 }
+
+/**
+ * Récupère tous les produits considérés comme "Accessoires".
+ * Convention Shopify : product type === "Accessoires" (mappé sur subcategory),
+ * ou tag `accessoires` en fallback (au cas où le client préfère taguer).
+ * Les produits restent classés par genre (femme/homme/unisexe) via leurs tags.
+ */
+export async function getAccessories(language = 'fr') {
+  const all = await getAllProducts(language);
+  return all.filter(p => {
+    const sub = (p.subcategory || '').toLowerCase();
+    const tags = (p.tags || []).map(t => t.toLowerCase());
+    return sub === 'accessoires' || sub === 'accessories' || tags.includes('accessoires') || tags.includes('accessories');
+  });
+}

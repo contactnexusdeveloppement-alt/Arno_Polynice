@@ -3,8 +3,10 @@
     "femme": "Women",
     "homme": "Men",
     "unisexe": "Unisex",
+    "accessoires": "Accessories",
     "notreHistoire": "Our Story",
     "notreEthique": "Our Ethics",
+    "presse": "Press",
     "contact": "Contact"
   },
   "home": {
@@ -31,6 +33,19 @@
     "creation": "creation",
     "creations": "creations",
     "noProducts": "No products in this category at the moment."
+  },
+  "accessories": {
+    "title": "Accessories",
+    "intro": "Belts, toiletry bags, eyewear — the finishing touch, crafted with the same care as our main pieces.",
+    "filterLabel": "Filter by gender",
+    "noProductsForGender": "No accessories in this category yet. Check back soon."
+  },
+  "press": {
+    "label": "Media",
+    "title": "Arno Polynice in the media",
+    "intro": "Press articles, interviews and videos featuring Arno Polynice's work and the brand.",
+    "readArticle": "Read article",
+    "empty": "No press item published yet. Check back soon!"
   },
   "product": {
     "home": "Home",
