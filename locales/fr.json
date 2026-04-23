@@ -29,6 +29,7 @@
     "femme": "Femme",
     "homme": "Homme",
     "unisexe": "Unisexe",
+    "boutique": "Toute la Collection",
     "all": "Tout",
     "creation": "création",
     "creations": "créations",
@@ -143,7 +144,16 @@
     "genericError": "Une erreur est survenue. Veuillez réessayer.",
     "socialNetworks": "Réseaux sociaux",
     "responseTime": "Délais de réponse",
-    "responseTimeText": "Nous répondons généralement sous 24 à 48 heures. Pour les commandes personnalisées, un rendez-vous atelier peut être organisé."
+    "responseTimeText": "Nous répondons généralement sous 24 à 48 heures. Pour les commandes personnalisées, un rendez-vous atelier peut être organisé.",
+    "errors": {
+      "serviceDown": "Service d'envoi non configuré. Merci de contacter directement arnopolynice@gmail.com.",
+      "allFieldsRequired": "Tous les champs sont obligatoires.",
+      "invalidEmail": "Adresse email invalide.",
+      "messageTooShort": "Votre message est trop court (10 caractères minimum).",
+      "messageTooLong": "Votre message est trop long (5000 caractères maximum).",
+      "sendFailed": "Impossible d'envoyer le message. Veuillez réessayer plus tard.",
+      "serverError": "Erreur serveur. Veuillez réessayer plus tard."
+    }
   },
   "auth": {
     "login": "Connexion",
@@ -176,7 +186,18 @@
     "rememberPassword": "Je me souviens de mon mot de passe.",
     "passwordMismatch": "Les mots de passe ne correspondent pas.",
     "logout": "Déconnexion",
-    "myAccount": "Mon compte"
+    "myAccount": "Mon compte",
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe",
+    "errors": {
+      "missingFields": "Veuillez remplir tous les champs.",
+      "invalidEmail": "Adresse email invalide.",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères.",
+      "invalidCredentials": "Identifiants invalides.",
+      "registrationFailed": "Erreur lors de l'inscription. Veuillez réessayer.",
+      "recoveryFailed": "Une erreur est survenue. Veuillez réessayer.",
+      "emailRequired": "Veuillez saisir votre adresse email."
+    }
   },
   "account": {
     "hello": "Bonjour,",

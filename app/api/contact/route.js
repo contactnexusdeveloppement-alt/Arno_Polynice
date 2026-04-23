@@ -7,10 +7,22 @@ const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'arnopolynice@gmail.com';
 // Basic email validation
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Codes d'erreur retournés au client. Chaque code correspond à une clé i18n
+// (contact.errors.<code>). Aucun message en français en dur ici.
+const CONTACT_ERRORS = {
+    SERVICE_DOWN: 'serviceDown',
+    ALL_FIELDS_REQUIRED: 'allFieldsRequired',
+    INVALID_EMAIL: 'invalidEmail',
+    MESSAGE_TOO_SHORT: 'messageTooShort',
+    MESSAGE_TOO_LONG: 'messageTooLong',
+    SEND_FAILED: 'sendFailed',
+    SERVER_ERROR: 'serverError',
+};
+
 export async function POST(req) {
     if (!RESEND_API_KEY) {
         return NextResponse.json(
-            { error: 'Service d\'envoi non configuré. Merci de contacter directement arnopolynice@gmail.com.' },
+            { error: CONTACT_ERRORS.SERVICE_DOWN },
             { status: 503 }
         );
     }
@@ -19,21 +31,20 @@ export async function POST(req) {
         const body = await req.json();
         const { firstName, lastName, email, subject, message } = body;
 
-        // Server-side validation
         if (!firstName || !lastName || !email || !subject || !message) {
-            return NextResponse.json({ error: 'Tous les champs sont obligatoires.' }, { status: 400 });
+            return NextResponse.json({ error: CONTACT_ERRORS.ALL_FIELDS_REQUIRED }, { status: 400 });
         }
 
         if (!EMAIL_REGEX.test(email)) {
-            return NextResponse.json({ error: 'Adresse email invalide.' }, { status: 400 });
+            return NextResponse.json({ error: CONTACT_ERRORS.INVALID_EMAIL }, { status: 400 });
         }
 
         if (message.length < 10) {
-            return NextResponse.json({ error: 'Votre message est trop court (10 caractères minimum).' }, { status: 400 });
+            return NextResponse.json({ error: CONTACT_ERRORS.MESSAGE_TOO_SHORT }, { status: 400 });
         }
 
         if (message.length > 5000) {
-            return NextResponse.json({ error: 'Votre message est trop long (5000 caractères maximum).' }, { status: 400 });
+            return NextResponse.json({ error: CONTACT_ERRORS.MESSAGE_TOO_LONG }, { status: 400 });
         }
 
         const subjectLabels = {
@@ -64,12 +75,12 @@ ${message}
 
         if (error) {
             console.error('Resend error:', error);
-            return NextResponse.json({ error: 'Impossible d\'envoyer le message. Veuillez réessayer plus tard.' }, { status: 500 });
+            return NextResponse.json({ error: CONTACT_ERRORS.SEND_FAILED }, { status: 500 });
         }
 
         return NextResponse.json({ success: true });
     } catch (err) {
         console.error('Contact API error:', err);
-        return NextResponse.json({ error: 'Erreur serveur. Veuillez réessayer plus tard.' }, { status: 500 });
+        return NextResponse.json({ error: CONTACT_ERRORS.SERVER_ERROR }, { status: 500 });
     }
 }

@@ -1,60 +1,88 @@
+/* Page auth (connexion / inscription / mot-de-passe-oublié).
+   Objectif : tenir dans 1 écran sans scroll, look plus vivant que le
+   carré blanc massif d'avant. On joue sur :
+   - Un fond de page avec un léger gradient subtil (beige → blanc cassé).
+   - Un container décoratif (bordure fine + ombre douce) au lieu d'un
+     bloc blanc plein, pour que la carte respire sur le fond.
+   - Paddings et tailles resserrés.
+*/
+
 .authPage {
-    min-height: 80vh;
+    /* min-height calculé pour rentrer pile entre le header fixe et le
+       footer, avec padding aéré. Pas de 80vh artificiel. */
+    min-height: calc(100vh - var(--nav-height));
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 120px var(--container-padding) 80px;
-    background-color: var(--color-bg);
+    padding: calc(var(--nav-height) + 24px) var(--container-padding) 40px;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(212, 197, 178, 0.25) 0%, transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(212, 197, 178, 0.18) 0%, transparent 50%),
+        var(--color-bg);
 }
 
 .authContainer {
     width: 100%;
-    max-width: 440px;
-    background: white;
-    padding: 60px 40px;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow:
+        0 1px 2px rgba(26, 26, 26, 0.04),
+        0 12px 32px -8px rgba(26, 26, 26, 0.08);
+}
+
+/* Inscription : légèrement plus large car 2 colonnes prénom/nom */
+.authContainerWide {
+    max-width: 480px;
 }
 
 .title {
     font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .subtitle {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     font-weight: 300;
+    line-height: 1.5;
 }
 
 .errorBanner {
-    background: rgba(196, 69, 54, 0.1);
+    background: rgba(196, 69, 54, 0.08);
     border-left: 3px solid var(--color-error, #c44536);
     color: var(--color-error, #c44536);
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-size: 0.8rem;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    border-radius: 4px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
 }
 
 .inputGroup {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .inputGroup label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-text);
@@ -63,18 +91,20 @@
 
 .inputGroup input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border: 1px solid var(--color-border);
-    background: transparent;
+    background: rgba(255, 255, 255, 0.6);
     font-family: var(--font-body);
     font-size: 0.9rem;
     color: var(--color-text);
-    transition: border-color var(--transition-fast);
+    border-radius: 4px;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .inputGroup input:focus {
     outline: none;
     border-color: var(--color-text);
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 .inputGroup input::placeholder {
@@ -84,11 +114,11 @@
 .formLinks {
     display: flex;
     justify-content: flex-end;
-    margin-top: -8px;
+    margin-top: -4px;
 }
 
 .link {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--color-text-light);
     text-decoration: none;
     transition: color var(--transition-fast);
@@ -101,16 +131,16 @@
 
 .submitBtn {
     width: 100%;
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 .switchAuth {
-    margin-top: 40px;
+    margin-top: 24px;
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--color-text-light);
     border-top: 1px solid var(--color-border);
-    padding-top: 32px;
+    padding-top: 20px;
 }
 
 .linkBold {
@@ -118,7 +148,7 @@
     font-weight: 500;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.1em;
     margin-left: 8px;
     transition: opacity var(--transition-fast);
@@ -128,23 +158,25 @@
     opacity: 0.6;
 }
 
-/* Specific to Registration */
+/* Inscription : 2 champs sur la même ligne (prénom + nom). */
 .row {
     display: flex;
-    gap: 20px;
+    gap: 14px;
 }
 
 .row .inputGroup {
     flex: 1;
 }
 
-@media (max-width: 768px) {
-    .authContainer {
-        padding: 40px 24px;
+@media (max-width: 520px) {
+    .authPage {
+        padding: calc(var(--nav-height) + 16px) 16px 24px;
     }
-
+    .authContainer {
+        padding: 28px 22px;
+    }
     .row {
         flex-direction: column;
-        gap: 24px;
+        gap: 16px;
     }
 }

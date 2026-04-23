@@ -29,6 +29,7 @@
     "femme": "Women",
     "homme": "Men",
     "unisexe": "Unisex",
+    "boutique": "The full collection",
     "all": "All",
     "creation": "creation",
     "creations": "creations",
@@ -143,7 +144,16 @@
     "genericError": "An error occurred. Please try again.",
     "socialNetworks": "Social networks",
     "responseTime": "Response time",
-    "responseTimeText": "We usually respond within 24 to 48 hours. For custom orders, a workshop appointment can be arranged."
+    "responseTimeText": "We usually respond within 24 to 48 hours. For custom orders, a workshop appointment can be arranged.",
+    "errors": {
+      "serviceDown": "Email service not configured. Please contact us directly at arnopolynice@gmail.com.",
+      "allFieldsRequired": "All fields are required.",
+      "invalidEmail": "Invalid email address.",
+      "messageTooShort": "Your message is too short (10 characters minimum).",
+      "messageTooLong": "Your message is too long (5000 characters maximum).",
+      "sendFailed": "Unable to send the message. Please try again later.",
+      "serverError": "Server error. Please try again later."
+    }
   },
   "auth": {
     "login": "Login",
@@ -176,7 +186,18 @@
     "rememberPassword": "I remember my password.",
     "passwordMismatch": "Passwords do not match.",
     "logout": "Log out",
-    "myAccount": "My account"
+    "myAccount": "My account",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "errors": {
+      "missingFields": "Please fill in all fields.",
+      "invalidEmail": "Invalid email address.",
+      "passwordTooShort": "Password must be at least 8 characters long.",
+      "invalidCredentials": "Invalid credentials.",
+      "registrationFailed": "Registration failed. Please try again.",
+      "recoveryFailed": "An error occurred. Please try again.",
+      "emailRequired": "Please enter your email address."
+    }
   },
   "account": {
     "hello": "Hello,",

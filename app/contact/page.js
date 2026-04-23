@@ -4,6 +4,18 @@ import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './page.module.css';
 
+// Mapping code d'erreur backend → clé i18n (contact.errors.<code>).
+// Le composant affiche une version localisée selon la langue courante.
+const ERROR_CODE_TO_KEY = {
+    serviceDown: 'contact.errors.serviceDown',
+    allFieldsRequired: 'contact.errors.allFieldsRequired',
+    invalidEmail: 'contact.errors.invalidEmail',
+    messageTooShort: 'contact.errors.messageTooShort',
+    messageTooLong: 'contact.errors.messageTooLong',
+    sendFailed: 'contact.errors.sendFailed',
+    serverError: 'contact.errors.serverError',
+};
+
 export default function ContactPage() {
     const { t } = useLanguage();
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
@@ -35,7 +47,8 @@ export default function ContactPage() {
             const result = await res.json();
 
             if (!res.ok) {
-                throw new Error(result.error || t('contact.genericError'));
+                const key = ERROR_CODE_TO_KEY[result.error] || 'contact.genericError';
+                throw new Error(t(key));
             }
 
             setStatus('success');

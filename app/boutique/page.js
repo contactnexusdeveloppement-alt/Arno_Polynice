@@ -17,5 +17,7 @@ export default async function BoutiquePage() {
             .filter(Boolean)
     )];
 
-    return <CategoryPage title="Toute la Collection" products={products} subcategories={subcategories} />;
+    // CategoryPage résout le titre via la clé i18n `categories.<title-en-minuscules>`.
+    // Pour /boutique on utilise `boutique` comme clé → traduit dans les 3 langues.
+    return <CategoryPage title="Boutique" products={products} subcategories={subcategories} />;
 }

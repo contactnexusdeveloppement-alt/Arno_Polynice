@@ -29,6 +29,7 @@
     "femme": "Mujer",
     "homme": "Hombre",
     "unisexe": "Unisex",
+    "boutique": "Toda la Colección",
     "all": "Todo",
     "creation": "creación",
     "creations": "creaciones",
@@ -143,7 +144,16 @@
     "genericError": "Se ha producido un error. Por favor, inténtelo de nuevo.",
     "socialNetworks": "Redes sociales",
     "responseTime": "Plazos de respuesta",
-    "responseTimeText": "Normalmente respondemos en 24 a 48 horas. Para pedidos personalizados, se puede organizar una cita en el taller."
+    "responseTimeText": "Normalmente respondemos en 24 a 48 horas. Para pedidos personalizados, se puede organizar una cita en el taller.",
+    "errors": {
+      "serviceDown": "Servicio de envío no configurado. Por favor, contáctenos directamente en arnopolynice@gmail.com.",
+      "allFieldsRequired": "Todos los campos son obligatorios.",
+      "invalidEmail": "Dirección de correo inválida.",
+      "messageTooShort": "Su mensaje es demasiado corto (mínimo 10 caracteres).",
+      "messageTooLong": "Su mensaje es demasiado largo (máximo 5000 caracteres).",
+      "sendFailed": "No se puede enviar el mensaje. Inténtelo de nuevo más tarde.",
+      "serverError": "Error del servidor. Inténtelo de nuevo más tarde."
+    }
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -176,7 +186,18 @@
     "rememberPassword": "Recuerdo mi contraseña.",
     "passwordMismatch": "Las contraseñas no coinciden.",
     "logout": "Cerrar sesión",
-    "myAccount": "Mi cuenta"
+    "myAccount": "Mi cuenta",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "errors": {
+      "missingFields": "Por favor rellene todos los campos.",
+      "invalidEmail": "Dirección de correo inválida.",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "invalidCredentials": "Credenciales inválidas.",
+      "registrationFailed": "Error al registrarse. Inténtelo de nuevo.",
+      "recoveryFailed": "Se ha producido un error. Inténtelo de nuevo.",
+      "emailRequired": "Por favor introduzca su dirección de correo."
+    }
   },
   "account": {
     "hello": "Hola,",

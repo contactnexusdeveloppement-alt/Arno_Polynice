@@ -5,7 +5,18 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { registerAction } from '@/app/actions/auth';
 import { useLanguage } from '@/context/LanguageContext';
+import PasswordInput from '@/components/PasswordInput';
 import styles from '@/app/connexion/page.module.css';
+
+const ERROR_CODE_TO_KEY = {
+    missingFields: 'auth.errors.missingFields',
+    invalidEmail: 'auth.errors.invalidEmail',
+    passwordTooShort: 'auth.errors.passwordTooShort',
+    invalidCredentials: 'auth.errors.invalidCredentials',
+    registrationFailed: 'auth.errors.registrationFailed',
+    recoveryFailed: 'auth.errors.recoveryFailed',
+    emailRequired: 'auth.errors.emailRequired',
+};
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -31,7 +42,8 @@ export default function RegisterPage() {
         const result = await registerAction(null, formData);
 
         if (result?.error) {
-            setError(result.error);
+            const key = ERROR_CODE_TO_KEY[result.error] || 'auth.errors.registrationFailed';
+            setError(t(key));
             setIsLoading(false);
         } else {
             router.push('/compte');
@@ -41,7 +53,7 @@ export default function RegisterPage() {
 
     return (
         <div className={`page-enter ${styles.authPage}`}>
-            <div className={styles.authContainer} style={{ maxWidth: '500px' }}>
+            <div className={`${styles.authContainer} ${styles.authContainerWide}`}>
                 <h1 className={styles.title}>{t('auth.createAccount')}</h1>
                 <p className={styles.subtitle}>{t('auth.registerSubtitle')}</p>
 
@@ -56,6 +68,7 @@ export default function RegisterPage() {
                                 id="firstName"
                                 name="firstName"
                                 required
+                                autoComplete="given-name"
                             />
                         </div>
                         <div className={styles.inputGroup}>
@@ -65,6 +78,7 @@ export default function RegisterPage() {
                                 id="lastName"
                                 name="lastName"
                                 required
+                                autoComplete="family-name"
                             />
                         </div>
                     </div>
@@ -76,28 +90,29 @@ export default function RegisterPage() {
                             id="email"
                             name="email"
                             required
+                            autoComplete="email"
                         />
                     </div>
 
                     <div className={styles.inputGroup}>
                         <label htmlFor="password">{t('auth.password')}</label>
-                        <input
-                            type="password"
+                        <PasswordInput
                             id="password"
                             name="password"
                             required
                             minLength={8}
+                            autoComplete="new-password"
                         />
                     </div>
 
                     <div className={styles.inputGroup}>
                         <label htmlFor="confirmPassword">{t('auth.confirmPassword')}</label>
-                        <input
-                            type="password"
+                        <PasswordInput
                             id="confirmPassword"
                             name="confirmPassword"
                             required
                             minLength={8}
+                            autoComplete="new-password"
                         />
                     </div>
 

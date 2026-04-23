@@ -6,8 +6,22 @@ import { customerAccessTokenCreate, customerCreate, getCustomer } from '@/lib/sh
 
 const TOKEN_COOKIE_NAME = 'shopify_customer_token';
 
+// Codes d'erreur renvoyés au client. Chaque code correspond à une clé i18n
+// dans locales/*.json → `auth.errors.<code>`. On NE met PAS de message en
+// français ici : c'est le composant client qui traduit via t().
+const AUTH_ERRORS = {
+    MISSING_FIELDS: 'missingFields',
+    INVALID_EMAIL: 'invalidEmail',
+    PASSWORD_TOO_SHORT: 'passwordTooShort',
+    INVALID_CREDENTIALS: 'invalidCredentials',
+    REGISTRATION_FAILED: 'registrationFailed',
+    RECOVERY_FAILED: 'recoveryFailed',
+    EMAIL_REQUIRED: 'emailRequired',
+};
+
 /**
- * Handles user login and sets the session cookie
+ * Handles user login and sets the session cookie.
+ * Retourne un code d'erreur (jamais un message en dur).
  */
 export async function loginAction(prevState, formData) {
     try {
@@ -15,13 +29,11 @@ export async function loginAction(prevState, formData) {
         const password = formData.get('password');
 
         if (!email || !password) {
-            return { error: 'Veuillez remplir tous les champs.' };
+            return { error: AUTH_ERRORS.MISSING_FIELDS };
         }
 
-        // Call Shopify API
         const tokenData = await customerAccessTokenCreate({ email, password });
 
-        // Set secure HTTP-only cookie
         const cookieStore = await cookies();
         cookieStore.set(TOKEN_COOKIE_NAME, tokenData.accessToken, {
             httpOnly: true,
@@ -33,12 +45,13 @@ export async function loginAction(prevState, formData) {
 
         return { success: true };
     } catch (error) {
-        return { error: error.message || 'Identifiants invalides.' };
+        console.error('[loginAction] Error:', error.message);
+        return { error: AUTH_ERRORS.INVALID_CREDENTIALS };
     }
 }
 
 /**
- * Handles user registration, then logs them in
+ * Handles user registration, then logs them in.
  */
 export async function registerAction(prevState, formData) {
     try {
@@ -48,24 +61,21 @@ export async function registerAction(prevState, formData) {
         const password = formData.get('password');
 
         if (!firstName || !lastName || !email || !password) {
-            return { error: 'Veuillez remplir tous les champs.' };
+            return { error: AUTH_ERRORS.MISSING_FIELDS };
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            return { error: 'Adresse email invalide.' };
+            return { error: AUTH_ERRORS.INVALID_EMAIL };
         }
 
         if (password.length < 8) {
-            return { error: 'Le mot de passe doit contenir au moins 8 caractères.' };
+            return { error: AUTH_ERRORS.PASSWORD_TOO_SHORT };
         }
 
-        // 1. Create account on Shopify
         await customerCreate({ firstName, lastName, email, password });
 
-        // 2. Automatically log them in after registration
         const tokenData = await customerAccessTokenCreate({ email, password });
 
-        // Set secure HTTP-only cookie
         const cookieStore = await cookies();
         cookieStore.set(TOKEN_COOKIE_NAME, tokenData.accessToken, {
             httpOnly: true,
@@ -77,12 +87,13 @@ export async function registerAction(prevState, formData) {
 
         return { success: true };
     } catch (error) {
-        return { error: error.message || "Erreur lors de l'inscription." };
+        console.error('[registerAction] Error:', error.message);
+        return { error: AUTH_ERRORS.REGISTRATION_FAILED };
     }
 }
 
 /**
- * Logs the user out by deleting the cookie
+ * Logs the user out by deleting the cookie.
  */
 export async function logoutAction() {
     const cookieStore = await cookies();
@@ -91,7 +102,7 @@ export async function logoutAction() {
 }
 
 /**
- * Retrieve current customer data from session cookie
+ * Retrieve current customer data from session cookie.
  */
 export async function getSessionCustomer() {
     const cookieStore = await cookies();
@@ -103,28 +114,27 @@ export async function getSessionCustomer() {
         const customer = await getCustomer(token);
         return customer;
     } catch (error) {
-        // Token might be invalid or expired
         console.error('Session expired or invalid token');
         return null;
     }
 }
 
 /**
- * Handle password recovery requests
+ * Handle password recovery requests.
  */
 export async function recoverAction(prevState, formData) {
     try {
         const email = formData.get('email');
         if (!email) {
-            return { error: 'Veuillez saisir votre adresse email.' };
+            return { error: AUTH_ERRORS.EMAIL_REQUIRED };
         }
 
-        // We import it inside the action to avoid circular dependency issues if any
         const { customerRecover } = await import('@/lib/shopifyAuth');
         await customerRecover(email);
 
         return { success: true };
     } catch (error) {
-        return { error: error.message || "Une erreur est survenue." };
+        console.error('[recoverAction] Error:', error.message);
+        return { error: AUTH_ERRORS.RECOVERY_FAILED };
     }
 }
