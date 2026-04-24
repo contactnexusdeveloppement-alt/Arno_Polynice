@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { useLanguage } from '@/context/LanguageContext';
+import { getSubcategoryLabel } from '@/lib/i18n';
 import styles from './CategoryPage.module.css';
 
 export default function CategoryPage({ title, products, subcategories }) {
@@ -14,9 +15,11 @@ export default function CategoryPage({ title, products, subcategories }) {
         ? products
         : products.filter(p => p.subcategory === activeFilter);
 
+    // 'all' = filtre spécial (clé i18n dédiée), sinon on délègue au mapping
+    // partagé avec ProductCard / AccessoriesContent.
     const getFilterLabel = (filter) => {
         if (filter === 'all') return t('categories.all');
-        return filter;
+        return getSubcategoryLabel(filter, t);
     };
 
     const getCategoryTitle = () => {

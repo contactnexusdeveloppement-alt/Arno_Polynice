@@ -67,7 +67,7 @@ export default function Header() {
                     <button
                         className={styles.menuToggle}
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        aria-label="Menu"
+                        aria-label={t('nav.menu')}
                         aria-expanded={isMenuOpen}
                         aria-controls="mobile-nav"
                     >
@@ -119,7 +119,7 @@ export default function Header() {
                                 <button
                                     className={styles.langBtn}
                                     onClick={(e) => { e.stopPropagation(); setIsLangOpen(!isLangOpen); }}
-                                    aria-label="Language"
+                                    aria-label={t('nav.language')}
                                 >
                                     <span className={styles.langFlag}>{currentFlag}</span>
                                 </button>

@@ -4,9 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { availabilityStatuses } from '@/data/products';
+import { useLanguage } from '@/context/LanguageContext';
+import { getSubcategoryLabel } from '@/lib/i18n';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product, showPrice = false, priority = false }) {
+    const { t } = useLanguage();
     const [isHovered, setIsHovered] = useState(false);
     const availability = availabilityStatuses[product.availability];
     const isUnavailable = product.availability === 'unavailable';
@@ -85,7 +88,7 @@ export default function ProductCard({ product, showPrice = false, priority = fal
             <div className={styles.info}>
                 <h3 className={styles.name}>{product.name}</h3>
                 {product.subcategory && (
-                    <span className={styles.category}>{product.subcategory}</span>
+                    <span className={styles.category}>{getSubcategoryLabel(product.subcategory, t)}</span>
                 )}
                 {showPrice && (
                     <span className={styles.price}>{product.price},00 €</span>

@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useLayoutEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { useLanguage } from '@/context/LanguageContext';
+import { getSubcategoryLabel } from '@/lib/i18n';
 import styles from './AccessoriesContent.module.css';
 
 /**
@@ -127,7 +128,7 @@ export default function AccessoriesContent({ products }) {
                                 onClick={() => setActiveSubcategory(sub)}
                                 aria-pressed={activeSubcategory === sub}
                             >
-                                {sub}
+                                {getSubcategoryLabel(sub, t)}
                             </button>
                         ))}
                     </div>

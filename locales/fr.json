@@ -7,7 +7,9 @@
     "notreHistoire": "Notre histoire",
     "notreEthique": "Notre éthique",
     "presse": "Presse",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu",
+    "language": "Langue"
   },
   "home": {
     "heroTitle1": "La Mode",
@@ -408,6 +410,19 @@
       "sec10Title": "10. Modification de la Politique",
       "sec10Text": "Arno Polynice se réserve le droit de modifier la présente politique de confidentialité à tout moment. Les modifications prennent effet dès leur publication sur le site. Nous vous invitons à consulter régulièrement cette page."
     }
+  },
+  "subcategories": {
+    "ensembles": "Ensembles",
+    "vestes": "Vestes",
+    "pantalons": "Pantalons",
+    "shorts": "Shorts",
+    "chemises": "Chemises",
+    "accessoires": "Accessoires",
+    "sacs": "Sacs",
+    "trousses": "Trousses",
+    "lunettes": "Lunettes",
+    "ceintures": "Ceintures",
+    "autre": "Autre"
   },
   "lang": {
     "fr": "Français",

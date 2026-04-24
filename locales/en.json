@@ -7,7 +7,9 @@
     "notreHistoire": "Our Story",
     "notreEthique": "Our Ethics",
     "presse": "Press",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu",
+    "language": "Language"
   },
   "home": {
     "heroTitle1": "French",
@@ -408,6 +410,19 @@
       "sec10Title": "10. Modification of the Policy",
       "sec10Text": "Arno Polynice reserves the right to modify this privacy policy at any time. Modifications take effect upon their publication on the website. We invite you to consult this page regularly."
     }
+  },
+  "subcategories": {
+    "ensembles": "Sets",
+    "vestes": "Jackets",
+    "pantalons": "Trousers",
+    "shorts": "Shorts",
+    "chemises": "Shirts",
+    "accessoires": "Accessories",
+    "sacs": "Bags",
+    "trousses": "Toiletry bags",
+    "lunettes": "Eyewear",
+    "ceintures": "Belts",
+    "autre": "Other"
   },
   "lang": {
     "fr": "Français",
