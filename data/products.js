@@ -143,9 +143,34 @@ export async function getAllProducts(language = 'fr') {
   }
 }
 
+/**
+ * Helper privé : un produit est-il un accessoire ?
+ * Source de vérité partagée entre les filtres genre (qui DOIVENT exclure
+ * les accessoires) et la page /accessoires (qui les regroupe).
+ *
+ * Convention Shopify :
+ *  - product type === "Accessoires" (mappé sur subcategory), OU
+ *  - tag `accessoires` (fallback si le client préfère taguer)
+ *
+ * Pourquoi exclure des pages /femme, /homme, /unisexe : un produit accessoire
+ * a généralement aussi un tag genre (ex. trousse `Femme + accessoires`) pour
+ * pouvoir être filtré dans le sélecteur de la page /accessoires. Sans cette
+ * exclusion, il remonterait dans la grille vêtements de la catégorie genre.
+ */
+function isAccessory(p) {
+  const sub = (p.subcategory || '').toLowerCase();
+  const tags = (p.tags || []).map(t => t.toLowerCase());
+  return (
+    sub === 'accessoires' ||
+    sub === 'accessories' ||
+    tags.includes('accessoires') ||
+    tags.includes('accessories')
+  );
+}
+
 export async function getProductsByCategory(category, language = 'fr') {
   const all = await getAllProducts(language);
-  return all.filter(p => p.category === category);
+  return all.filter(p => p.category === category && !isAccessory(p));
 }
 
 export async function getProductBySlug(slug, language = 'fr') {
@@ -160,7 +185,9 @@ export async function getFeaturedProducts(language = 'fr') {
 
 export async function getProductsBySubcategory(category, subcategory, language = 'fr') {
   const all = await getAllProducts(language);
-  return all.filter(p => p.category === category && p.subcategory === subcategory);
+  // Exclut les accessoires : ils ont leur propre page /accessoires avec
+  // sous-filtres dédiés (Sacs, Trousses, Lunettes…).
+  return all.filter(p => p.category === category && p.subcategory === subcategory && !isAccessory(p));
 }
 
 export async function getAvailableSubcategories(category, language = 'fr') {
@@ -170,15 +197,15 @@ export async function getAvailableSubcategories(category, language = 'fr') {
 
 /**
  * Récupère tous les produits considérés comme "Accessoires".
- * Convention Shopify : product type === "Accessoires" (mappé sur subcategory),
- * ou tag `accessoires` en fallback (au cas où le client préfère taguer).
- * Les produits restent classés par genre (femme/homme/unisexe) via leurs tags.
+ * Utilise le helper privé `isAccessory` (cf. plus haut) pour garantir la
+ * symétrie : un produit est dans /accessoires si et seulement s'il est
+ * exclu des pages /femme, /homme, /unisexe.
+ *
+ * Les produits restent classés par genre (femme/homme/unisexe) via leurs
+ * tags : c'est ce qui permet le sélecteur Femme/Homme/Unisexe sur la page
+ * /accessoires sans qu'ils remontent dans les pages vêtements.
  */
 export async function getAccessories(language = 'fr') {
   const all = await getAllProducts(language);
-  return all.filter(p => {
-    const sub = (p.subcategory || '').toLowerCase();
-    const tags = (p.tags || []).map(t => t.toLowerCase());
-    return sub === 'accessoires' || sub === 'accessories' || tags.includes('accessoires') || tags.includes('accessories');
-  });
+  return all.filter(isAccessory);
 }
