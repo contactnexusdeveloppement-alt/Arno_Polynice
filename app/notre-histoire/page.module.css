@@ -278,6 +278,10 @@
 }
 
 /* ============ Responsive ============ */
+
+/* Tablette (769-1024px) — la grille 2col est conservée mais on relâche
+   tous les min-height en vh (qui rendaient les sections trop hautes en
+   orientation portrait) et on resserre les gaps des grilles multi-photos. */
 @media (max-width: 1024px) {
     .storyPage {
         padding: 24px 24px 0;
@@ -292,6 +296,30 @@
     .storyHeroContent,
     .sectionContent {
         padding: 24px 8px;
+    }
+
+    /* Toutes les variantes de section : laisser le contenu définir la
+       hauteur (les min-height en 70-92vh étaient calibrés desktop et
+       créaient d'énormes vides verticaux sur iPad portrait). */
+    .storyHero,
+    .section,
+    .sectionPhotoLarge,
+    .sectionPhotoFull,
+    .sectionGridLarge,
+    .sectionGridFirst {
+        min-height: auto;
+    }
+
+    /* Grilles multi-photos : réduire les gaps pour éviter que les
+       cellules paraissent éclatées les unes des autres. */
+    .imageGridStacked,
+    .imageGridSideStack {
+        gap: 12px;
+        min-height: auto;
+    }
+
+    .imageGridStackedTall {
+        min-height: auto;
     }
 }
 

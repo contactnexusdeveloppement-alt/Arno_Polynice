@@ -282,8 +282,10 @@
     padding: 0 var(--container-padding) 40px;
   }
 
+  /* heroImageGrid : 480px sur tablette (était 360px = trop petit pour
+     iPad portrait, les photos paraissaient maquette). */
   .heroImageGrid {
-    max-width: 360px;
+    max-width: 480px;
   }
 
   .visionInner {

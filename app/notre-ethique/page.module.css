@@ -112,9 +112,26 @@
 }
 
 /* ============ Responsive ============ */
+
+/* Tablette (769-1024px) — réduit les gaps et les paddings excessifs.
+   Le bandeau quote occupait 120px de padding vertical (= 25% du viewport
+   sur iPad portrait), trop généreux. */
 @media (max-width: 1024px) {
+    .ethicsPage {
+        padding: 60px var(--container-padding) 0;
+    }
+
+    .header {
+        margin-bottom: 90px;
+    }
+
     .values {
         gap: 80px 60px;
+        margin-bottom: 100px;
+    }
+
+    .quote {
+        padding: 80px var(--container-padding);
     }
 }
 

@@ -137,6 +137,28 @@
 }
 
 /* Responsive */
+
+/* Tablette (769-1024px) — la grille reste à 2 colonnes mais on resserre
+   le gap de 80 → 50px pour éviter que le formulaire et le bloc info ne
+   soient écrasés sur iPad portrait. */
+@media (max-width: 1024px) {
+    .contactPage {
+        padding: 50px var(--container-padding) 80px;
+    }
+
+    .grid {
+        gap: 50px;
+    }
+
+    .header {
+        margin-bottom: 48px;
+    }
+
+    .contactInfo {
+        gap: 28px;
+    }
+}
+
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;

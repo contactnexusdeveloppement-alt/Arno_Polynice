@@ -141,6 +141,28 @@
     font-style: italic;
 }
 
+/* Tablette (≤ 900px) — resserre paddings du switcher pour libérer de la
+   place avant le break "vraiment mobile" à 520px. */
+@media (max-width: 900px) {
+    .pageHeader {
+        padding: 50px 20px 20px;
+    }
+
+    .switcherWrapper {
+        padding: 24px 16px 32px;
+    }
+
+    .tab {
+        padding: 9px 18px;
+        font-size: 0.75rem;
+    }
+
+    .subFilter {
+        padding: 5px 14px;
+        font-size: 0.72rem;
+    }
+}
+
 @media (max-width: 520px) {
     .switcher {
         gap: 0;

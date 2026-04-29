@@ -192,6 +192,37 @@
 }
 
 /* Responsive */
+
+/* Tablette (iPad portrait, 9-10") — entre 769 et 1024px les 3 colonnes
+   avec gap 40px sont écrasées (≈250px par colonne sur 850px). On
+   resserre tout ce qui est aérage avant la bascule mobile. */
+@media (max-width: 1024px) {
+    .footer {
+        padding: 64px 0 36px;
+        margin-top: 80px;
+    }
+
+    .newsletter {
+        padding-bottom: 48px;
+        margin-bottom: 48px;
+    }
+
+    .linksGrid {
+        gap: 24px;
+        padding-bottom: 48px;
+        margin-bottom: 32px;
+    }
+
+    .columnTitle {
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+    }
+
+    .link {
+        font-size: 0.78rem;
+    }
+}
+
 @media (max-width: 768px) {
     .footer {
         padding: 60px 0 30px;

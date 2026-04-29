@@ -74,6 +74,20 @@
     font-weight: 300;
 }
 
+/* Tablette (≤ 1024px) — resserre les filtres et le header pour éviter
+   l'effet "trop d'air" sur iPad portrait où la zone utile est restreinte. */
+@media (max-width: 1024px) {
+    .pageHeader {
+        padding: 50px var(--container-padding) 24px;
+    }
+
+    .filterBtn {
+        padding: 14px 18px;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+    }
+}
+
 @media (max-width: 480px) {
     .filterBtn {
         padding: 14px 16px;

@@ -155,6 +155,24 @@
     margin-top: 2px;
 }
 
+/* Tablette (≤ 900px) — typo réduite avant la bascule "vraiment mobile" à 600px
+   pour éviter que les cartes ne paraissent oversized sur iPad portrait
+   où les colonnes font ~250-280px de large. */
+@media (max-width: 900px) {
+    .name {
+        font-size: 0.8rem;
+    }
+
+    .category {
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+    }
+
+    .price {
+        font-size: 0.78rem;
+    }
+}
+
 /* Mobile */
 @media (max-width: 600px) {
     .imageWrapper {
