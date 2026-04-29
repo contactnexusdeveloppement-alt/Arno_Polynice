@@ -258,7 +258,74 @@
 }
 
 /* Responsive */
+/* Ajustements communs tablette-and-below (≤ 1024px) :
+   image grid plafonnée et vision passée en 1 colonne, indépendamment
+   du fait que le hero soit en bento (820-1024) ou en stack (≤ 819). */
 @media (max-width: 1024px) {
+  .heroVisual {
+    padding: 0 var(--container-padding) 40px;
+  }
+
+  /* heroImageGrid : 480px sur tablette (était 360px = trop petit pour
+     iPad portrait, les photos paraissaient maquette). */
+  .heroImageGrid {
+    max-width: 480px;
+  }
+
+  .visionInner {
+    grid-template-columns: 1fr;
+  }
+
+  .visionContent {
+    padding: 60px var(--container-padding);
+  }
+}
+
+/* Tablette large (820-1024px) — on conserve le bento 2 colonnes du
+   desktop (texte gauche, photos droite) au lieu de tout empiler. Couvre
+   iPad 10e gen (820), iPad Pro 11" portrait (834), iPad Pro 12.9"
+   portrait (1024) et toutes les Surfaces / Android tablets dans cette
+   zone. Le bento reste confortable car on resserre les paddings et on
+   abaisse le cap du titre pour que "ARTISANALE" tienne dans la colonne
+   gauche (~370-510px utiles selon le viewport). */
+@media (min-width: 820px) and (max-width: 1024px) {
+  .hero {
+    min-height: auto;
+  }
+
+  /* Padding interne resserré (était 80px 40px 80px 60px) */
+  .heroContent {
+    padding: 60px 24px 60px 32px;
+  }
+
+  /* Cap du titre abaissé pour ne pas déborder (clamp 6vw/5.5rem desktop
+     → 5.5vw/3.4rem ici). À 820px : 5.5vw = 45px, "ARTISANALE" ≈ 280px
+     dans une colonne ~370px = ça respire. */
+  .heroTitle {
+    font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+    line-height: 1;
+    margin-bottom: 22px;
+  }
+
+  .heroSubtitle {
+    margin-bottom: 32px;
+  }
+
+  /* La colonne droite : padding allégé + grid prend 100% de la colonne
+     (le plafond 480px du bloc commun ≤ 1024px reste actif au-dessus). */
+  .heroVisual {
+    padding: 32px 24px;
+  }
+
+  .heroImageGrid {
+    max-width: 100%;
+  }
+}
+
+/* Tablette portrait + phablet (≤ 819px) — bascule en stack 1 colonne :
+   texte centré au-dessus, bento en dessous. Couvre iPad Mini portrait
+   (768) et tous les téléphones grand format / phablets. */
+@media (max-width: 819px) {
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -276,24 +343,6 @@
 
   .heroCta {
     justify-content: center;
-  }
-
-  .heroVisual {
-    padding: 0 var(--container-padding) 40px;
-  }
-
-  /* heroImageGrid : 480px sur tablette (était 360px = trop petit pour
-     iPad portrait, les photos paraissaient maquette). */
-  .heroImageGrid {
-    max-width: 480px;
-  }
-
-  .visionInner {
-    grid-template-columns: 1fr;
-  }
-
-  .visionContent {
-    padding: 60px var(--container-padding);
   }
 }
 
