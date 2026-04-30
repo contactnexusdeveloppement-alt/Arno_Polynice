@@ -1,20 +1,24 @@
 import { getEthicsPage, getEthicsValues } from '@/lib/shopify';
 import EthicsContent from './EthicsContent';
+import {
+    SITE_URL,
+    getAboutPageSchema,
+    getBreadcrumbSchema,
+    jsonLdScriptProps,
+} from '@/lib/schemas';
 
 // ISR : Adelson peut modifier le contenu Shopify et le voir en ligne en
 // quelques minutes max, sans rebuild manuel.
 export const revalidate = 300;
 
 export const metadata = {
-    title: 'Notre Éthique — Mode Responsable et Artisanale',
-    description: 'Les engagements d\'Arno Polynice : confection éthique, matériaux responsables, production locale dans les Vosges. Une mode artisanale respectueuse de l\'environnement.',
-    alternates: { canonical: 'https://www.arno-polynice.com/notre-ethique' },
+    title: 'Notre Éthique — Mode Responsable Vosges',
+    description: 'Les engagements d\'Arno Polynice : confection éthique, matériaux responsables, production locale à Épinal dans les Vosges. Mode artisanale respectueuse de l\'environnement.',
+    alternates: { canonical: `${SITE_URL}/notre-ethique` },
 };
 
 // Fallback statique : si Shopify est down au moment du SSR, on garde un
-// contenu FR par défaut pour que la page reste fonctionnelle. Ce fallback
-// ne doit JAMAIS être visible en pratique — Shopify est la source de vérité
-// gérée par Adelson via les metaobjects ethics_page + ethics_value.
+// contenu FR par défaut pour que la page reste fonctionnelle.
 const FALLBACK_PAGE = {
     label: 'Nos engagements',
     title: 'Notre Éthique',
@@ -50,14 +54,22 @@ const FALLBACK_VALUES = [
     },
 ];
 
+// AboutPage schema — la page parle de la marque (about → ORG_ID par défaut).
+const aboutPageSchema = getAboutPageSchema({
+    slug: 'notre-ethique',
+    name: 'Notre Éthique — Mode Responsable Arno Polynice',
+    description: 'Les engagements d\'Arno Polynice : confection éthique, matériaux responsables, production locale dans les Vosges.',
+});
+
+const breadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Accueil', url: SITE_URL },
+    { name: 'Notre Éthique', url: `${SITE_URL}/notre-ethique` },
+]);
+
 /**
  * Server component : fetch le contenu Shopify en FR (SSR + ISR pour SEO et
  * perf), puis délègue le rendu à EthicsContent (client) qui re-fetch en
  * EN/ES si l'utilisateur change de langue (cf. /api/ethics).
- *
- * Adelson reste maître du contenu via Shopify metaobjects. Pour que les
- * traductions EN/ES s'affichent : installer l'app Shopify "Translate &
- * Adapt" (gratuite) et traduire chaque champ depuis le panel Shopify.
  */
 export default async function NotreEthiquePage() {
     const [pageData, valuesData] = await Promise.all([
@@ -68,5 +80,11 @@ export default async function NotreEthiquePage() {
     const initialPage = pageData ?? FALLBACK_PAGE;
     const initialValues = valuesData?.length > 0 ? valuesData : FALLBACK_VALUES;
 
-    return <EthicsContent initialPage={initialPage} initialValues={initialValues} />;
+    return (
+        <>
+            <script {...jsonLdScriptProps(aboutPageSchema)} />
+            <script {...jsonLdScriptProps(breadcrumbSchema)} />
+            <EthicsContent initialPage={initialPage} initialValues={initialValues} />
+        </>
+    );
 }
