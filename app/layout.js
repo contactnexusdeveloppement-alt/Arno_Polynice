@@ -9,11 +9,12 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import PageLoader from '@/components/PageLoader';
+import GA4PageView from '@/components/GA4PageView';
 import { ORG_ID, WEBSITE_ID, PERSON_ID, SITE_URL } from '@/lib/schemas';
 
 // IDs des outils analytics tiers (publics côté client, pas de secret)
 const CLARITY_PROJECT_ID = 'wjr12966i7';
-// const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';  // À remplir une fois propriété GA4 créée
+const GA4_MEASUREMENT_ID = 'G-0RZ39DLT3H';
 
 const barlowCondensed = Barlow_Condensed({
     subsets: ['latin'],
@@ -208,7 +209,6 @@ export default function RootLayout({ children }) {
                   Microsoft Clarity — heatmaps + session recordings + insights UX.
                   strategy="afterInteractive" : se charge après l'hydratation React,
                   ne bloque pas le rendu initial (zéro impact LCP/INP).
-                  Snippet officiel Clarity adapté pour next/script.
                 */}
                 <Script id="ms-clarity" strategy="afterInteractive">
                     {`(function(c,l,a,r,i,t,y){
@@ -217,6 +217,29 @@ export default function RootLayout({ children }) {
                         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                     })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
                 </Script>
+                {/*
+                  Google Analytics 4 — trafic, sources, conversions, démographie.
+                  - Le 1er Script charge gtag.js de façon async
+                  - Le 2e Script initialise dataLayer + envoie le premier page_view
+                  - GA4PageView (client component) tracke les navigations Next.js
+                    suivantes (App Router = client-side routing, gtag ne capte pas
+                    les changements de route automatiquement)
+                */}
+                <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}
+                    strategy="afterInteractive"
+                />
+                <Script id="ga4-init" strategy="afterInteractive">
+                    {`window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    window.gtag = gtag;
+                    gtag('js', new Date());
+                    gtag('config', '${GA4_MEASUREMENT_ID}', {
+                        send_page_view: true,
+                        cookie_flags: 'SameSite=None;Secure',
+                    });`}
+                </Script>
+                <GA4PageView />
             </body>
         </html>
     );
