@@ -426,6 +426,13 @@
     "value4Title": "Transparence",
     "value4Text": "Nous détaillons la composition de chaque pièce, son lieu de fabrication et les conditions de travail de nos artisans. Notre prix reflète le coût réel d'une production éthique et locale."
   },
+  "cookie": {
+    "title": "Vos cookies",
+    "text": "Nous utilisons des cookies pour analyser le trafic et améliorer votre expérience. Vous pouvez les refuser sans impact sur votre navigation.",
+    "learnMore": "En savoir plus",
+    "accept": "Accepter",
+    "reject": "Refuser"
+  },
   "subcategories": {
     "ensembles": "Ensembles",
     "vestes": "Vestes",

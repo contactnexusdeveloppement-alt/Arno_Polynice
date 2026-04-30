@@ -1,0 +1,147 @@
+.banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding: 20px var(--container-padding);
+    z-index: 9000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    animation: slideUpBanner 0.4s ease-out;
+    /* Respecte la safe-area iOS (home indicator) */
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+@keyframes slideUpBanner {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner {
+        animation: none;
+    }
+}
+
+.inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.content {
+    flex: 1;
+}
+
+.title {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin: 0 0 6px;
+}
+
+.text {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.link {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity var(--transition-fast);
+}
+
+.link:hover {
+    opacity: 0.7;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.btnReject,
+.btnAccept {
+    padding: 10px 24px;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btnReject {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-light);
+}
+
+.btnReject:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+}
+
+.btnAccept {
+    background: var(--color-text);
+    border: 1px solid var(--color-text);
+    color: var(--color-bg);
+}
+
+.btnAccept:hover {
+    opacity: 0.85;
+}
+
+/* Tablette / mobile : passage en stack vertical pour gagner de la place */
+@media (max-width: 768px) {
+    .banner {
+        padding: 16px var(--container-padding);
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .actions {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .btnReject,
+    .btnAccept {
+        flex: 1;
+        padding: 11px 12px;
+        font-size: 0.72rem;
+    }
+
+    .title {
+        font-size: 0.78rem;
+    }
+
+    .text {
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+}

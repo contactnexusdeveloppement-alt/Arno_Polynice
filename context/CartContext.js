@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { trackAddToCart } from '@/lib/gtag';
 
 const CartContext = createContext();
 
@@ -47,6 +48,8 @@ export function CartProvider({ children }) {
                 quantity,
             }];
         });
+        // GA4 e-commerce event (no-op safe si gtag pas chargé / consent refusé)
+        trackAddToCart(product, { color: selectedColor, size: selectedSize, quantity });
         setIsOpen(true);
     }, []);
 

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
+import { trackBeginCheckout } from '@/lib/gtag';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './CartDrawer.module.css';
@@ -64,6 +65,8 @@ export default function CartDrawer() {
 
     const handleCheckout = async () => {
         if (isCheckingOut) return;
+        // GA4 e-commerce : begin_checkout event (avant le call API checkout)
+        trackBeginCheckout(items, totalPrice);
         setIsCheckingOut(true);
         setCheckoutError('');
         try {

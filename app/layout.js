@@ -1,20 +1,17 @@
 import './globals.css';
-import Script from 'next/script';
 import { Barlow_Condensed, Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { CartProvider } from '@/context/CartContext';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { CookieConsentProvider } from '@/context/CookieConsentContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import PageLoader from '@/components/PageLoader';
-import GA4PageView from '@/components/GA4PageView';
+import CookieBanner from '@/components/CookieBanner';
+import AnalyticsScripts from '@/components/AnalyticsScripts';
 import { ORG_ID, WEBSITE_ID, PERSON_ID, SITE_URL } from '@/lib/schemas';
-
-// IDs des outils analytics tiers (publics côté client, pas de secret)
-const CLARITY_PROJECT_ID = 'wjr12966i7';
-const GA4_MEASUREMENT_ID = 'G-0RZ39DLT3H';
 
 const barlowCondensed = Barlow_Condensed({
     subsets: ['latin'],
@@ -99,9 +96,9 @@ export const viewport = {
 
 /**
  * Schema.org : Organization + Store (combiné via array de @type).
- * Inclut maintenant : geo coordinates, areaServed, knowsAbout, knowsLanguage,
- * founder enrichi avec @id Person, hasMap. Ces champs renforcent les signaux
- * pour le SEO local (Knowledge Graph + Local Pack Vosges/Épinal).
+ * Inclut : geo coordinates, areaServed, knowsAbout, knowsLanguage,
+ * founder enrichi avec @id Person, hasMap. Renforce les signaux pour le
+ * SEO local (Knowledge Graph + Local Pack Vosges/Épinal).
  */
 const organizationSchema = {
     '@context': 'https://schema.org',
@@ -180,6 +177,21 @@ const websiteSchema = {
     publisher: { '@id': ORG_ID },
 };
 
+/**
+ * Architecture des Providers (de l'extérieur vers l'intérieur) :
+ *
+ *   CookieConsentProvider           ← gère consentement RGPD (state global)
+ *     └─ LanguageProvider           ← langue UI courante
+ *         └─ CartProvider           ← panier (uses gtag.js si chargé)
+ *
+ * Pourquoi cet ordre :
+ *   - CookieBanner a besoin de useLanguage ET useCookieConsent → après les deux
+ *   - AnalyticsScripts a besoin de useCookieConsent uniquement → peut être
+ *     en frère du LanguageProvider, mais on le met à l'intérieur pour rester
+ *     cohérent et garder le banner au même niveau
+ *   - GA4PageView (à l'intérieur de AnalyticsScripts) a besoin du router
+ *     Next.js → pas de prérequis Provider mais doit être client component
+ */
 export default function RootLayout({ children }) {
     return (
         <html lang="fr" className={`${barlowCondensed.variable} ${inter.variable}`}>
@@ -192,54 +204,34 @@ export default function RootLayout({ children }) {
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
                 />
-                <LanguageProvider>
-                    <CartProvider>
-                        <PageLoader />
-                        <Header />
-                        <main style={{ paddingTop: 'var(--nav-height)' }}>
-                            {children}
-                        </main>
-                        <Footer />
-                        <CartDrawer />
-                    </CartProvider>
-                </LanguageProvider>
+                <CookieConsentProvider>
+                    <LanguageProvider>
+                        <CartProvider>
+                            <PageLoader />
+                            <Header />
+                            <main style={{ paddingTop: 'var(--nav-height)' }}>
+                                {children}
+                            </main>
+                            <Footer />
+                            <CartDrawer />
+                            <CookieBanner />
+                        </CartProvider>
+                    </LanguageProvider>
+                    {/*
+                      AnalyticsScripts charge Clarity + GA4 UNIQUEMENT si l'utilisateur
+                      a accepté via la bannière (consent === 'accepted' dans le context).
+                      Sinon : zéro cookie analytics, zéro requête vers clarity.ms ou
+                      googletagmanager.com → conforme RGPD/CNIL par défaut.
+                    */}
+                    <AnalyticsScripts />
+                </CookieConsentProvider>
+                {/*
+                  Vercel Analytics et Speed Insights : analytics privacy-first
+                  sans cookies tiers, donc pas soumis à consentement RGPD.
+                  Restent actifs en permanence.
+                */}
                 <Analytics />
                 <SpeedInsights />
-                {/*
-                  Microsoft Clarity — heatmaps + session recordings + insights UX.
-                  strategy="afterInteractive" : se charge après l'hydratation React,
-                  ne bloque pas le rendu initial (zéro impact LCP/INP).
-                */}
-                <Script id="ms-clarity" strategy="afterInteractive">
-                    {`(function(c,l,a,r,i,t,y){
-                        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                    })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
-                </Script>
-                {/*
-                  Google Analytics 4 — trafic, sources, conversions, démographie.
-                  - Le 1er Script charge gtag.js de façon async
-                  - Le 2e Script initialise dataLayer + envoie le premier page_view
-                  - GA4PageView (client component) tracke les navigations Next.js
-                    suivantes (App Router = client-side routing, gtag ne capte pas
-                    les changements de route automatiquement)
-                */}
-                <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}
-                    strategy="afterInteractive"
-                />
-                <Script id="ga4-init" strategy="afterInteractive">
-                    {`window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    window.gtag = gtag;
-                    gtag('js', new Date());
-                    gtag('config', '${GA4_MEASUREMENT_ID}', {
-                        send_page_view: true,
-                        cookie_flags: 'SameSite=None;Secure',
-                    });`}
-                </Script>
-                <GA4PageView />
             </body>
         </html>
     );

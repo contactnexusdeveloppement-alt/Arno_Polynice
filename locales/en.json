@@ -426,6 +426,13 @@
     "value4Title": "Transparency",
     "value4Text": "We detail the composition of each piece, its place of manufacture, and the working conditions of our artisans. Our prices reflect the true cost of ethical, local production."
   },
+  "cookie": {
+    "title": "Your cookies",
+    "text": "We use cookies to analyze traffic and improve your experience. You can decline without affecting your browsing.",
+    "learnMore": "Learn more",
+    "accept": "Accept",
+    "reject": "Decline"
+  },
   "subcategories": {
     "ensembles": "Sets",
     "vestes": "Jackets",

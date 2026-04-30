@@ -426,6 +426,13 @@
     "value4Title": "Transparencia",
     "value4Text": "Detallamos la composición de cada pieza, su lugar de fabricación y las condiciones de trabajo de nuestros artesanos. Nuestro precio refleja el coste real de una producción ética y local."
   },
+  "cookie": {
+    "title": "Sus cookies",
+    "text": "Utilizamos cookies para analizar el tráfico y mejorar su experiencia. Puede rechazarlos sin que afecte a su navegación.",
+    "learnMore": "Más información",
+    "accept": "Aceptar",
+    "reject": "Rechazar"
+  },
   "subcategories": {
     "ensembles": "Conjuntos",
     "vestes": "Chaquetas",

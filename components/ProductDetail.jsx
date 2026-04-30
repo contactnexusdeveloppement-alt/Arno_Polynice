@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
+import { trackViewItem } from '@/lib/gtag';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/app/produit/[slug]/page.module.css';
@@ -25,6 +26,12 @@ export default function ProductDetail({ product }) {
             })
             .catch(() => setCurrentProduct(product));
     }, [language, product]);
+
+    // GA4 e-commerce : view_item event au mount (1x par produit consulté)
+    useEffect(() => {
+        trackViewItem(product);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [product?.slug]);
 
     const [selectedColor, setSelectedColor] = useState(currentProduct.colors[0]?.name || '');
 

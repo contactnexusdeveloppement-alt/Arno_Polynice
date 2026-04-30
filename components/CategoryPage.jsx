@@ -1,14 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { useLanguage } from '@/context/LanguageContext';
 import { getSubcategoryLabel } from '@/lib/i18n';
+import { trackViewItemList } from '@/lib/gtag';
 import styles from './CategoryPage.module.css';
 
 export default function CategoryPage({ title, products, subcategories }) {
     const { t } = useLanguage();
     const [activeFilter, setActiveFilter] = useState('all');
+
+    // GA4 e-commerce : view_item_list au mount (1x par catégorie visitée)
+    useEffect(() => {
+        trackViewItemList(title, products);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [title]);
 
     const filters = ['all', ...subcategories];
     const filteredProducts = activeFilter === 'all'
