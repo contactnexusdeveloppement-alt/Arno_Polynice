@@ -1,4 +1,5 @@
 import './globals.css';
+import Script from 'next/script';
 import { Barlow_Condensed, Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -9,6 +10,10 @@ import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import PageLoader from '@/components/PageLoader';
 import { ORG_ID, WEBSITE_ID, PERSON_ID, SITE_URL } from '@/lib/schemas';
+
+// IDs des outils analytics tiers (publics côté client, pas de secret)
+const CLARITY_PROJECT_ID = 'wjr12966i7';
+// const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';  // À remplir une fois propriété GA4 créée
 
 const barlowCondensed = Barlow_Condensed({
     subsets: ['latin'],
@@ -199,6 +204,19 @@ export default function RootLayout({ children }) {
                 </LanguageProvider>
                 <Analytics />
                 <SpeedInsights />
+                {/*
+                  Microsoft Clarity — heatmaps + session recordings + insights UX.
+                  strategy="afterInteractive" : se charge après l'hydratation React,
+                  ne bloque pas le rendu initial (zéro impact LCP/INP).
+                  Snippet officiel Clarity adapté pour next/script.
+                */}
+                <Script id="ms-clarity" strategy="afterInteractive">
+                    {`(function(c,l,a,r,i,t,y){
+                        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                    })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
+                </Script>
             </body>
         </html>
     );
