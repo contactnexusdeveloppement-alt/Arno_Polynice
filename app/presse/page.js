@@ -1,8 +1,8 @@
-import { getPressItems } from '@/lib/shopify';
+import { getPressPage, getPressItems } from '@/lib/shopify';
 import PresseContent from './PresseContent';
 
-// ISR : permet au client d'ajouter une parution depuis Shopify et de la voir
-// en ligne en quelques minutes max, sans rebuild manuel.
+// ISR : Adelson peut ajouter une parution depuis Shopify et la voir en
+// ligne en quelques minutes max, sans rebuild manuel.
 export const revalidate = 300;
 
 export const metadata = {
@@ -11,16 +11,31 @@ export const metadata = {
     alternates: { canonical: 'https://www.arno-polynice.com/presse' },
 };
 
+// Fallback statique : si Shopify est down au moment du SSR, on garde un
+// en-tête FR par défaut. Ne doit jamais être visible en pratique.
+const FALLBACK_PAGE = {
+    label: 'Médias',
+    title: 'Arno Polynice dans les médias',
+    intro: "Articles de presse, interviews et vidéos qui parlent du travail d'Arno Polynice et de la marque.",
+};
+
 /**
- * Server wrapper : fetch les items Shopify (avec ISR 5 min) et délègue le
- * rendu à PresseContent (client) qui gère l'en-tête traduit via les locales.
+ * Server component : fetch header + items Shopify en FR (SSR + ISR), puis
+ * délègue à PresseContent (client) qui re-fetch en EN/ES si l'utilisateur
+ * change de langue (cf. /api/press).
  *
- * Note : on n'utilise plus le metaobject `press_page` pour l'en-tête —
- * remplacé par les clés press.* des locales pour avoir un en-tête traduit
- * en EN et ES (Shopify ne supporte pas la traduction native sans installer
- * l'app Translate & Adapt + re-saisie manuelle par Adelson).
+ * Adelson reste maître du contenu via Shopify metaobjects (press_page +
+ * press_item). Pour que les traductions EN/ES s'affichent : installer l'app
+ * Shopify "Translate & Adapt" (gratuite) et traduire chaque champ.
  */
 export default async function PressePage() {
-    const items = await getPressItems();
-    return <PresseContent items={items} />;
+    const [pageData, items] = await Promise.all([
+        getPressPage('fr'),
+        getPressItems('fr'),
+    ]);
+
+    const initialPage = pageData ?? FALLBACK_PAGE;
+    const initialItems = items || [];
+
+    return <PresseContent initialPage={initialPage} initialItems={initialItems} />;
 }

@@ -1,50 +1,81 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './page.module.css';
 
 /**
- * Page Notre Éthique — contenu rendu côté client à partir des locales.
+ * Page Notre Éthique — wrapper client.
  *
- * Architecture : on a abandonné le contenu via Shopify metaobjects
- * (ethics_page + ethics_value) au profit des locales pour deux raisons :
- *   1) Adelson saisissait son contenu uniquement en FR → les utilisateurs
- *      EN et ES voyaient du français. La fonction Shopify `@inContext` ne
- *      résout pas le problème (elle nécessite que le contenu soit
- *      explicitement traduit côté Shopify via l'app Translate & Adapt,
- *      donc une re-saisie manuelle pour chaque langue).
- *   2) Le contenu de cette page est très stable (4 valeurs + un crédo) →
- *      perdre le CMS Shopify pour cette page est un compromis acceptable.
+ * Architecture (identique au pattern utilisé pour les produits Shopify) :
+ *   - Le SERVEUR (page.js) fetch le contenu en FR depuis Shopify metaobjects
+ *     (ethics_page + ethics_value) avec ISR 5 min. Il passe ces données en
+ *     props ici pour que le rendu initial (SSR) soit déjà en FR — bon pour
+ *     le SEO et zéro flash pour les visiteurs FR (la majorité).
+ *   - Le CLIENT (ce composant) détecte la langue active via useLanguage().
+ *     Si la langue ≠ 'fr', il re-fetch via /api/ethics?lang=X qui appelle
+ *     les mêmes fonctions Shopify avec la directive @inContext(language: X).
  *
- * Si Adelson souhaite modifier le contenu de cette page, il faut éditer
- * locales/{fr,en,es}.json dans la clé "ethics" (cf. NEXUS DEVELOPPEMENT).
+ * Pré-requis pour que la traduction marche en EN / ES :
+ *   1. Adelson installe l'app Shopify GRATUITE "Translate & Adapt"
+ *      (https://apps.shopify.com/translate-and-adapt — éditeur officiel Shopify)
+ *   2. Adelson ouvre Translate & Adapt → sélectionne EN puis ES
+ *   3. Adelson traduit chaque champ des metaobjects ethics_page + ethics_value
+ *   4. Le code se synchronise automatiquement via ISR (5 min max)
+ *
+ * Si Adelson n'a pas encore traduit un champ, Shopify renvoie le contenu FR
+ * par défaut (comportement gracieux — pas de breakage UX, juste du FR au lieu
+ * du EN/ES sur les champs non traduits).
  */
+export default function EthicsContent({ initialPage, initialValues }) {
+    const { language } = useLanguage();
+    const [page, setPage] = useState(initialPage);
+    const [values, setValues] = useState(initialValues);
 
-const VALUES = [
-    { number: '01', titleKey: 'ethics.value1Title', textKey: 'ethics.value1Text' },
-    { number: '02', titleKey: 'ethics.value2Title', textKey: 'ethics.value2Text' },
-    { number: '03', titleKey: 'ethics.value3Title', textKey: 'ethics.value3Text' },
-    { number: '04', titleKey: 'ethics.value4Title', textKey: 'ethics.value4Text' },
-];
+    useEffect(() => {
+        // Langue par défaut : on garde le SSR initial sans re-fetch (zéro flash).
+        if (language === 'fr') {
+            setPage(initialPage);
+            setValues(initialValues);
+            return;
+        }
 
-export default function EthicsContent() {
-    const { t } = useLanguage();
+        let cancelled = false;
+        fetch(`/api/ethics?lang=${language}`)
+            .then((r) => {
+                if (!r.ok) throw new Error('API error ' + r.status);
+                return r.json();
+            })
+            .then((data) => {
+                if (cancelled) return;
+                if (data.page) setPage(data.page);
+                if (data.values?.length) setValues(data.values);
+            })
+            .catch((err) => {
+                console.error('[EthicsContent] Translation fetch failed, keeping FR:', err.message);
+                // Sur erreur, on garde l'affichage FR (pas de breakage UX).
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [language, initialPage, initialValues]);
 
     return (
         <div className="page-enter">
             <section className={styles.ethicsPage}>
                 <div className={styles.header}>
-                    <span className={styles.label}>{t('ethics.label')}</span>
-                    <h1 className={styles.title}>{t('ethics.title')}</h1>
-                    <p className={styles.intro}>{t('ethics.intro')}</p>
+                    <span className={styles.label}>{page.label}</span>
+                    <h1 className={styles.title}>{page.title}</h1>
+                    <p className={styles.intro}>{page.intro}</p>
                 </div>
 
                 <div className={styles.values}>
-                    {VALUES.map((value) => (
-                        <div key={value.number} className={styles.value}>
+                    {values.map((value) => (
+                        <div key={value.position || value.number} className={styles.value}>
                             <span className={styles.valueNumber} aria-hidden="true">{value.number}</span>
-                            <h2 className={styles.valueTitle}>{t(value.titleKey)}</h2>
-                            <p className={styles.valueText}>{t(value.textKey)}</p>
+                            <h2 className={styles.valueTitle}>{value.title}</h2>
+                            <p className={styles.valueText}>{value.text}</p>
                         </div>
                     ))}
                 </div>
@@ -52,9 +83,9 @@ export default function EthicsContent() {
                 {/* Citation pleine largeur */}
                 <div className={styles.quote}>
                     <blockquote className={styles.quoteText}>
-                        « {t('ethics.quoteText')} »
+                        « {page.quoteText} »
                     </blockquote>
-                    <cite className={styles.quoteAuthor}>— {t('ethics.quoteAuthor')}</cite>
+                    <cite className={styles.quoteAuthor}>— {page.quoteAuthor}</cite>
                 </div>
             </section>
         </div>
