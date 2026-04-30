@@ -1,7 +1,5 @@
-import styles from './page.module.css';
-import { getPressPage, getPressItems } from '@/lib/shopify';
-import PressItem from '@/components/PressItem';
-import PressEmpty from '@/components/PressEmpty';
+import { getPressItems } from '@/lib/shopify';
+import PresseContent from './PresseContent';
 
 // ISR : permet au client d'ajouter une parution depuis Shopify et de la voir
 // en ligne en quelques minutes max, sans rebuild manuel.
@@ -13,47 +11,16 @@ export const metadata = {
     alternates: { canonical: 'https://www.arno-polynice.com/presse' },
 };
 
-// Fallback statique : si Shopify est down ou les metaobjects sont vides,
-// la page reste fonctionnelle avec un en-tête + une invitation à revenir.
-const FALLBACK_PAGE = {
-    label: 'Médias',
-    title: 'Arno Polynice dans les médias',
-    intro: "Articles de presse, interviews et vidéos qui parlent du travail d'Arno Polynice et de la marque.",
-};
-
+/**
+ * Server wrapper : fetch les items Shopify (avec ISR 5 min) et délègue le
+ * rendu à PresseContent (client) qui gère l'en-tête traduit via les locales.
+ *
+ * Note : on n'utilise plus le metaobject `press_page` pour l'en-tête —
+ * remplacé par les clés press.* des locales pour avoir un en-tête traduit
+ * en EN et ES (Shopify ne supporte pas la traduction native sans installer
+ * l'app Translate & Adapt + re-saisie manuelle par Adelson).
+ */
 export default async function PressePage() {
-    const [pageData, items] = await Promise.all([
-        getPressPage(),
-        getPressItems(),
-    ]);
-
-    const page = pageData ?? FALLBACK_PAGE;
-
-    return (
-        <div className="page-enter">
-            <section className={styles.pressPage}>
-                <div className={styles.header}>
-                    {page.label && <span className={styles.label}>{page.label}</span>}
-                    <h1 className={styles.title}>{page.title}</h1>
-                    {page.intro && <p className={styles.intro}>{page.intro}</p>}
-                </div>
-
-                {items.length > 0 ? (
-                    <div className={styles.itemsList}>
-                        {items.map((item, index) => (
-                            <PressItem
-                                key={item.id}
-                                item={item}
-                                reversed={index % 2 === 1}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.empty}>
-                        <PressEmpty />
-                    </div>
-                )}
-            </section>
-        </div>
-    );
+    const items = await getPressItems();
+    return <PresseContent items={items} />;
 }

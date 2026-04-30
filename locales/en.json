@@ -411,6 +411,21 @@
       "sec10Text": "Arno Polynice reserves the right to modify this privacy policy at any time. Modifications take effect upon their publication on the website. We invite you to consult this page regularly."
     }
   },
+  "ethics": {
+    "label": "Our commitments",
+    "title": "Our Ethics",
+    "intro": "We believe that beautiful fashion can — and must — be responsible. Here are the principles that guide each of our creations.",
+    "quoteText": "True elegance is wearing clothes that respect those who make them and the world we live in.",
+    "quoteAuthor": "Arno Polynice",
+    "value1Title": "Responsible Materials",
+    "value1Text": "We select our fabrics with care: French linen, organic cotton, certified merino wool, recycled polyester. Each material is chosen for its quality, durability and reduced environmental impact.",
+    "value2Title": "Artisanal Manufacturing",
+    "value2Text": "No mass production. Each piece is crafted in small batches or made to order, in our workshop or by our artisan partners in France. The time it takes to craft is the time it takes for quality.",
+    "value3Title": "Zero Waste",
+    "value3Text": "Our made-to-order production model minimises unsold stock and textile waste. Fabric scraps are repurposed for accessories or donated to solidarity sewing associations.",
+    "value4Title": "Transparency",
+    "value4Text": "We detail the composition of each piece, its place of manufacture, and the working conditions of our artisans. Our prices reflect the true cost of ethical, local production."
+  },
   "subcategories": {
     "ensembles": "Sets",
     "vestes": "Jackets",

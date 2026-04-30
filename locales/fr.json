@@ -411,6 +411,21 @@
       "sec10Text": "Arno Polynice se réserve le droit de modifier la présente politique de confidentialité à tout moment. Les modifications prennent effet dès leur publication sur le site. Nous vous invitons à consulter régulièrement cette page."
     }
   },
+  "ethics": {
+    "label": "Nos engagements",
+    "title": "Notre Éthique",
+    "intro": "Nous croyons qu'une belle mode peut — et doit — être responsable. Voici les principes qui guident chacune de nos créations.",
+    "quoteText": "La vraie élégance, c'est de porter des vêtements qui respectent ceux qui les fabriquent et le monde dans lequel nous vivons.",
+    "quoteAuthor": "Arno Polynice",
+    "value1Title": "Matières Responsables",
+    "value1Text": "Nous sélectionnons nos tissus avec exigence : lin français, coton biologique, laine mérinos certifiée, polyester recyclé. Chaque matière est choisie pour sa qualité, sa durabilité et son impact environnemental réduit.",
+    "value2Title": "Fabrication Artisanale",
+    "value2Text": "Pas de production de masse. Chaque pièce est confectionnée en petite série ou sur commande, dans notre atelier ou chez nos artisans partenaires en France. Le temps de la confection est le temps de la qualité.",
+    "value3Title": "Anti-gaspillage",
+    "value3Text": "Notre modèle de production à la commande minimise les invendus et le gaspillage textile. Les chutes de tissu sont réutilisées pour des accessoires ou données à des associations de couture solidaire.",
+    "value4Title": "Transparence",
+    "value4Text": "Nous détaillons la composition de chaque pièce, son lieu de fabrication et les conditions de travail de nos artisans. Notre prix reflète le coût réel d'une production éthique et locale."
+  },
   "subcategories": {
     "ensembles": "Ensembles",
     "vestes": "Vestes",
