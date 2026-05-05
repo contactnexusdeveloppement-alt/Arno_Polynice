@@ -89,6 +89,13 @@ export default function PolitiqueContent() {
                             <strong>{t('legal.privacy.sec6Text2Bold2')}</strong>
                             {t('legal.privacy.sec6Text2Part3')}
                         </p>
+                        <p className={styles.text}>
+                            {t('legal.privacy.sec6Text3Part1')}
+                            <strong>{t('legal.privacy.sec6Text3Bold1')}</strong>
+                            {t('legal.privacy.sec6Text3Part2')}
+                            <strong>{t('legal.privacy.sec6Text3Bold2')}</strong>
+                            {t('legal.privacy.sec6Text3Part3')}
+                        </p>
                     </div>
 
                     <div className={styles.section}>
@@ -99,6 +106,8 @@ export default function PolitiqueContent() {
                             <li><strong>{t('legal.privacy.sec7Item2Bold')}</strong>{t('legal.privacy.sec7Item2')}</li>
                             <li><strong>{t('legal.privacy.sec7Item3Bold')}</strong>{t('legal.privacy.sec7Item3')}</li>
                             <li><strong>{t('legal.privacy.sec7Item4Bold')}</strong>{t('legal.privacy.sec7Item4')}</li>
+                            <li><strong>{t('legal.privacy.sec7Item5Bold')}</strong>{t('legal.privacy.sec7Item5')}</li>
+                            <li><strong>{t('legal.privacy.sec7Item6Bold')}</strong>{t('legal.privacy.sec7Item6')}</li>
                         </ul>
                     </div>
 

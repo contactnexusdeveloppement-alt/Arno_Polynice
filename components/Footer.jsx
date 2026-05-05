@@ -17,6 +17,7 @@ const shopLinks = [
 ];
 
 const infoLinks = [
+    { key: 'nav.surMesure', href: '/sur-mesure' },
     { key: 'nav.notreHistoire', href: '/notre-histoire' },
     { key: 'nav.notreEthique', href: '/notre-ethique' },
     { key: 'nav.contact', href: '/contact' },
