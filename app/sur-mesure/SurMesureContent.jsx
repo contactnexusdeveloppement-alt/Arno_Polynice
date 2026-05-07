@@ -56,18 +56,6 @@ export default function SurMesureContent() {
                     </div>
                 </section>
 
-                {/* Matières */}
-                <section className={styles.materials}>
-                    <h2 className={styles.sectionTitle}>{t('customMade.materialsTitle')}</h2>
-                    <p className={styles.text}>{t('customMade.materialsText')}</p>
-                </section>
-
-                {/* Délais & tarifs */}
-                <section className={styles.timing}>
-                    <h2 className={styles.sectionTitle}>{t('customMade.timingTitle')}</h2>
-                    <p className={styles.text}>{t('customMade.timingText')}</p>
-                </section>
-
                 {/* CTA */}
                 <section className={styles.cta}>
                     <h2 className={styles.ctaTitle}>{t('customMade.ctaTitle')}</h2>
