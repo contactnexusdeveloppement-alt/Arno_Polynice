@@ -204,6 +204,9 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 100px 40px 40px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobileNavOpen {
