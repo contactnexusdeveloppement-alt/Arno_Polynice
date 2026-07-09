@@ -114,6 +114,13 @@
     "newsletterText": "Suscríbase para recibir nuestras últimas creaciones y novedades.",
     "emailPlaceholder": "Su dirección de email",
     "subscribe": "Suscribirse",
+    "subscribeSuccess": "¡Gracias! Su suscripción ha sido registrada.",
+    "errors": {
+      "serviceDown": "El servicio de suscripción no está disponible temporalmente. Inténtelo más tarde.",
+      "invalidEmail": "Por favor, introduzca una dirección de email válida.",
+      "sendFailed": "La suscripción ha fallado. Por favor, inténtelo de nuevo.",
+      "serverError": "Se ha producido un error. Por favor, inténtelo más tarde."
+    },
     "shop": "Tienda",
     "info": "Información",
     "followUs": "Síguenos",

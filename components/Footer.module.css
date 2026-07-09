@@ -73,6 +73,38 @@
     opacity: 0.6;
 }
 
+.newsletterBtn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* Honeypot anti-bot : sorti du flux et invisible, mais pas display:none
+   (certains bots ignorent les champs display:none) */
+.newsletterHoneypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.newsletterMessage {
+    max-width: 420px;
+    margin: 14px auto 0;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+}
+
+.newsletterSuccess {
+    color: rgba(248, 245, 240, 0.85);
+}
+
+.newsletterError {
+    color: #E8A297;
+}
+
 /* Links Grid */
 .linksGrid {
     display: grid;

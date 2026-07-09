@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './Footer.module.css';
@@ -25,6 +26,42 @@ const infoLinks = [
 
 export default function Footer() {
     const { t } = useLanguage();
+    const [status, setStatus] = useState('idle'); // idle | sending | success | error
+    const [errorKey, setErrorKey] = useState('footer.errors.serverError');
+
+    const handleSubscribe = async (e) => {
+        e.preventDefault();
+        if (status === 'sending') return;
+
+        setStatus('sending');
+
+        const formData = new FormData(e.target);
+
+        try {
+            const res = await fetch('/api/newsletter', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: formData.get('email'),
+                    website: formData.get('website'),
+                }),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                setErrorKey(`footer.errors.${result.error}`);
+                setStatus('error');
+                return;
+            }
+
+            setStatus('success');
+            e.target.reset();
+        } catch {
+            setErrorKey('footer.errors.serverError');
+            setStatus('error');
+        }
+    };
 
     return (
         <footer className={styles.footer}>
@@ -35,21 +72,44 @@ export default function Footer() {
                     <p className={styles.newsletterText}>
                         {t('footer.newsletterText')}
                     </p>
-                    <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
+                    <form className={styles.newsletterForm} onSubmit={handleSubscribe}>
                         <input
                             type="email"
+                            name="email"
                             placeholder={t('footer.emailPlaceholder')}
                             className={styles.newsletterInput}
                             aria-label={t('footer.emailPlaceholder')}
+                            required
+                            disabled={status === 'sending'}
+                        />
+                        {/* Honeypot anti-bot : invisible pour les humains */}
+                        <input
+                            type="text"
+                            name="website"
+                            className={styles.newsletterHoneypot}
+                            tabIndex={-1}
+                            autoComplete="off"
+                            aria-hidden="true"
                         />
                         <button
                             type="submit"
                             className={styles.newsletterBtn}
                             aria-label={t('footer.subscribe')}
+                            disabled={status === 'sending'}
                         >
                             →
                         </button>
                     </form>
+                    {status === 'success' && (
+                        <p className={`${styles.newsletterMessage} ${styles.newsletterSuccess}`} role="status" aria-live="polite">
+                            {t('footer.subscribeSuccess')}
+                        </p>
+                    )}
+                    {status === 'error' && (
+                        <p className={`${styles.newsletterMessage} ${styles.newsletterError}`} role="alert" aria-live="polite">
+                            {t(errorKey)}
+                        </p>
+                    )}
                 </div>
 
                 {/* Links Grid */}

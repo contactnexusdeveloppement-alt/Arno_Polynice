@@ -114,6 +114,13 @@
     "newsletterText": "Sign up to receive our latest creations and news.",
     "emailPlaceholder": "Your email address",
     "subscribe": "Subscribe",
+    "subscribeSuccess": "Thank you! Your subscription has been registered.",
+    "errors": {
+      "serviceDown": "The subscription service is temporarily unavailable. Please try again later.",
+      "invalidEmail": "Please enter a valid email address.",
+      "sendFailed": "Subscription failed. Please try again.",
+      "serverError": "An error occurred. Please try again later."
+    },
     "shop": "Shop",
     "info": "Information",
     "followUs": "Follow us",

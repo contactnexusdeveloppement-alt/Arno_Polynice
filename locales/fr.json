@@ -114,6 +114,13 @@
     "newsletterText": "Inscrivez-vous pour recevoir nos dernières créations et actualités.",
     "emailPlaceholder": "Votre adresse email",
     "subscribe": "S'inscrire",
+    "subscribeSuccess": "Merci ! Votre inscription a bien été prise en compte.",
+    "errors": {
+      "serviceDown": "Le service d'inscription est momentanément indisponible. Réessayez plus tard.",
+      "invalidEmail": "Veuillez saisir une adresse email valide.",
+      "sendFailed": "L'inscription a échoué. Veuillez réessayer.",
+      "serverError": "Une erreur est survenue. Veuillez réessayer plus tard."
+    },
     "shop": "Boutique",
     "info": "Informations",
     "followUs": "Suivez-nous",
