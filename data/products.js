@@ -15,11 +15,13 @@ export const subcategories = [
   'Accessoires',
 ];
 
+// Les libellés sont des clés i18n (availability.*) résolues via t() dans les
+// composants, pour que badges et bannières suivent la langue du visiteur.
 export const availabilityStatuses = {
-  available: { label: 'Disponible', color: '#4A7C59', icon: '✓' },
-  made_to_order: { label: 'À confectionner', color: '#C4943D', icon: '✂', delay: 'Délai de confection : 2 à 4 semaines' },
-  waiting_materials: { label: 'En attente de matériaux', color: '#8A6D3B', icon: '⏳', delay: 'Délai variable selon approvisionnement' },
-  unavailable: { label: 'Non disponible', color: '#A63D40', icon: '✕' },
+  available: { labelKey: 'availability.available', color: '#4A7C59', icon: '✓' },
+  made_to_order: { labelKey: 'availability.madeToOrder', color: '#C4943D', icon: '✂', delayKey: 'availability.madeToOrderDelay' },
+  waiting_materials: { labelKey: 'availability.waitingMaterials', color: '#8A6D3B', icon: '⏳', delayKey: 'availability.waitingMaterialsDelay' },
+  unavailable: { labelKey: 'availability.outOfStock', color: '#A63D40', icon: '✕' },
 };
 
 // Color mapping for Shopify product options

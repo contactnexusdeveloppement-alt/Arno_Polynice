@@ -53,6 +53,14 @@
     "readArticle": "Lire l'article",
     "empty": "Aucune parution publiée pour le moment. Revenez bientôt !"
   },
+  "availability": {
+    "available": "Disponible",
+    "madeToOrder": "À confectionner",
+    "madeToOrderDelay": "Délai de confection : 2 à 4 semaines",
+    "waitingMaterials": "En attente de matériaux",
+    "waitingMaterialsDelay": "Délai variable selon approvisionnement",
+    "outOfStock": "Rupture de stock"
+  },
   "product": {
     "home": "Accueil",
     "color": "Couleur",

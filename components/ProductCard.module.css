@@ -55,6 +55,24 @@
     opacity: 1;
 }
 
+/* Bannière rupture de stock : bandeau pleine largeur en travers de l'image */
+.soldOutBanner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 8px;
+    background: rgba(26, 26, 26, 0.82);
+    color: #F8F5F0;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    z-index: 3;
+}
+
 /* Badge */
 .badge {
     position: absolute;
@@ -196,5 +214,11 @@
         left: 8px;
         padding: 4px 8px;
         font-size: 0.55rem;
+    }
+
+    .soldOutBanner {
+        padding: 7px 6px;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
     }
 }

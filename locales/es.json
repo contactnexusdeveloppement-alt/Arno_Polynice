@@ -53,6 +53,14 @@
     "readArticle": "Leer el artículo",
     "empty": "Ninguna publicación por ahora. ¡Vuelva pronto!"
   },
+  "availability": {
+    "available": "Disponible",
+    "madeToOrder": "Confección por encargo",
+    "madeToOrderDelay": "Plazo de confección: 2 a 4 semanas",
+    "waitingMaterials": "En espera de materiales",
+    "waitingMaterialsDelay": "Plazo variable según aprovisionamiento",
+    "outOfStock": "Agotado"
+  },
   "product": {
     "home": "Inicio",
     "color": "Color",

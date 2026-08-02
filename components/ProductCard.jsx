@@ -51,13 +51,18 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     />
                 )}
 
-                {/* Availability badge */}
-                {product.availability !== 'available' && (
+                {/* Rupture de stock : bannière en travers de l'image.
+                    Autres statuts (à confectionner, attente matériaux) : badge de coin. */}
+                {isUnavailable ? (
+                    <span className={styles.soldOutBanner}>
+                        {t('availability.outOfStock')}
+                    </span>
+                ) : product.availability !== 'available' && availability && (
                     <span
                         className={styles.badge}
                         style={{ '--badge-color': availability.color }}
                     >
-                        {availability.icon} {availability.label}
+                        {availability.icon} {t(availability.labelKey)}
                     </span>
                 )}
 

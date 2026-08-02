@@ -215,11 +215,11 @@ export default function ProductDetail({ product }) {
                         {/* Availability */}
                         <div className={styles.availability} style={{ '--avail-color': availability.color }}>
                             <span className={styles.availIcon}>{availability.icon}</span>
-                            <span>{availability.label}</span>
+                            <span>{t(availability.labelKey)}</span>
                         </div>
                         {(currentProduct.availability === 'made_to_order' || currentProduct.availability === 'waiting_materials') && (
                             <p className={styles.delayWarning}>
-                                ⚠ {availability.delay}
+                                ⚠ {t(availability.delayKey)}
                             </p>
                         )}
 
@@ -304,7 +304,7 @@ export default function ProductDetail({ product }) {
                             </button>
                         ) : (
                             <button className={`btn btn--secondary ${styles.addToCart}`} disabled>
-                                {t('product.unavailable')}
+                                {t('availability.outOfStock')}
                             </button>
                         )}
                         {addError && (
