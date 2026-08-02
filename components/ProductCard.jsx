@@ -80,9 +80,10 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     </div>
                 )}
 
-                {/* Made in France badge */}
+                {/* Made in France badge — remonte au-dessus de la bannière
+                    rupture de stock quand elle occupe le coin bas droit */}
                 {product.madeInFrance && (
-                    <span className={styles.madeInFranceBadge}>
+                    <span className={`${styles.madeInFranceBadge} ${isUnavailable ? styles.madeInFranceBadgeRaised : ''}`}>
                         <span className={styles.flagBlue} />
                         <span className={styles.flagWhite} />
                         <span className={styles.flagRed} />
