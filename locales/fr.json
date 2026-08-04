@@ -59,7 +59,8 @@
     "madeToOrderDelay": "Délai de confection : 2 à 4 semaines",
     "waitingMaterials": "En attente de matériaux",
     "waitingMaterialsDelay": "Délai variable selon approvisionnement",
-    "outOfStock": "Rupture de stock"
+    "outOfStock": "Rupture de stock",
+    "soldOut": "Épuisé"
   },
   "product": {
     "home": "Accueil",

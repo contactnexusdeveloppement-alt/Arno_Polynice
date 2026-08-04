@@ -59,7 +59,8 @@
     "madeToOrderDelay": "Plazo de confección: 2 a 4 semanas",
     "waitingMaterials": "En espera de materiales",
     "waitingMaterialsDelay": "Plazo variable según aprovisionamiento",
-    "outOfStock": "Agotado"
+    "outOfStock": "Agotado",
+    "soldOut": "Agotado"
   },
   "product": {
     "home": "Inicio",

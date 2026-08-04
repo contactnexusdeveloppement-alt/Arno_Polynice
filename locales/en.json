@@ -59,7 +59,8 @@
     "madeToOrderDelay": "Production time: 2 to 4 weeks",
     "waitingMaterials": "Awaiting materials",
     "waitingMaterialsDelay": "Time frame varies with supply",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "soldOut": "Sold out"
   },
   "product": {
     "home": "Home",

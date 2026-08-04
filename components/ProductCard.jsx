@@ -17,14 +17,24 @@ export default function ProductCard({ product, showPrice = false, priority = fal
     const secondaryImage = product.images?.[1];
     const fallbackColor = product.colors[0]?.hex || '#E5E0D8';
 
+    // État épuisé (spec client) : carte inerte sans lien, image en niveaux
+    // de gris, étiquette noire "Épuisé", texte atténué et neutre dessous.
+    const Wrapper = isUnavailable ? 'div' : Link;
+    const wrapperProps = isUnavailable
+        ? { className: `${styles.card} ${styles.unavailable}` }
+        : {
+            href: `/produit/${product.slug}`,
+            className: styles.card,
+            onMouseEnter: () => setIsHovered(true),
+            onMouseLeave: () => setIsHovered(false),
+        };
+
     return (
-        <Link
-            href={`/produit/${product.slug}`}
-            className={`${styles.card} ${isUnavailable ? styles.unavailable : ''}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <div className={styles.imageWrapper} style={{ backgroundColor: fallbackColor }}>
+        <Wrapper {...wrapperProps}>
+            <div
+                className={`${styles.imageWrapper} ${isUnavailable ? styles.imageWrapperGrayscale : ''}`}
+                style={{ backgroundColor: fallbackColor }}
+            >
                 {primaryImage ? (
                     <Image
                         src={primaryImage}
@@ -40,7 +50,7 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     </span>
                 )}
 
-                {secondaryImage && (
+                {!isUnavailable && secondaryImage && (
                     <Image
                         src={secondaryImage}
                         alt=""
@@ -51,11 +61,11 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     />
                 )}
 
-                {/* Rupture de stock : bannière en travers de l'image.
+                {/* Épuisé : étiquette noire pleine en bas à gauche (spec client).
                     Autres statuts (à confectionner, attente matériaux) : badge de coin. */}
                 {isUnavailable ? (
-                    <span className={styles.soldOutBanner}>
-                        {t('availability.outOfStock')}
+                    <span className={styles.soldOutTag}>
+                        {t('availability.soldOut')}
                     </span>
                 ) : product.availability !== 'available' && availability && (
                     <span
@@ -66,8 +76,8 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     </span>
                 )}
 
-                {/* Color dots */}
-                {product.colors.length > 1 && (
+                {/* Color dots — masqués sur carte épuisée (inerte) */}
+                {!isUnavailable && product.colors.length > 1 && (
                     <div className={`${styles.colors} ${isHovered ? styles.colorsVisible : ''}`}>
                         {product.colors.map(color => (
                             <span
@@ -80,10 +90,10 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                     </div>
                 )}
 
-                {/* Made in France badge — remonte au-dessus de la bannière
-                    rupture de stock quand elle occupe le coin bas droit */}
-                {product.madeInFrance && (
-                    <span className={`${styles.madeInFranceBadge} ${isUnavailable ? styles.madeInFranceBadgeRaised : ''}`}>
+                {/* Made in France badge — masqué sur carte épuisée (le filtre
+                    niveaux de gris rendrait le drapeau illisible) */}
+                {!isUnavailable && product.madeInFrance && (
+                    <span className={styles.madeInFranceBadge}>
                         <span className={styles.flagBlue} />
                         <span className={styles.flagWhite} />
                         <span className={styles.flagRed} />
@@ -92,14 +102,16 @@ export default function ProductCard({ product, showPrice = false, priority = fal
             </div>
 
             <div className={styles.info}>
-                <h3 className={styles.name}>{product.name}</h3>
+                <h3 className={`${styles.name} ${isUnavailable ? styles.nameMuted : ''}`}>{product.name}</h3>
                 {product.subcategory && (
                     <span className={styles.category}>{getSubcategoryLabel(product.subcategory, t)}</span>
                 )}
-                {showPrice && (
+                {isUnavailable ? (
+                    <span className={styles.statusMuted}>{t('product.unavailable')}</span>
+                ) : showPrice && (
                     <span className={styles.price}>{product.price},00 €</span>
                 )}
             </div>
-        </Link>
+        </Wrapper>
     );
 }
