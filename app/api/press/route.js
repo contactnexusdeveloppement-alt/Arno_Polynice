@@ -1,4 +1,4 @@
-import { getPressPage, getPressItems } from '@/lib/shopify';
+import { getPressPage, getPressItems, getPressExtraSections } from '@/lib/shopify';
 import { NextResponse } from 'next/server';
 import fr from '@/locales/fr.json';
 import en from '@/locales/en.json';
@@ -36,20 +36,23 @@ export async function GET(request) {
     const language = searchParams.get('lang') || 'fr';
 
     try {
-        const [page, items] = await Promise.all([
+        const [page, items, extraSections] = await Promise.all([
             getPressPage(language),
             getPressItems(language),
+            getPressExtraSections(language),
         ]);
 
         return NextResponse.json({
             page: page ?? buildPageFallback(language),
             items: items || [],
+            extraSections: extraSections || [],
         });
     } catch (error) {
         console.error('[API /press] Error:', error);
         return NextResponse.json({
             page: buildPageFallback(language),
             items: [],
+            extraSections: [],
         });
     }
 }

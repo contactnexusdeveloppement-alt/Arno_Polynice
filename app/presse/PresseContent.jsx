@@ -29,15 +29,17 @@ import styles from './page.module.css';
  * Si Adelson n'a pas encore traduit un champ, Shopify renvoie le contenu FR
  * par défaut (comportement gracieux).
  */
-export default function PresseContent({ initialPage, initialItems }) {
+export default function PresseContent({ initialPage, initialItems, initialExtraSections = [] }) {
     const { language } = useLanguage();
     const [page, setPage] = useState(initialPage);
     const [items, setItems] = useState(initialItems);
+    const [extraSections, setExtraSections] = useState(initialExtraSections);
 
     useEffect(() => {
         if (language === 'fr') {
             setPage(initialPage);
             setItems(initialItems);
+            setExtraSections(initialExtraSections);
             return;
         }
 
@@ -51,6 +53,7 @@ export default function PresseContent({ initialPage, initialItems }) {
                 if (cancelled) return;
                 if (data.page) setPage(data.page);
                 if (Array.isArray(data.items)) setItems(data.items);
+                if (Array.isArray(data.extraSections)) setExtraSections(data.extraSections);
             })
             .catch((err) => {
                 console.error('[PresseContent] Translation fetch failed, keeping FR:', err.message);
@@ -59,7 +62,7 @@ export default function PresseContent({ initialPage, initialItems }) {
         return () => {
             cancelled = true;
         };
-    }, [language, initialPage, initialItems]);
+    }, [language, initialPage, initialItems, initialExtraSections]);
 
     return (
         <div className="page-enter">
@@ -85,6 +88,38 @@ export default function PresseContent({ initialPage, initialItems }) {
                         <PressEmpty />
                     </div>
                 )}
+
+                {/* Espaces additionnels (press_section_2 / press_section_3).
+                    Gérés par le client depuis Shopify, invisibles tant que
+                    ni en-tête ni élément n'a été rempli. */}
+                {extraSections.map((section, sIndex) => {
+                    const sectionItems = section?.items || [];
+                    const hasHeader = section?.page?.title || section?.page?.intro || section?.page?.label;
+                    if (!hasHeader && sectionItems.length === 0) return null;
+
+                    return (
+                        <div key={sIndex} className={styles.extraSection}>
+                            {hasHeader && (
+                                <div className={styles.header}>
+                                    {section.page?.label && <span className={styles.label}>{section.page.label}</span>}
+                                    {section.page?.title && <h2 className={styles.extraTitle}>{section.page.title}</h2>}
+                                    {section.page?.intro && <p className={styles.intro}>{section.page.intro}</p>}
+                                </div>
+                            )}
+                            {sectionItems.length > 0 && (
+                                <div className={styles.itemsList}>
+                                    {sectionItems.map((item, index) => (
+                                        <PressItem
+                                            key={item.id}
+                                            item={item}
+                                            reversed={index % 2 === 1}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </section>
         </div>
     );

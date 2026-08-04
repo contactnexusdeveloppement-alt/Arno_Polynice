@@ -1,4 +1,4 @@
-import { getPressPage, getPressItems } from '@/lib/shopify';
+import { getPressPage, getPressItems, getPressExtraSections } from '@/lib/shopify';
 import PresseContent from './PresseContent';
 
 // ISR : Adelson peut ajouter une parution depuis Shopify et la voir en
@@ -29,13 +29,20 @@ const FALLBACK_PAGE = {
  * Shopify "Translate & Adapt" (gratuite) et traduire chaque champ.
  */
 export default async function PressePage() {
-    const [pageData, items] = await Promise.all([
+    const [pageData, items, extraSections] = await Promise.all([
         getPressPage('fr'),
         getPressItems('fr'),
+        getPressExtraSections('fr'),
     ]);
 
     const initialPage = pageData ?? FALLBACK_PAGE;
     const initialItems = items || [];
 
-    return <PresseContent initialPage={initialPage} initialItems={initialItems} />;
+    return (
+        <PresseContent
+            initialPage={initialPage}
+            initialItems={initialItems}
+            initialExtraSections={extraSections || []}
+        />
+    );
 }
