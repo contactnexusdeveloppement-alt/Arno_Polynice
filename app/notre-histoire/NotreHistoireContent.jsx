@@ -16,6 +16,8 @@ function HistoryImage({ src, alt, className = '', priority = false, sizes, posit
                 src={src}
                 alt={alt}
                 fill
+                // Webp locaux déjà optimisés : pas de srcset ni de passage par le loader Shopify.
+                unoptimized
                 sizes={sizes}
                 priority={priority}
                 className={styles.coverImage}

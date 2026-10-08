@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
+        // Redimensionnement délégué au CDN Shopify (voir lib/shopifyImageLoader.js) :
+        // plus aucune transformation facturée/plafonnée par Vercel.
+        loader: 'custom',
+        loaderFile: './lib/shopifyImageLoader.js',
+        // Toujours utile : /_next/image reste exposé et ne doit accepter que ce domaine.
         remotePatterns: [
             {
                 protocol: 'https',
