@@ -223,6 +223,22 @@
     opacity: 1;
 }
 
+/* Bouton « Gérer les cookies » : même rendu que les liens légaux */
+.cookieSettings {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: 0.7rem;
+    color: rgba(248, 245, 240, 0.3);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.cookieSettings:hover {
+    color: rgba(248, 245, 240, 0.7);
+}
+
 /* Responsive */
 
 /* Tablette (iPad portrait, 9-10") — entre 769 et 1024px les 3 colonnes

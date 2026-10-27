@@ -137,7 +137,8 @@
     "createdBy": "Créé par",
     "legalNotice": "Mentions légales",
     "cgv": "CGV",
-    "privacyPolicy": "Politique de confidentialité"
+    "privacyPolicy": "Politique de confidentialité",
+    "cookieSettings": "Gérer les cookies"
   },
   "contact": {
     "title": "Contact",
@@ -298,7 +299,7 @@
       "sec4Text1": "Arno Polynice s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, Arno Polynice ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition sur ce site.",
       "sec4Text2": "En conséquence, Arno Polynice décline toute responsabilité pour toute imprécision, inexactitude ou omission portant sur des informations disponibles sur ce site.",
       "sec5Title": "5. Cookies et Mesure d'Audience",
-      "sec5TextPart1": "Le site utilise uniquement des cookies strictement nécessaires à son bon fonctionnement (panier, session). La mesure d'audience est assurée par Vercel Analytics, une solution respectueuse de la vie privée qui ne dépose aucun cookie et ne collecte aucune donnée personnelle identifiable. Pour plus d'informations, consultez notre ",
+      "sec5TextPart1": "Le site utilise des cookies strictement nécessaires à son bon fonctionnement (panier, session). La mesure d'audience de base est assurée par Vercel Analytics, qui ne dépose aucun cookie. Avec votre accord donné via la bannière cookies, le site utilise aussi Google Analytics et Microsoft Clarity. Vous pouvez modifier votre choix à tout moment via le lien « Gérer les cookies » en bas de chaque page. Pour plus d'informations, consultez notre ",
       "sec5Link": "Politique de Confidentialité",
       "sec5TextPart2": ".",
       "sec6Title": "6. Droit Applicable",
@@ -400,7 +401,7 @@
       "sec6Text3Bold1": "Microsoft Clarity",
       "sec6Text3Part2": " (heatmaps et enregistrements de session — cookies _clck, _clsk) et ",
       "sec6Text3Bold2": "Google Analytics 4",
-      "sec6Text3Part3": " (statistiques d'audience — cookies _ga, _gid). Vous pouvez révoquer ce consentement à tout moment en vidant les cookies de votre navigateur.",
+      "sec6Text3Part3": " (statistiques d'audience — cookies _ga, _gid). Vous pouvez retirer ce consentement à tout moment via le lien « Gérer les cookies » en bas de chaque page.",
       "sec7Title": "7. Partage des Données",
       "sec7Intro": "Vos données personnelles ne sont jamais vendues à des tiers. Elles peuvent être partagées avec les prestataires suivants, strictement nécessaires à l'exécution de nos services :",
       "sec7Item1Bold": "Shopify",

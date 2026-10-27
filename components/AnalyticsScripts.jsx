@@ -16,8 +16,8 @@ import GA4PageView from './GA4PageView';
  * Note : si l'utilisateur change d'avis et accepte plus tard, les scripts
  * sont injectés à ce moment-là (next/script gère ça proprement). En revanche,
  * passer de 'accepted' à 'rejected' ne décharge pas les scripts déjà
- * chargés en mémoire — il faut reload. C'est documenté dans la politique
- * de confidentialité (vider les cookies du navigateur pour révoquer).
+ * chargés en mémoire : reject() efface alors les cookies analytics et
+ * recharge la page (cf. CookieConsentContext, lien « Gérer les cookies »).
  */
 
 const CLARITY_PROJECT_ID = 'wjr12966i7';

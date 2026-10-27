@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
+import { useCookieConsent } from '@/context/CookieConsentContext';
 import styles from './Footer.module.css';
 
 const socialLinks = [
@@ -26,6 +27,7 @@ const infoLinks = [
 
 export default function Footer() {
     const { t } = useLanguage();
+    const { reset: openCookieSettings } = useCookieConsent();
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
     const [errorKey, setErrorKey] = useState('footer.errors.serverError');
 
@@ -166,6 +168,9 @@ export default function Footer() {
                         <Link href="/mentions-legales">{t('footer.legalNotice')}</Link>
                         <Link href="/cgv">{t('footer.cgv')}</Link>
                         <Link href="/politique-de-confidentialite">{t('footer.privacyPolicy')}</Link>
+                        <button type="button" className={styles.cookieSettings} onClick={openCookieSettings}>
+                            {t('footer.cookieSettings')}
+                        </button>
                     </div>
                 </div>
             </div>

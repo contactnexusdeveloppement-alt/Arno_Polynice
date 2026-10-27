@@ -19,6 +19,29 @@ const STORAGE_KEY = 'arno-cookie-consent';
  */
 const CookieConsentContext = createContext();
 
+// Cookies déposés par GA4 (_ga, _ga_<id>, _gid) et Clarity (_clck, _clsk).
+const ANALYTICS_COOKIE_PATTERN = /^(_ga|_gid|_clck|_clsk)/;
+
+/**
+ * Supprime les cookies analytics existants (retrait du consentement, exigé
+ * par la CNIL). GA4 les pose sur le domaine racine (.arno-polynice.com),
+ * d'où la suppression sur chaque niveau de domaine.
+ */
+function clearAnalyticsCookies() {
+    const hostParts = window.location.hostname.split('.');
+    const domains = [''];
+    for (let i = 0; i < hostParts.length - 1; i++) {
+        domains.push(`; domain=.${hostParts.slice(i).join('.')}`);
+    }
+    document.cookie.split(';').forEach(cookie => {
+        const name = cookie.split('=')[0].trim();
+        if (!ANALYTICS_COOKIE_PATTERN.test(name)) return;
+        domains.forEach(domain => {
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domain}`;
+        });
+    });
+}
+
 export function CookieConsentProvider({ children }) {
     const [consent, setConsent] = useState('pending');
     const [isHydrated, setIsHydrated] = useState(false);
@@ -29,6 +52,9 @@ export function CookieConsentProvider({ children }) {
             if (stored === 'accepted' || stored === 'rejected') {
                 setConsent(stored);
             }
+            // GA4 réécrit ses cookies au déchargement de la page : on refait
+            // le ménage au chargement suivant tant que le choix est « refusé ».
+            if (stored === 'rejected') clearAnalyticsCookies();
         } catch (e) { /* localStorage indisponible (mode privé strict) */ }
         setIsHydrated(true);
     }, []);
@@ -39,13 +65,26 @@ export function CookieConsentProvider({ children }) {
     }, []);
 
     const reject = useCallback(() => {
+        let wasAccepted = false;
+        try {
+            wasAccepted = localStorage.getItem(STORAGE_KEY) === 'accepted';
+            localStorage.setItem(STORAGE_KEY, 'rejected');
+        } catch (e) { }
         setConsent('rejected');
-        try { localStorage.setItem(STORAGE_KEY, 'rejected'); } catch (e) { }
+
+        // Retrait d'un consentement donné plus tôt : les scripts GA4/Clarity
+        // déjà chargés ne se déchargent pas, on efface leurs cookies puis on
+        // recharge la page pour les arrêter.
+        if (wasAccepted) {
+            clearAnalyticsCookies();
+            window.location.reload();
+        }
     }, []);
 
+    // Réaffiche la bannière (lien « Gérer les cookies » du footer).
+    // Le choix enregistré reste en place tant que le visiteur n'a pas re-choisi.
     const reset = useCallback(() => {
         setConsent('pending');
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) { }
     }, []);
 
     return (

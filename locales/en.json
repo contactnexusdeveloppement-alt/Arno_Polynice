@@ -137,7 +137,8 @@
     "createdBy": "Created by",
     "legalNotice": "Legal notice",
     "cgv": "Terms of sale",
-    "privacyPolicy": "Privacy policy"
+    "privacyPolicy": "Privacy policy",
+    "cookieSettings": "Cookie settings"
   },
   "contact": {
     "title": "Contact",
@@ -298,7 +299,7 @@
       "sec4Text1": "Arno Polynice strives to ensure the accuracy and timeliness of the information published on this website. However, Arno Polynice cannot guarantee the accuracy, precision or completeness of the information made available on this website.",
       "sec4Text2": "Consequently, Arno Polynice disclaims all liability for any inaccuracy, imprecision or omission relating to information available on this website.",
       "sec5Title": "5. Cookies and Audience Measurement",
-      "sec5TextPart1": "The website only uses cookies strictly necessary for its proper operation (cart, session). Audience measurement is provided by Vercel Analytics, a privacy-respecting solution that does not deposit any cookies and does not collect any personally identifiable data. For more information, please consult our ",
+      "sec5TextPart1": "The website uses cookies strictly necessary for its proper operation (cart, session). Basic audience measurement is provided by Vercel Analytics, which does not set any cookies. With your consent given through the cookie banner, the website also uses Google Analytics and Microsoft Clarity. You can change your choice at any time using the “Cookie settings” link at the bottom of every page. For more information, please consult our ",
       "sec5Link": "Privacy Policy",
       "sec5TextPart2": ".",
       "sec6Title": "6. Applicable Law",
@@ -400,7 +401,7 @@
       "sec6Text3Bold1": "Microsoft Clarity",
       "sec6Text3Part2": " (heatmaps and session recordings — cookies _clck, _clsk) and ",
       "sec6Text3Bold2": "Google Analytics 4",
-      "sec6Text3Part3": " (audience statistics — cookies _ga, _gid). You can revoke this consent at any time by clearing your browser cookies.",
+      "sec6Text3Part3": " (audience statistics — cookies _ga, _gid). You can withdraw this consent at any time using the “Cookie settings” link at the bottom of every page.",
       "sec7Title": "7. Data Sharing",
       "sec7Intro": "Your personal data is never sold to third parties. It may be shared with the following service providers, strictly necessary for the execution of our services:",
       "sec7Item1Bold": "Shopify",
