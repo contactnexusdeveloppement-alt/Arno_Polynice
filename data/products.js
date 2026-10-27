@@ -61,9 +61,9 @@ const colorMap = {
 const getHexForColor = (name) => colorMap[name.toLowerCase()] || '#8A8A8A';
 
 function mapShopifyProduct(node) {
-  // Handle price
+  // Prix en euros avec centimes (parseFloat, pas parseInt : 89.90 doit rester 89.90)
   const price = node.priceRange?.minVariantPrice?.amount
-    ? parseInt(node.priceRange.minVariantPrice.amount, 10)
+    ? parseFloat(node.priceRange.minVariantPrice.amount)
     : 0;
 
   // Handle images
@@ -111,6 +111,7 @@ function mapShopifyProduct(node) {
     title: edge.node.title,
     availableForSale: edge.node.availableForSale,
     selectedOptions: edge.node.selectedOptions,
+    price: edge.node.price?.amount ? parseFloat(edge.node.price.amount) : null,
   })) || [];
 
   return {
@@ -126,8 +127,9 @@ function mapShopifyProduct(node) {
     images,
     tags: rawTags,
     madeInFrance: tagsLower.includes('made-in-france') || tagsLower.includes('made in france'),
-    description: node.description || 'Description à venir.',
-    details: node.metafield?.value || 'Ajoutez le champ méta personnalisé `custom.details` sur Shopify pour afficher la composition ici.',
+    // Champs vides = bloc masqué sur la fiche produit (jamais de texte technique visible).
+    description: node.description || '',
+    details: node.metafield?.value || '',
     availability,
     featured: true,
     isShopify: true
@@ -136,7 +138,7 @@ function mapShopifyProduct(node) {
 
 export async function getAllProducts(language = 'fr') {
   try {
-    const shopifyNodes = await fetchShopifyProducts(50, language);
+    const shopifyNodes = await fetchShopifyProducts(undefined, language);
     const shopifyProducts = shopifyNodes.map(mapShopifyProduct);
     return shopifyProducts;
   } catch (error) {
@@ -175,9 +177,16 @@ export async function getProductsByCategory(category, language = 'fr') {
   return all.filter(p => p.category === category && !isAccessory(p));
 }
 
+// Requête ciblée sur le handle : évite de recharger tout le catalogue
+// à chaque affichage de fiche produit.
 export async function getProductBySlug(slug, language = 'fr') {
-  const all = await getAllProducts(language);
-  return all.find(p => p.slug === slug);
+  try {
+    const node = await fetchShopifyProduct(slug, language);
+    return node ? mapShopifyProduct(node) : undefined;
+  } catch (error) {
+    console.error('[getProductBySlug] ERROR fetching Shopify product:', error.message);
+    return undefined;
+  }
 }
 
 export async function getFeaturedProducts(language = 'fr') {

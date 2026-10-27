@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import LogoutButton from './LogoutButton';
+import { formatPrice } from '@/lib/formatPrice';
 import styles from './page.module.css';
 
 const LANGUAGE_LOCALE = {
@@ -57,7 +58,7 @@ export default function AccountContent({ customer }) {
                                                         {order.fulfillmentStatus || t('account.processing')}
                                                     </span>
                                                     <span className={styles.orderTotal}>
-                                                        {order.totalPrice.amount} {order.totalPrice.currencyCode}
+                                                        {formatPrice(order.totalPrice.amount)}
                                                     </span>
                                                 </div>
                                             </div>

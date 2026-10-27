@@ -80,7 +80,7 @@ export default async function ProductPage({ params }) {
         '@type': 'Product',
         '@id': `${url}#product`,
         name: product.name,
-        description: product.description,
+        description: product.description || `${product.name}, pièce artisanale Arno Polynice confectionnée à Épinal dans les Vosges.`,
         image: product.images?.length ? product.images : [`${SITE_URL}/og-image.png`],
         sku: product.slug,
         brand: {

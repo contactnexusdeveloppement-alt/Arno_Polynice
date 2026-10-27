@@ -5,9 +5,35 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { availabilityStatuses } from '@/data/products';
 import { trackViewItem } from '@/lib/gtag';
+import { formatPrice } from '@/lib/formatPrice';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/app/produit/[slug]/page.module.css';
+
+const isColorOption = o => o.name === 'Couleur' || o.name === 'Coloris';
+const isSizeOption = o => o.name === 'Taille' || o.name === 'Size';
+
+/**
+ * Variante Shopify correspondant à la sélection couleur + taille.
+ * Stratégie :
+ *   1) Match exact couleur + taille
+ *   2) Fallback : taille seule (produit sans option "Couleur")
+ *   3) Fallback : variante unique (produit sans aucune option, ex. accessoire)
+ */
+function findVariant(variants, color, size) {
+    if (!variants?.length || !size) return null;
+    const exact = variants.find(v =>
+        v.selectedOptions.some(o => isColorOption(o) && o.value === color) &&
+        v.selectedOptions.some(o => isSizeOption(o) && o.value === size)
+    );
+    if (exact) return exact;
+    const bySize = variants.find(v =>
+        !v.selectedOptions.some(isColorOption) &&
+        v.selectedOptions.some(o => isSizeOption(o) && o.value === size)
+    );
+    if (bySize) return bySize;
+    return variants.length === 1 ? variants[0] : null;
+}
 
 export default function ProductDetail({ product }) {
     const { addItem } = useCart();
@@ -37,11 +63,8 @@ export default function ProductDetail({ product }) {
 
     // Reset size if the selected size is not available for new color
     const checkSizeAvailability = (color, size) => {
-        if (!product.variants) return true; // mock products are always available
-        const variant = product.variants.find(v =>
-            v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === color) &&
-            v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === size)
-        );
+        if (!product.variants?.length) return true; // mock products are always available
+        const variant = findVariant(product.variants, color, size);
         return variant ? variant.availableForSale : false;
     };
 
@@ -59,41 +82,26 @@ export default function ProductDetail({ product }) {
     const canAddToCart = currentProduct.availability !== 'unavailable';
     const isShopifyProduct = Array.isArray(currentProduct.variants) && currentProduct.variants.length > 0;
 
+    // Prix affiché = prix de la variante choisie (une taille peut coûter plus cher),
+    // sinon prix minimum du produit.
+    const selectedVariant = isShopifyProduct ? findVariant(currentProduct.variants, selectedColor, selectedSize) : null;
+    const displayPrice = selectedVariant?.price ?? currentProduct.price;
+
     const handleAddToCart = () => {
         if (!selectedSize || added) return;
 
         setAddError('');
 
-        // Recherche de la variante Shopify (checkout via merchandiseId).
-        // Stratégie :
-        //   1) Match exact couleur + taille
-        //   2) Fallback : taille seule (ex: produit à couleur unique)
-        //   3) Échec → on refuse l'ajout et on affiche un message clair
-        //      (plutôt que d'envoyer une variante aléatoire au checkout)
-        let variantId = null;
-        if (isShopifyProduct) {
-            const variant = currentProduct.variants.find(v =>
-                v.selectedOptions.some(o => (o.name === 'Couleur' || o.name === 'Coloris') && o.value === selectedColor) &&
-                v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
-            );
-            if (variant) {
-                variantId = variant.id;
-            } else {
-                // Fallback légitime : produit sans option "Couleur"
-                const sizeOnlyVariant = currentProduct.variants.find(v =>
-                    v.selectedOptions.some(o => (o.name === 'Taille' || o.name === 'Size') && o.value === selectedSize)
-                );
-                if (sizeOnlyVariant) variantId = sizeOnlyVariant.id;
-            }
-
-            if (!variantId) {
-                // On refuse l'ajout : mieux vaut un message clair qu'un checkout qui plante.
-                setAddError(t('productPage.variantMissing'));
-                return;
-            }
+        // Variante Shopify introuvable → on refuse l'ajout et on affiche un message
+        // clair (plutôt que d'envoyer une variante aléatoire au checkout).
+        if (isShopifyProduct && !selectedVariant) {
+            setAddError(t('productPage.variantMissing'));
+            return;
         }
 
-        addItem(currentProduct, selectedColor, selectedSize, 1, variantId);
+        // Le panier enregistre le prix de la variante pour que son total
+        // corresponde au montant encaissé par Shopify.
+        addItem({ ...currentProduct, price: displayPrice }, selectedColor, selectedSize, 1, selectedVariant?.id ?? null);
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
     };
@@ -210,7 +218,7 @@ export default function ProductDetail({ product }) {
                     <div className={styles.infoSticky}>
                         {/* Name & Price */}
                         <h1 className={styles.productName}>{currentProduct.name}</h1>
-                        <p className={styles.price}>{currentProduct.price},00 €</p>
+                        <p className={styles.price}>{formatPrice(displayPrice)}</p>
 
                         {/* Availability */}
                         <div className={styles.availability} style={{ '--avail-color': availability.color }}>
@@ -314,11 +322,14 @@ export default function ProductDetail({ product }) {
                         )}
 
                         {/* Description */}
-                        <div className={styles.description}>
-                            <p>{currentProduct.description}</p>
-                        </div>
+                        {currentProduct.description && (
+                            <div className={styles.description}>
+                                <p>{currentProduct.description}</p>
+                            </div>
+                        )}
 
-                        {/* Details accordion */}
+                        {/* Details accordion (masqué si le métachamp custom.details est vide) */}
+                        {currentProduct.details && (<>
                         <button
                             className={styles.accordion}
                             onClick={() => setShowDetails(!showDetails)}
@@ -333,6 +344,7 @@ export default function ProductDetail({ product }) {
                                 <p>{currentProduct.details}</p>
                             </div>
                         )}
+                        </>)}
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { trackBeginCheckout } from '@/lib/gtag';
+import { formatPrice } from '@/lib/formatPrice';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './CartDrawer.module.css';
@@ -173,7 +174,7 @@ export default function CartDrawer() {
                                                     +
                                                 </button>
                                             </div>
-                                            <span className={styles.itemPrice}>{item.price * item.quantity},00 €</span>
+                                            <span className={styles.itemPrice}>{formatPrice(item.price * item.quantity)}</span>
                                         </div>
                                     </div>
                                     <button
@@ -191,7 +192,7 @@ export default function CartDrawer() {
                         <div className={styles.footer}>
                             <div className={styles.totalRow}>
                                 <span className={styles.totalLabel}>{t('cart.total')}</span>
-                                <span className={styles.totalPrice}>{totalPrice},00 €</span>
+                                <span className={styles.totalPrice}>{formatPrice(totalPrice)}</span>
                             </div>
                             <p className={styles.shipping}>{t('cart.shippingNote')}</p>
 

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { availabilityStatuses } from '@/data/products';
 import { useLanguage } from '@/context/LanguageContext';
 import { getSubcategoryLabel } from '@/lib/i18n';
+import { formatPrice } from '@/lib/formatPrice';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product, showPrice = false, priority = false }) {
@@ -109,7 +110,7 @@ export default function ProductCard({ product, showPrice = false, priority = fal
                 {isUnavailable ? (
                     <span className={styles.statusMuted}>{t('product.unavailable')}</span>
                 ) : showPrice && (
-                    <span className={styles.price}>{product.price},00 €</span>
+                    <span className={styles.price}>{formatPrice(product.price)}</span>
                 )}
             </div>
         </Wrapper>
