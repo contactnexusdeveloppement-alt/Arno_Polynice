@@ -3,6 +3,9 @@ import { Resend } from 'resend';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'arnopolynice@gmail.com';
+// Expéditeur : adresse sur un domaine vérifié dans Resend (ex. contact@arno-polynice.com).
+// Repli sur l'adresse de test Resend, qui ne livre qu'à l'email du compte Resend.
+const FROM_EMAIL = process.env.RESEND_FROM || 'Arno Polynice <onboarding@resend.dev>';
 
 // Basic email validation
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,7 +61,7 @@ export async function POST(req) {
         const resend = new Resend(RESEND_API_KEY);
 
         const { error } = await resend.emails.send({
-            from: 'Arno Polynice <onboarding@resend.dev>',
+            from: FROM_EMAIL,
             to: [CONTACT_EMAIL],
             replyTo: email,
             subject: `[Contact arno-polynice.com] ${subjectLabels[subject] || subject}`,
