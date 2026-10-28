@@ -64,7 +64,7 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 
 ## Points de vigilance connus
 - **Vercel Hobby** : l'équipe est en plan Hobby, réservé à l'usage non commercial. Un site e-commerce client y est hors conditions d'utilisation (risque de suspension) et le quota d'images a déjà sauté en oct. 2026. Passage en Pro à prévoir (sujet agence, pas spécifique à ce client).
-- Resend en `onboarding@resend.dev` : ne livre qu'à l'adresse du compte Resend. La clé de prod n'est PAS celle du compte Resend de Ned (compte contact.nexus.developpement, utilisé pour Gym Coach) : test du 28/10/2026 accepté par l'API mais absent de ce compte et de la boîte Ned, donc compte probablement au nom d'Adelson. Réception chez Adelson à confirmer (et dossier spam).
+- Resend : la clé de prod appartient à un autre compte Resend que celui de Ned (contact.nexus.developpement, utilisé pour Gym Coach), a priori celui d'Adelson. Test du 28/10/2026 reçu par Adelson en boîte principale : les formulaires fonctionnent. Le lot 3 du devis se vend sur l'image (contact@arno-polynice.com) et l'accusé de réception, pas sur la délivrabilité.
 - Newsletter : simple email envoyé à Adelson, aucune liste stockée (lot 2 du devis).
 - Traduction côté client uniquement : Google n'indexe que le français (lot 1 du devis).
 - Produits `veste-a-capuche-rose` et `short-en-jacquard-poudre` : composition (`custom.details`) non renseignée par Adelson.
