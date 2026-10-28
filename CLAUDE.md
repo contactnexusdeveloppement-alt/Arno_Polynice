@@ -52,11 +52,19 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 - `npm run lint` : 8 erreurs connues `react-hooks/set-state-in-effect` (lecture de localStorage dans des `useEffect`), non bloquantes pour le build. Ne pas en ajouter de nouvelles.
 - Changement visible : preview Vercel + captures avant fusion sur `main`.
 
-## Points de vigilance connus (oct. 2026)
-- Prix affichés via `parseInt` + `,00 €` en dur : un prix avec centimes s'affiche faux (le checkout Shopify, lui, est juste).
-- `getAllProducts` est plafonné à 50 produits et chaque page produit recharge tout le catalogue sans cache.
-- Texte de remplacement technique visible si `custom.details` est vide sur un produit.
-- Sitemap sans `/accessoires`, `/presse`, `/sur-mesure`.
-- Mentions légales (section cookies) : affirment encore « uniquement des cookies strictement nécessaires » alors que GA4 et Clarity sont présents (avec consentement).
-- Newsletter : simple email envoyé à Adelson, aucune liste stockée.
-- Resend en `onboarding@resend.dev` : ne livre qu'à l'adresse du compte Resend, domaine non vérifié.
+## Contexte commercial (interne Ned)
+- Création facturée **500 € TTC** (DEV-2026-002). Client à petit budget : vendre par lots indépendants.
+- Hébergement Vercel géré par Ned (équipe « Nexus' projects ») tant que le contrat de maintenance mensuel court (cf. acte de cession).
+- Règle : bug ou oubli de notre livraison = corrigé gratuitement ; évolution = devis.
+- Devis évolutions du 28/10/2026 : https://claude.ai/artifact/YPATuMFCUfTnSo7g57wvAg (lots SEO EN/ES 490 €, newsletter Shopify 190 €, emails au domaine 150 €, performance + anti-spam 180 €, option checkout pré-rempli 90 € ; pack 850 € HT).
+
+## Historique des corrections sous garantie
+- 28/10/2026 : prix avec centimes + prix par variante, produits sans option couleur invendables, pastilles Rose/Violet grises, texte technique si `custom.details` vide, pagination > 50 produits, sitemap incomplet, retrait du consentement cookies (CNIL) + mentions légales, expéditeur Resend configurable (`RESEND_FROM`).
+
+## Points de vigilance connus
+- **Vercel Hobby** : l'équipe est en plan Hobby, réservé à l'usage non commercial. Un site e-commerce client y est hors conditions d'utilisation (risque de suspension) et le quota d'images a déjà sauté en oct. 2026. Passage en Pro à prévoir (sujet agence, pas spécifique à ce client).
+- Resend en `onboarding@resend.dev` : ne livre qu'à l'adresse du compte Resend. À vérifier ; si les formulaires n'arrivent pas chez Adelson, c'est à nous de corriger.
+- Newsletter : simple email envoyé à Adelson, aucune liste stockée (lot 2 du devis).
+- Traduction côté client uniquement : Google n'indexe que le français (lot 1 du devis).
+- Produits `veste-a-capuche-rose` et `short-en-jacquard-poudre` : composition (`custom.details`) non renseignée par Adelson.
+- Contraste des liens légaux du footer (opacité 0.3) sous le seuil AA.
