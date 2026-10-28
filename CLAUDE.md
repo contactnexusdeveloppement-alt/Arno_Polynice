@@ -60,6 +60,7 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 
 ## Historique des corrections sous garantie
 - 28/10/2026 : prix avec centimes + prix par variante, produits sans option couleur invendables, pastilles Rose/Violet grises, texte technique si `custom.details` vide, pagination > 50 produits, sitemap incomplet, retrait du consentement cookies (CNIL) + mentions légales, expéditeur Resend configurable (`RESEND_FROM`).
+- 29/10/2026 : contraste AA des textes du footer (opacité 0.3/0.4 → 0.6, soit 6,5:1).
 
 ## Points de vigilance connus
 - **Vercel Hobby** : l'équipe est en plan Hobby, réservé à l'usage non commercial. Un site e-commerce client y est hors conditions d'utilisation (risque de suspension) et le quota d'images a déjà sauté en oct. 2026. Passage en Pro à prévoir (sujet agence, pas spécifique à ce client).
@@ -67,4 +68,4 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 - Newsletter : simple email envoyé à Adelson, aucune liste stockée (lot 2 du devis).
 - Traduction côté client uniquement : Google n'indexe que le français (lot 1 du devis).
 - Produits `veste-a-capuche-rose` et `short-en-jacquard-poudre` : composition (`custom.details`) non renseignée par Adelson.
-- Contraste des liens légaux du footer (opacité 0.3) sous le seuil AA.
+- Build Vercel : `next/font/google` télécharge Inter et Barlow Condensed pendant le build. Le 29/10/2026, un build a échoué (« Can't resolve '@vercel/turbopack-next/internal/font/google/font' ») puis est passé au redéploiement. Si ça se répète : redéployer, puis envisager `next/font/local`. Un build raté ne touche pas la prod (Vercel garde la dernière version valide).
