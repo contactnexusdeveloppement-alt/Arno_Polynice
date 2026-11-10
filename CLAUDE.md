@@ -56,7 +56,9 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 - Création facturée **500 € TTC** (DEV-2026-002). Client à petit budget : vendre par lots indépendants.
 - Hébergement Vercel géré par Ned (équipe « Nexus' projects ») tant que le contrat de maintenance mensuel court (cf. acte de cession).
 - Règle : bug ou oubli de notre livraison = corrigé gratuitement ; évolution = devis.
-- Devis évolutions du 28/10/2026 : https://claude.ai/artifact/YPATuMFCUfTnSo7g57wvAg (lots SEO EN/ES 490 €, newsletter Shopify 190 €, emails au domaine 150 €, performance + anti-spam 180 €, option checkout pré-rempli 90 € ; pack 850 € HT).
+- Devis **DEV-2026-010** du 10/11/2026 (n° attribué par le Gestionnaire NED, registre `ned-gestion/data/devis/DEV-2026-010.yaml`) : lots SEO EN/ES 490 €, newsletter Shopify 190 €, emails au domaine 150 €, performance + anti-spam 180 €, option checkout pré-rempli 90 € ; pack 850 € HT / 1 020 € TTC. PDF à la charte Ned sur le Drive Ned (`DEV-2026-010_Paugain.pdf`), signataire Théo. Brouillon Gmail préparé par le Gestionnaire NED, envoi après bon pour envoi d'un gérant. Version de travail : https://claude.ai/artifact/YPATuMFCUfTnSo7g57wvAg.
+- Contrat DEV-2026-002 (signé 23/03/2026) : la maintenance (20 € TTC/mois, Stripe le 28) couvre « uniquement le maintien en conditions opérationnelles » et exclut toute évolution, chiffrée à part.
+- Suivi client côté Ned : **Théo Jacobée** (seul gérant depuis le 21/10/2026, signe devis et factures).
 
 ## Historique des corrections sous garantie
 - 28/10/2026 : prix avec centimes + prix par variante, produits sans option couleur invendables, pastilles Rose/Violet grises, texte technique si `custom.details` vide, pagination > 50 produits, sitemap incomplet, retrait du consentement cookies (CNIL) + mentions légales, expéditeur Resend configurable (`RESEND_FROM`).
