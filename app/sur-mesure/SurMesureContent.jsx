@@ -60,7 +60,7 @@ export default function SurMesureContent() {
                 <section className={styles.cta}>
                     <h2 className={styles.ctaTitle}>{t('customMade.ctaTitle')}</h2>
                     <p className={styles.ctaText}>{t('customMade.ctaText')}</p>
-                    <Link href="/contact" className="btn btn--primary">
+                    <Link href="/contact?sujet=personnalisation" className="btn btn--primary">
                         {t('customMade.ctaButton')}
                     </Link>
                 </section>

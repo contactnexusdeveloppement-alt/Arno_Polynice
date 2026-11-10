@@ -61,10 +61,12 @@ Métachamp produit : `custom.details` (composition, onglet « Détails »).
 ## Historique des corrections sous garantie
 - 28/10/2026 : prix avec centimes + prix par variante, produits sans option couleur invendables, pastilles Rose/Violet grises, texte technique si `custom.details` vide, pagination > 50 produits, sitemap incomplet, retrait du consentement cookies (CNIL) + mentions légales, expéditeur Resend configurable (`RESEND_FROM`).
 - 29/10/2026 : contraste AA des textes du footer (opacité 0.3/0.4 → 0.6, soit 6,5:1).
+- 10/11/2026 : le bouton de /sur-mesure pré-sélectionne le sujet « Personnalisation / Sur mesure » du formulaire (`/contact?sujet=personnalisation`), annoncé dans le code mais jamais branché.
 
 ## Points de vigilance connus
 - **Vercel Hobby** : l'équipe est en plan Hobby, réservé à l'usage non commercial. Un site e-commerce client y est hors conditions d'utilisation (risque de suspension) et le quota d'images a déjà sauté en oct. 2026. Passage en Pro à prévoir (sujet agence, pas spécifique à ce client).
 - Resend : la clé de prod appartient à un autre compte Resend que celui de Ned (contact.nexus.developpement, utilisé pour Gym Coach), a priori celui d'Adelson. Test du 28/10/2026 reçu par Adelson en boîte principale : les formulaires fonctionnent. Le lot 3 du devis se vend sur l'image (contact@arno-polynice.com) et l'accusé de réception, pas sur la délivrabilité.
+- Formulaire de contact sans anti-spam (la newsletter a un honeypot) : spam reçu le 10/11/2026 (texte généré + lien externe). Anti-robots + blocage des liens = lot 4 du devis.
 - Newsletter : simple email envoyé à Adelson, aucune liste stockée (lot 2 du devis).
 - Traduction côté client uniquement : Google n'indexe que le français (lot 1 du devis).
 - Produits `veste-a-capuche-rose` et `short-en-jacquard-poudre` : composition (`custom.details`) non renseignée par Adelson.

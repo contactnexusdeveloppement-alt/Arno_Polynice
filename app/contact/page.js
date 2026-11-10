@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './page.module.css';
 
@@ -16,10 +16,23 @@ const ERROR_CODE_TO_KEY = {
     serverError: 'contact.errors.serverError',
 };
 
+// Sujets acceptés en pré-remplissage via l'URL (/contact?sujet=personnalisation).
+const SUBJECTS = ['commande', 'personnalisation', 'collaboration', 'presse', 'autre'];
+
 export default function ContactPage() {
     const { t } = useLanguage();
     const [status, setStatus] = useState('idle'); // idle | sending | success | error
     const [errorMessage, setErrorMessage] = useState('');
+    const subjectRef = useRef(null);
+
+    // Pré-sélectionne le sujet passé en paramètre (ex. bouton de la page Sur mesure).
+    // Lu après le montage : la page est pré-rendue en statique, sans paramètres.
+    useEffect(() => {
+        const subject = new URLSearchParams(window.location.search).get('sujet');
+        if (subject && SUBJECTS.includes(subject) && subjectRef.current) {
+            subjectRef.current.value = subject;
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -86,7 +99,7 @@ export default function ContactPage() {
                         </div>
                         <div className={styles.formGroup}>
                             <label className={styles.formLabel} htmlFor="subject">{t('contact.subject')}</label>
-                            <select id="subject" name="subject" className={styles.formInput} defaultValue="" required disabled={status === 'sending'}>
+                            <select ref={subjectRef} id="subject" name="subject" className={styles.formInput} defaultValue="" required disabled={status === 'sending'}>
                                 <option value="" disabled>{t('contact.selectSubject')}</option>
                                 <option value="commande">{t('contact.subjectOrder')}</option>
                                 <option value="personnalisation">{t('contact.subjectCustom')}</option>
